@@ -1,0 +1,46 @@
+name: flutter_hentai_viewer
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.0-97.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  path_provider: ^2.1.1
+  intl_utils: ^2.8.5
+  intl: ^0.19.0
+  mobx: ^2.2.1
+  flutter_mobx: ^2.2.0
+  http: ^1.1.0
+  html: ^0.15.4
+  waterfall_flow: ^3.0.3
+  json_annotation: ^4.9.0
+  toastification: ^2.1.0
+  extended_image: ^8.2.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.6
+  mobx_codegen: ^2.4.0
+  json_serializable: ^6.8.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/nhentai_tags.json
+    - assets/nhentai_logo.png
+    - assets/cn_flag.gif
+    - assets/en_flag.gif
+    - assets/jp_flag.gif
+flutter_intl:
+  enabled: true
+  class_name: L10n
+  main_locale: en_US
