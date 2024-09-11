@@ -4,9 +4,12 @@ import 'package:flutter_hentai_viewer/nhentai/pages/settings_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_filter_page.dart';
 
 class MenuDrawer extends StatelessWidget {
-  const MenuDrawer({
+  const MenuDrawer(
+    this.refreshHomePage, {
     super.key,
   });
+
+  final Function refreshHomePage;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +53,10 @@ class MenuDrawer extends StatelessWidget {
           leading: const Icon(Icons.tag),
           title: Text(L10n.of(context).tagFilter),
           onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const TagFilterPage()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (context) => const TagFilterPage()))
+                .then((_) => refreshHomePage());
           },
         ),
         const Divider(),

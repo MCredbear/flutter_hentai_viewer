@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(!searching ? Icons.search : Icons.cancel))
           ],
         ),
-        drawer: const MenuDrawer(),
+        drawer: MenuDrawer(() => getGalleries(1)),
         bottomNavigationBar: (lastPageIndex == null || lastPageIndex == 1)
             ? null
             : SizedBox(
