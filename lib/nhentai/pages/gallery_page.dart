@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
+import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 import 'package:toastification/toastification.dart';
@@ -104,7 +105,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                             padding: const EdgeInsets.only(
                                                 left: 2, right: 2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(
+                                                                parodyTag))),
                                                 label: Text(parodyTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
@@ -124,7 +130,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(
+                                                                characterTag))),
                                                 label: Text(characterTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
@@ -144,7 +155,11 @@ class _GalleryPageState extends State<GalleryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(tagTag))),
                                                 label: Text(tagTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
@@ -164,7 +179,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(
+                                                                artistTag))),
                                                 label: Text(artistTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
@@ -184,7 +204,11 @@ class _GalleryPageState extends State<GalleryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(groupTag))),
                                                 label: Text(groupTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
@@ -204,7 +228,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(
+                                                                languageTag))),
                                                 label: Text(languageTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
@@ -224,7 +253,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2),
                                             child: RawChip(
-                                                onPressed: () {},
+                                                onPressed: () => Navigator.of(
+                                                        context)
+                                                    .push(MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TagPage(
+                                                                categoryTag))),
                                                 label: Text(categoryTag.name,
                                                     textAlign:
                                                         TextAlign.center)),
