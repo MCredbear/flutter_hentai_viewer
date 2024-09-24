@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "customizeUserAgent":
             MessageLookupByLibrary.simpleMessage("Customize User-Agent"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+        "dependsOnSystem":
+            MessageLookupByLibrary.simpleMessage("Depends on system"),
         "downloadedGalleries":
             MessageLookupByLibrary.simpleMessage("Downloaded galleries"),
         "enabledTag": MessageLookupByLibrary.simpleMessage("Enabled tag"),

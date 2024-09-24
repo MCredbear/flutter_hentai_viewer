@@ -5,6 +5,7 @@
     "tagFilter": "标签过滤",
     "settings":"设置",
     "language": "语言",
+    "dependsOnSystem": "跟随系统",
     "thisLanguage": "简体中文",
     "readingDirection":"阅读方向",
     "leftToRight": "从左往右",

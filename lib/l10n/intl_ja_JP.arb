@@ -5,6 +5,7 @@
     "tagFilter": "タグフィルター",
     "settings": "設定",
     "language": "言語",
+    "dependsOnSystem": "システムによって",
     "thisLanguage": "日本語",
     "readingDirection": "読書方向",
     "leftToRight": "左から右",

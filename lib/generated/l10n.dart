@@ -110,6 +110,16 @@ class L10n {
     );
   }
 
+  /// `Depends on system`
+  String get dependsOnSystem {
+    return Intl.message(
+      'Depends on system',
+      name: 'dependsOnSystem',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `English`
   String get thisLanguage {
     return Intl.message(

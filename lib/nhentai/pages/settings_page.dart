@@ -20,7 +20,8 @@ class _SettingsPageState extends State<SettingsPage> {
   final _customizedUserAgentController =
       TextEditingController(text: settingsStore.customizedUserAgent);
 
-  final localeCode2Language = {
+  late final localeCode2Language = {
+    'null': L10n.of(context).dependsOnSystem,
     'en_US': 'English',
     'ja_JP': '日本語',
     'zh_CN': '简体中文',
@@ -43,14 +44,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text(L10n.of(context).language),
                 subtitle: Observer(
                   builder: (context) {
-                    return Text(localeCode2Language[
-                        '${globalSettingsStore.locale!.languageCode}_${globalSettingsStore.locale!.countryCode}']!);
+                    final localCode = globalSettingsStore.locale != null
+                        ? '${globalSettingsStore.locale!.languageCode}_${globalSettingsStore.locale!.countryCode}'
+                        : null;
+                    return Text(localeCode2Language[localCode] ??
+                        L10n.of(context).dependsOnSystem);
                   },
                 ),
               ),
               onSelected: (value) {
-                globalSettingsStore.setLocale(
-                    Locale(value.substring(0, 2), value.substring(3)));
+                if (value == 'null') {
+                  globalSettingsStore.setLocale(null);
+                } else {
+                  globalSettingsStore.setLocale(
+                      Locale(value.substring(0, 2), value.substring(3)));
+                }
                 globalSettingsStore.save();
               },
               itemBuilder: (BuildContext context) => localeCode2Language.entries
@@ -115,6 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ];
               }),
+
           /// TODO: add these funcions
           // const Divider(),
           // const ListTile(

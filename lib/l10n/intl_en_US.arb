@@ -5,6 +5,7 @@
     "tagFilter": "Tag filter",
     "settings":"Settings",
     "language": "Language",
+    "dependsOnSystem": "Depends on system",
     "thisLanguage": "English",
     "readingDirection":"Reading direction",
     "leftToRight": "Left to right",

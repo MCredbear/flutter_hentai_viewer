@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customizeUserAgent":
             MessageLookupByLibrary.simpleMessage("User-Agent をカスタマイズ"),
         "dark": MessageLookupByLibrary.simpleMessage("闇い"),
+        "dependsOnSystem": MessageLookupByLibrary.simpleMessage("システムによって"),
         "downloadedGalleries":
             MessageLookupByLibrary.simpleMessage("ダウンロードしたギャラリー"),
         "enabledTag": MessageLookupByLibrary.simpleMessage("有効なタグ"),

@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customizeUserAgent":
             MessageLookupByLibrary.simpleMessage("自定义 User-Agent"),
         "dark": MessageLookupByLibrary.simpleMessage("黑暗"),
+        "dependsOnSystem": MessageLookupByLibrary.simpleMessage("跟随系统"),
         "downloadedGalleries": MessageLookupByLibrary.simpleMessage("下载的漫画"),
         "enabledTag": MessageLookupByLibrary.simpleMessage("已启用的标签"),
         "english": MessageLookupByLibrary.simpleMessage("英语"),
