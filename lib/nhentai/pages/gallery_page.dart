@@ -268,11 +268,11 @@ class _GalleryPageState extends State<GalleryPage> {
                     ],
                   ),
                 ),
-                WaterfallFlow.builder(
+                GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate:
-                        const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 4),
                     itemCount: previewImageUrls.length,
                     itemBuilder: (context, index) => Card(
