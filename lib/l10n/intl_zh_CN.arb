@@ -25,5 +25,8 @@
     "artist": "作者",
     "character": "角色",
     "parody": "原作",
-    "group": "社团"
+    "group": "社团",
+    "jumpTo": "转跳至",
+    "jump": "转跳",
+    "cancel": "取消"
 }

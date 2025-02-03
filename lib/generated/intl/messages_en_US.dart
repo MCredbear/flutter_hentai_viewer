@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "artist": MessageLookupByLibrary.simpleMessage("Artist"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "character": MessageLookupByLibrary.simpleMessage("Character"),
         "customizeUserAgent":
             MessageLookupByLibrary.simpleMessage("Customize User-Agent"),
@@ -40,9 +41,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "group": MessageLookupByLibrary.simpleMessage("Group"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
         "japanese": MessageLookupByLibrary.simpleMessage("Japanese"),
+        "jump": MessageLookupByLibrary.simpleMessage("Jump"),
+        "jumpTo": MessageLookupByLibrary.simpleMessage("Jump to"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("Left to right"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
+        "networkError": MessageLookupByLibrary.simpleMessage("Network error"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("Number of image to preload"),
         "parody": MessageLookupByLibrary.simpleMessage("Parody"),

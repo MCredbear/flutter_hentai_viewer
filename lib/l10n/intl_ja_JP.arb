@@ -25,5 +25,8 @@
     "artist": "アーティスト",
     "character": "キャラクター",
     "parody": "パロディ",
-    "group": "グループ"
+    "group": "グループ",
+    "jumpTo": "ジャンプ先",
+    "jump": "ジャンプ",
+    "cancel": "キャンセル"
 }

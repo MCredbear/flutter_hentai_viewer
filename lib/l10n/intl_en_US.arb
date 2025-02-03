@@ -25,5 +25,9 @@
     "artist": "Artist",
     "character": "Character",
     "parody": "Parody",
-    "group": "Group"
+    "group": "Group",
+    "jumpTo": "Jump to",
+    "jump": "Jump",
+    "cancel": "Cancel",
+    "networkError": "Network error"
 }

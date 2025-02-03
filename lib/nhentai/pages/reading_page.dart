@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 
@@ -29,6 +30,11 @@ class _ReadingPageState extends State<ReadingPage> {
   final paginationTextController = TextEditingController();
   late int currentPageIndex;
 
+  void jumpTo(int index) async {
+    await pageController.animateToPage(index - 1,
+        duration: const Duration(milliseconds: 200), curve: Curves.linear);
+  }
+
   @override
   Widget build(BuildContext context) {
     () async {
@@ -50,12 +56,7 @@ class _ReadingPageState extends State<ReadingPage> {
                     child: (currentPageIndex + 1 == 1)
                         ? Container()
                         : IconButton(
-                            onPressed: () async {
-                              await pageController.animateToPage(
-                                  currentPageIndex - 1,
-                                  duration: const Duration(milliseconds: 200),
-                                  curve: Curves.linear);
-                            },
+                            onPressed: () => jumpTo(currentPageIndex - 1),
                             icon: const Icon(Icons.keyboard_arrow_left))),
                 Expanded(
                     flex: 1,
@@ -63,7 +64,13 @@ class _ReadingPageState extends State<ReadingPage> {
                       padding: const EdgeInsets.only(bottom: 5),
                       child: TextField(
                           onTap: () {
-                            /// TODO: add a jump dialog
+                            showDialog(
+                                context: context,
+                                builder: (context) => JumpDialog(
+                                    lastPageIndex:
+                                        widget.readingImageUrls.length,
+                                    currentPageIndex: currentPageIndex + 1,
+                                    jumpTo: jumpTo));
                           },
                           readOnly: true,
                           textAlign: TextAlign.center,

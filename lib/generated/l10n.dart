@@ -319,6 +319,46 @@ class L10n {
       args: [],
     );
   }
+
+  /// `Jump to`
+  String get jumpTo {
+    return Intl.message(
+      'Jump to',
+      name: 'jumpTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jump`
+  String get jump {
+    return Intl.message(
+      'Jump',
+      name: 'jump',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network error`
+  String get networkError {
+    return Intl.message(
+      'Network error',
+      name: 'networkError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<L10n> {

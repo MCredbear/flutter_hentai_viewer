@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "all": MessageLookupByLibrary.simpleMessage("すべて"),
         "artist": MessageLookupByLibrary.simpleMessage("アーティスト"),
+        "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "character": MessageLookupByLibrary.simpleMessage("キャラクター"),
         "customizeUserAgent":
             MessageLookupByLibrary.simpleMessage("User-Agent をカスタマイズ"),
@@ -38,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "group": MessageLookupByLibrary.simpleMessage("グループ"),
         "history": MessageLookupByLibrary.simpleMessage("履歴"),
         "japanese": MessageLookupByLibrary.simpleMessage("日本語"),
+        "jump": MessageLookupByLibrary.simpleMessage("ジャンプ"),
+        "jumpTo": MessageLookupByLibrary.simpleMessage("ジャンプ先"),
         "language": MessageLookupByLibrary.simpleMessage("言語"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("左から右"),
         "light": MessageLookupByLibrary.simpleMessage("明るい"),
