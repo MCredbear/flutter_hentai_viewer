@@ -268,11 +268,11 @@ class _GalleryPageState extends State<GalleryPage> {
                     ],
                   ),
                 ),
-                GridView.builder(
+                WaterfallFlow.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 4),
                     itemCount: previewImageUrls.length,
                     itemBuilder: (context, index) => Card(
@@ -283,29 +283,32 @@ class _GalleryPageState extends State<GalleryPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  ExtendedImage.network(
-                                    proxy(previewImageUrls[index]),
-                                    cache: true,
-                                    loadStateChanged: (state) {
-                                      switch (state.extendedImageLoadState) {
-                                        case LoadState.loading:
-                                          return LinearProgressIndicator(
-                                            value: (state.loadingProgress
-                                                        ?.cumulativeBytesLoaded ??
-                                                    0) /
-                                                (state.loadingProgress
-                                                        ?.expectedTotalBytes ??
-                                                    double.infinity),
-                                          );
-                                        case LoadState.completed:
-                                          return state.completedWidget;
-                                        case LoadState.failed:
-                                          return const Text(
-                                            "加载失败",
-                                            textAlign: TextAlign.center,
-                                          );
-                                      }
-                                    },
+                                  AspectRatio(
+                                    aspectRatio: 1 / 1.414,
+                                    child: ExtendedImage.network(
+                                      proxy(previewImageUrls[index]),
+                                      cache: true,
+                                      loadStateChanged: (state) {
+                                        switch (state.extendedImageLoadState) {
+                                          case LoadState.loading:
+                                            return LinearProgressIndicator(
+                                              value: (state.loadingProgress
+                                                          ?.cumulativeBytesLoaded ??
+                                                      0) /
+                                                  (state.loadingProgress
+                                                          ?.expectedTotalBytes ??
+                                                      double.infinity),
+                                            );
+                                          case LoadState.completed:
+                                            return state.completedWidget;
+                                          case LoadState.failed:
+                                            return const Text(
+                                              "加载失败",
+                                              textAlign: TextAlign.center,
+                                            );
+                                        }
+                                      },
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(5),
