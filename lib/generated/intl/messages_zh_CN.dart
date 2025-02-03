@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("语言"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("从左往右"),
         "light": MessageLookupByLibrary.simpleMessage("明亮"),
+        "networkError": MessageLookupByLibrary.simpleMessage("网络错误"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("预加载的图片数量"),
         "parody": MessageLookupByLibrary.simpleMessage("原作"),
@@ -53,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tagFilter": MessageLookupByLibrary.simpleMessage("标签过滤"),
         "theme": MessageLookupByLibrary.simpleMessage("主题"),
         "thisLanguage": MessageLookupByLibrary.simpleMessage("简体中文"),
-        "titleStyle": MessageLookupByLibrary.simpleMessage("标题样式")
+        "titleStyle": MessageLookupByLibrary.simpleMessage("标题样式"),
+        "updateTags": MessageLookupByLibrary.simpleMessage("更新标签")
       };
 }

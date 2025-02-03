@@ -29,5 +29,6 @@
     "jumpTo": "Jump to",
     "jump": "Jump",
     "cancel": "Cancel",
-    "networkError": "Network error"
+    "networkError": "Network error",
+    "updateTags": "Update tags"
 }

@@ -28,5 +28,7 @@
     "group": "グループ",
     "jumpTo": "ジャンプ先",
     "jump": "ジャンプ",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "networkError": "ネットワークエラー",
+    "updateTags": "タグを更新"
 }

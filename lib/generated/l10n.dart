@@ -359,6 +359,16 @@ class L10n {
       args: [],
     );
   }
+
+  /// `Update tags`
+  String get updateTags {
+    return Intl.message(
+      'Update tags',
+      name: 'updateTags',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<L10n> {

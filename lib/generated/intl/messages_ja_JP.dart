@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("言語"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("左から右"),
         "light": MessageLookupByLibrary.simpleMessage("明るい"),
+        "networkError": MessageLookupByLibrary.simpleMessage("ネットワークエラー"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("プリロードする画像の数"),
         "parody": MessageLookupByLibrary.simpleMessage("パロディ"),
@@ -54,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tagFilter": MessageLookupByLibrary.simpleMessage("タグフィルター"),
         "theme": MessageLookupByLibrary.simpleMessage("テーマ"),
         "thisLanguage": MessageLookupByLibrary.simpleMessage("日本語"),
-        "titleStyle": MessageLookupByLibrary.simpleMessage("タイトルスタイル")
+        "titleStyle": MessageLookupByLibrary.simpleMessage("タイトルスタイル"),
+        "updateTags": MessageLookupByLibrary.simpleMessage("タグを更新")
       };
 }

@@ -124,6 +124,15 @@ class _TagFilterPageState extends State<TagFilterPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: L10n.of(context).updateTags,
+              onPressed: () async {
+                await tagFilterStore.pullTags();
+                tagFilterStore.save();
+              })
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -252,10 +261,6 @@ class _TagFilterPageState extends State<TagFilterPage>
                       });
                     }
                   }),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(),
             ),
           ],
         ),

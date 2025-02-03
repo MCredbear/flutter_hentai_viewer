@@ -28,5 +28,7 @@
     "group": "社团",
     "jumpTo": "转跳至",
     "jump": "转跳",
-    "cancel": "取消"
+    "cancel": "取消",
+    "networkError": "网络错误",
+    "updateTags": "更新标签"
 }

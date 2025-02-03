@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tagFilter": MessageLookupByLibrary.simpleMessage("Tag filter"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "thisLanguage": MessageLookupByLibrary.simpleMessage("English"),
-        "titleStyle": MessageLookupByLibrary.simpleMessage("Title style")
+        "titleStyle": MessageLookupByLibrary.simpleMessage("Title style"),
+        "updateTags": MessageLookupByLibrary.simpleMessage("Update tags")
       };
 }
