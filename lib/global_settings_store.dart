@@ -86,7 +86,7 @@ abstract class GlobalSettingsStoreBase with Store {
           ? null
           : '${locale!.languageCode}_${locale!.countryCode}',
       'themeData': (themeData == null)
-          ? ThemeData.dark(useMaterial3: false)
+          ? 'Dark'
           : (themeData == ThemeData.dark(useMaterial3: false))
               ? 'Dark'
               : 'Light',
