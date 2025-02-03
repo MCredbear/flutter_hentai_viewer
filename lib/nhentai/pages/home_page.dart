@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';

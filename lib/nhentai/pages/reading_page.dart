@@ -31,7 +31,7 @@ class _ReadingPageState extends State<ReadingPage> {
   late int currentPageIndex;
 
   void jumpTo(int index) async {
-    await pageController.animateToPage(index - 1,
+    await pageController.animateToPage(index,
         duration: const Duration(milliseconds: 200), curve: Curves.linear);
   }
 
@@ -78,35 +78,46 @@ class _ReadingPageState extends State<ReadingPage> {
                     )),
                 Expanded(
                     flex: 1,
-                    child: (currentPageIndex + 1 ==
-                            widget.readingImageUrls.length)
-                        ? Container()
-                        : IconButton(
-                            onPressed: () async {
-                              await pageController.animateToPage(
-                                  currentPageIndex + 1,
-                                  duration: const Duration(milliseconds: 200),
-                                  curve: Curves.linear);
-                            },
-                            icon: const Icon(Icons.keyboard_arrow_right))),
+                    child:
+                        (currentPageIndex + 1 == widget.readingImageUrls.length)
+                            ? Container()
+                            : IconButton(
+                                onPressed: () => jumpTo(currentPageIndex + 1),
+                                icon: const Icon(Icons.keyboard_arrow_right))),
               ],
             ),
           ),
         ),
-        body: ExtendedImageGesturePageView.builder(
-            controller: pageController,
-            onPageChanged: (index) {
-              currentPageIndex = index;
-              setState(() {
-                paginationTextController.text =
-                    '${currentPageIndex + 1} / ${widget.readingImageUrls.length}';
-              });
-            },
-            itemCount: widget.readingImageUrls.length,
-            itemBuilder: (context, index) => ExtendedImage.network(
-                  proxy(widget.readingImageUrls[index]),
-                  fit: BoxFit.contain,
-                  mode: ExtendedImageMode.gesture,
-                )));
+        body: GestureDetector(
+          onTapUp: (details) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final dx = details.globalPosition.dx;
+            if (dx < screenWidth / 3) {
+              if (currentPageIndex > 0) {
+                jumpTo(currentPageIndex - 1);
+              }
+            } else if (dx > screenWidth * 2 / 3) {
+              if (currentPageIndex < widget.readingImageUrls.length - 1) {
+                jumpTo(currentPageIndex + 1);
+              }
+            }
+          },
+          child: ExtendedImageGesturePageView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: pageController,
+              onPageChanged: (index) {
+                currentPageIndex = index;
+                setState(() {
+                  paginationTextController.text =
+                      '${currentPageIndex + 1} / ${widget.readingImageUrls.length}';
+                });
+              },
+              itemCount: widget.readingImageUrls.length,
+              itemBuilder: (context, index) => ExtendedImage.network(
+                    proxy(widget.readingImageUrls[index]),
+                    fit: BoxFit.contain,
+                    mode: ExtendedImageMode.gesture,
+                  )),
+        ));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
+import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
@@ -66,7 +67,12 @@ class _TagPageState extends State<TagPage> {
                             padding: const EdgeInsets.only(bottom: 5),
                             child: TextField(
                                 onTap: () {
-                                  /// TODO: add a jump dialog
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => JumpDialog(
+                                          lastPageIndex: lastPageIndex!,
+                                          currentPageIndex: currentPageIndex,
+                                          jumpTo: getGalleries));
                                 },
                                 readOnly: true,
                                 textAlign: TextAlign.center,
