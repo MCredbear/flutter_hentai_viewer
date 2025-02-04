@@ -72,6 +72,22 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
     });
   }
 
+  late final _$scrollUpToLoadMoreAtom = Atom(
+      name: 'GlobalSettingsStoreBase.scrollUpToLoadMore', context: context);
+
+  @override
+  bool get scrollUpToLoadMore {
+    _$scrollUpToLoadMoreAtom.reportRead();
+    return super.scrollUpToLoadMore;
+  }
+
+  @override
+  set scrollUpToLoadMore(bool value) {
+    _$scrollUpToLoadMoreAtom.reportWrite(value, super.scrollUpToLoadMore, () {
+      super.scrollUpToLoadMore = value;
+    });
+  }
+
   late final _$GlobalSettingsStoreBaseActionController =
       ActionController(name: 'GlobalSettingsStoreBase', context: context);
 
@@ -87,7 +103,7 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
   }
 
   @override
-  void setThemeData(ThemeData themeData) {
+  void setThemeData(ThemeData? themeData) {
     final _$actionInfo = _$GlobalSettingsStoreBaseActionController.startAction(
         name: 'GlobalSettingsStoreBase.setThemeData');
     try {
@@ -109,11 +125,23 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
   }
 
   @override
+  void setScrollUpToLoadMore(bool scrollUpToLoadMore) {
+    final _$actionInfo = _$GlobalSettingsStoreBaseActionController.startAction(
+        name: 'GlobalSettingsStoreBase.setScrollUpToLoadMore');
+    try {
+      return super.setScrollUpToLoadMore(scrollUpToLoadMore);
+    } finally {
+      _$GlobalSettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 locale: ${locale},
 themeData: ${themeData},
 readingDirection: ${readingDirection},
+scrollUpToLoadMore: ${scrollUpToLoadMore},
 themeDataString: ${themeDataString},
 readingDirectionString: ${readingDirectionString}
     ''';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
@@ -27,6 +28,9 @@ class _TagPageState extends State<TagPage> {
   void initState() {
     super.initState();
     getGalleries(currentPageIndex);
+    if (globalSettingsStore.scrollUpToLoadMore) {
+      scrollController.addListener(scrollListener);
+    }
   }
 
   List<Gallery>? galleries;
@@ -34,6 +38,15 @@ class _TagPageState extends State<TagPage> {
   int currentPageIndex = 1;
   int? lastPageIndex;
   final paginationTextController = TextEditingController();
+
+  final scrollController = ScrollController();
+  void scrollListener() {
+    if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 100 &&
+        currentPageIndex < (lastPageIndex ?? 1)) {
+      getGalleries(currentPageIndex + 1);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +71,8 @@ class _TagPageState extends State<TagPage> {
                     children: [
                       Expanded(
                           flex: 1,
-                          child: (currentPageIndex == 1)
+                          child: (currentPageIndex == 1 ||
+                                  globalSettingsStore.scrollUpToLoadMore)
                               ? Container()
                               : IconButton(
                                   onPressed: () {
@@ -70,21 +84,25 @@ class _TagPageState extends State<TagPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5),
                             child: TextField(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => JumpDialog(
-                                          lastPageIndex: lastPageIndex!,
-                                          currentPageIndex: currentPageIndex,
-                                          jumpTo: getGalleries));
-                                },
+                                onTap: globalSettingsStore.scrollUpToLoadMore
+                                    ? null
+                                    : () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => JumpDialog(
+                                                lastPageIndex: lastPageIndex!,
+                                                currentPageIndex:
+                                                    currentPageIndex,
+                                                jumpTo: getGalleries));
+                                      },
                                 readOnly: true,
                                 textAlign: TextAlign.center,
                                 controller: paginationTextController),
                           )),
                       Expanded(
                           flex: 1,
-                          child: (currentPageIndex == lastPageIndex)
+                          child: (currentPageIndex == lastPageIndex ||
+                                  globalSettingsStore.scrollUpToLoadMore)
                               ? Container()
                               : IconButton(
                                   onPressed: () {
@@ -100,6 +118,7 @@ class _TagPageState extends State<TagPage> {
           child: (galleries == null)
               ? const CircularProgressIndicator()
               : WaterfallFlow.builder(
+                  controller: scrollController,
                   gridDelegate:
                       const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2),
@@ -130,20 +149,40 @@ class _TagPageState extends State<TagPage> {
         galleries.addAll(galleryContainerDiv.querySelectorAll('.gallery'));
       }
       setState(() {
-        this.galleries = galleries.map((gallery) {
-          final coverA = gallery.querySelector('.cover');
-          final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
-          final captionDiv = gallery.querySelector('.caption');
-          final title = captionDiv!.text;
-          final lazyLoadImg = gallery.querySelector('.lazyload');
-          final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
-          final tagIds = gallery.attributes['data-tags']!
-              .split(' ')
-              .map((e) => int.parse(e))
-              .toList()
-              .cast<int>();
-          return Gallery(id, title, coverImageUrl, tagIds);
-        }).toList();
+        if (!globalSettingsStore.scrollUpToLoadMore) {
+          this.galleries = galleries.map((gallery) {
+            final coverA = gallery.querySelector('.cover');
+            final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
+            final captionDiv = gallery.querySelector('.caption');
+            final title = captionDiv!.text;
+            final lazyLoadImg = gallery.querySelector('.lazyload');
+            final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
+            final tagIds = gallery.attributes['data-tags']!
+                .split(' ')
+                .map((e) => int.parse(e))
+                .toList()
+                .cast<int>();
+            return Gallery(id, title, coverImageUrl, tagIds);
+          }).toList();
+        } else {
+          if (pageIndex == 1) {
+            this.galleries = [];
+          }
+          this.galleries!.addAll(galleries.map((gallery) {
+                final coverA = gallery.querySelector('.cover');
+                final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
+                final captionDiv = gallery.querySelector('.caption');
+                final title = captionDiv!.text;
+                final lazyLoadImg = gallery.querySelector('.lazyload');
+                final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
+                final tagIds = gallery.attributes['data-tags']!
+                    .split(' ')
+                    .map((e) => int.parse(e))
+                    .toList()
+                    .cast<int>();
+                return Gallery(id, title, coverImageUrl, tagIds);
+              }).toList());
+        }
       });
 
       if (paginationSection == null) {

@@ -57,8 +57,7 @@ abstract class SettingsStoreBase with Store {
       // init
       save();
     } else {
-      final settings =
-          _Settings.fromJson(json.decode(file.readAsStringSync()));
+      final settings = _Settings.fromJson(json.decode(file.readAsStringSync()));
       titleType = settings.titleType;
       numberOfImageToPreload = settings.numberOfImageToPreload;
       customizedUserAgent = settings.customizedUserAgent;

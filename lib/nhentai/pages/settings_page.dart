@@ -99,10 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 subtitle: Observer(
                   builder: (context) => Text(
                       (globalSettingsStore.themeData == null)
-                          ? ((MediaQuery.of(rootContext).platformBrightness ==
-                                  Brightness.dark)
-                              ? L10n.current.dark
-                              : L10n.current.light)
+                          ? 'Follow system'
                           : ((globalSettingsStore.themeData ==
                                   ThemeData.dark(useMaterial3: false))
                               ? L10n.current.dark
@@ -111,6 +108,10 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               itemBuilder: (BuildContext context) {
                 return <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    child: const Text('Follow system'),
+                    onTap: () => globalSettingsStore.setThemeData(null),
+                  ),
                   PopupMenuItem<String>(
                     child: Text(L10n.of(context).dark),
                     onTap: () => globalSettingsStore
@@ -123,6 +124,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ];
               }),
+          ListTile(
+            leading: const Text("Scroll down to load more"),
+            trailing: Observer(
+              builder: (context) => Switch(
+                value: globalSettingsStore.scrollUpToLoadMore,
+                onChanged: (value) =>
+                    globalSettingsStore.setScrollUpToLoadMore(value),
+              ),
+            ),
+          ),
 
           /// TODO: add these funcions
           // const Divider(),

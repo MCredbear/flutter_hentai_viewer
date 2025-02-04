@@ -26,7 +26,7 @@ abstract class GlobalSettingsStoreBase with Store {
   @observable
   ThemeData? themeData;
   @action
-  void setThemeData(ThemeData themeData) {
+  void setThemeData(ThemeData? themeData) {
     this.themeData = themeData;
     save();
   }
@@ -54,6 +54,15 @@ abstract class GlobalSettingsStoreBase with Store {
           ? L10n.current.leftToRight
           : L10n.current.rightToLeft;
 
+  /// suit for @nekomoyi 's habit
+  @observable
+  bool scrollUpToLoadMore = false;
+  @action
+  void setScrollUpToLoadMore(bool scrollUpToLoadMore) {
+    this.scrollUpToLoadMore = scrollUpToLoadMore;
+    save();
+  }
+
   Future<void> read() async {
     final appDir = await getApplicationSupportDirectory();
     final settingsFile = File('${appDir.path}/global_settings.json');
@@ -75,6 +84,7 @@ abstract class GlobalSettingsStoreBase with Store {
               .startsWith(TextDirection.ltr.name))
           ? TextDirection.ltr
           : TextDirection.rtl;
+      scrollUpToLoadMore = settings['scrollUpToLoad'] ?? false;
     }
   }
 
@@ -90,7 +100,8 @@ abstract class GlobalSettingsStoreBase with Store {
           : (themeData == ThemeData.dark(useMaterial3: false))
               ? 'Dark'
               : 'Light',
-      'readingDirection': readingDirection.name
+      'readingDirection': readingDirection.name,
+      'scrollUpToLoad': scrollUpToLoadMore,
     };
     settingsFile.writeAsStringSync(json.encode(settings));
   }

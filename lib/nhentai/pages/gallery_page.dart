@@ -44,13 +44,7 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () => getGalleryInfo(widget.gallery.id),
-              icon: const Icon(Icons.more_vert))
-        ],
-      ),
+      appBar: AppBar(),
       body: ListView(
         shrinkWrap: true,
         children: !loaded
