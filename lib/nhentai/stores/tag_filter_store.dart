@@ -22,7 +22,7 @@ abstract class TagFilterStoreBase with Store {
   ObservableList<Tag> tags = ObservableList();
 
   @action
-  Future<void> pullTags() async {
+  Future<void> updateTags() async {
     final tagTypeToName = {
       TagType.tag: 'tags',
       TagType.artist: 'artists',
@@ -80,6 +80,26 @@ abstract class TagFilterStoreBase with Store {
   @observable
   ObservableList<int> requiredTagIds = ObservableList();
 
+  @action
+  void setTagState(int tagId, TagState tagState) {
+    final tag = tags.firstWhere((tag) => tag.id == tagId);
+    tag.tagState = tagState;
+    bannedTagIds = tags
+        .where((tag) => tag.tagState == TagState.banned)
+        .map((tag) => tag.id)
+        .toList()
+        .cast<int>()
+        .asObservable();
+    requiredTagIds = tags
+        .where((tag) => tag.tagState == TagState.required)
+        .map((tag) => tag.id)
+        .toList()
+        .cast<int>()
+        .asObservable();
+    save();
+  }
+
+  @action
   Future<void> read() async {
     final appDir = await getApplicationSupportDirectory();
     final file = File('${appDir.path}/nhentai_tags.json');
@@ -95,6 +115,18 @@ abstract class TagFilterStoreBase with Store {
           (json.decode(file.readAsStringSync()) as List<dynamic>)
               .map((tag) => Tag.fromJson(tag as Map<String, dynamic>)));
     }
+    bannedTagIds = tags
+        .where((tag) => tag.tagState == TagState.banned)
+        .map((tag) => tag.id)
+        .toList()
+        .cast<int>()
+        .asObservable();
+    requiredTagIds = tags
+        .where((tag) => tag.tagState == TagState.required)
+        .map((tag) => tag.id)
+        .toList()
+        .cast<int>()
+        .asObservable();
   }
 
   Future<void> save() async {

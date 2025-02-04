@@ -3,15 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/flags.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/gallery_page.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 
-class GalleryCard extends StatelessWidget {
+class GalleryCard extends StatefulWidget {
   const GalleryCard(
     this.gallery, {
     super.key,
   });
 
   final Gallery gallery;
+
+  @override
+  State<GalleryCard> createState() => _GalleryCardState();
+}
+
+class _GalleryCardState extends State<GalleryCard> {
+  late bool isMasked = widget.gallery.tagIds
+      .where((tagId) => tagFilterStore.bannedTagIds.contains(tagId))
+      .isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +34,7 @@ class GalleryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ExtendedImage.network(
-                proxy(gallery.coverImageUrl),
+                proxy(widget.gallery.coverImageUrl),
                 loadStateChanged: (state) {
                   switch (state.extendedImageLoadState) {
                     case LoadState.loading:
@@ -51,20 +61,29 @@ class GalleryCard extends StatelessWidget {
                   WidgetSpan(
                       child: Padding(
                     padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: Flag(gallery.language),
+                    child: Flag(widget.gallery.language),
                   )),
-                  TextSpan(text: gallery.title)
+                  TextSpan(text: widget.gallery.title)
                 ])),
               )
             ],
           ),
+          if (isMasked)
+            Positioned.fill(
+                child: Container(color: Colors.black.withValues(alpha: 0.5))),
           Positioned.fill(
               child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => GalleryPage(gallery)));
+                if (isMasked) {
+                  setState(() {
+                    isMasked = false;
+                  });
+                } else {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => GalleryPage(widget.gallery)));
+                }
               },
             ),
           ))

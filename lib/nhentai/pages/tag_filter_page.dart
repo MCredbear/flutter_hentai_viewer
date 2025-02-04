@@ -129,7 +129,7 @@ class _TagFilterPageState extends State<TagFilterPage>
               icon: const Icon(Icons.refresh),
               tooltip: L10n.of(context).updateTags,
               onPressed: () async {
-                await tagFilterStore.pullTags();
+                await tagFilterStore.updateTags();
                 tagFilterStore.save();
               })
         ],
@@ -341,14 +341,15 @@ class _TagChipState extends State<TagChip> {
                 backgroundColor: Theme.of(context).cardColor),
             onPressed: () {
               setState(() {
-                widget.tag.tagState = switch (widget.tag.tagState) {
-                  TagState.disabled => TagState.required,
-                  TagState.required => TagState.banned,
-                  TagState.banned => TagState.disabled,
-                  null => TagState.disabled
-                };
+                tagFilterStore.setTagState(
+                    widget.tag.id,
+                    switch (widget.tag.tagState) {
+                      TagState.disabled => TagState.required,
+                      TagState.required => TagState.banned,
+                      TagState.banned => TagState.disabled,
+                      null => TagState.disabled
+                    });
               });
-              tagFilterStore.save();
             },
             child: SizedBox(
               height: 50,

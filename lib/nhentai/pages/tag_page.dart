@@ -3,7 +3,6 @@ import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
-import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/menu_drawer.dart';
 import 'package:toastification/toastification.dart';

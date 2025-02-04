@@ -57,12 +57,34 @@ mixin _$TagFilterStore on TagFilterStoreBase, Store {
     });
   }
 
-  late final _$pullTagsAsyncAction =
-      AsyncAction('TagFilterStoreBase.pullTags', context: context);
+  late final _$updateTagsAsyncAction =
+      AsyncAction('TagFilterStoreBase.updateTags', context: context);
 
   @override
-  Future<void> pullTags() {
-    return _$pullTagsAsyncAction.run(() => super.pullTags());
+  Future<void> updateTags() {
+    return _$updateTagsAsyncAction.run(() => super.updateTags());
+  }
+
+  late final _$readAsyncAction =
+      AsyncAction('TagFilterStoreBase.read', context: context);
+
+  @override
+  Future<void> read() {
+    return _$readAsyncAction.run(() => super.read());
+  }
+
+  late final _$TagFilterStoreBaseActionController =
+      ActionController(name: 'TagFilterStoreBase', context: context);
+
+  @override
+  void setTagState(int tagId, TagState tagState) {
+    final _$actionInfo = _$TagFilterStoreBaseActionController.startAction(
+        name: 'TagFilterStoreBase.setTagState');
+    try {
+      return super.setTagState(tagId, tagState);
+    } finally {
+      _$TagFilterStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
