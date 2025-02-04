@@ -41,6 +41,11 @@ class _TagPageState extends State<TagPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.keyTag.name),
+          actions: [
+            BackButton(
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
         ),
         drawer: MenuDrawer(() => getGalleries(1)),
         bottomNavigationBar: (lastPageIndex == null || lastPageIndex == 1)
@@ -107,19 +112,24 @@ class _TagPageState extends State<TagPage> {
 
   void getGalleries(int pageIndex) async {
     final response = await http.get(Uri.parse(proxy(
-        '$hostUrl/search/?q=${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${{
-              TagType.tag: 'tag',
-              TagType.artist: 'artists',
-              TagType.character: 'characters',
-              TagType.parody: 'parodies',
-              TagType.group: 'groups',
-            }[tag.tagType]}%3A"${tag.name.replaceAll(' ', '+')}"').join('+')}${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).isNotEmpty ? '+' : ''}${widget.keyTag.name.replaceAll(' ', '+')}&page=$pageIndex')));
+        '$hostUrl/${widget.keyTag.tagType.name}/${widget.keyTag.name.replaceAll(' ', '-')}/?page=$pageIndex')));
+    // final response = await http.get(Uri.parse(proxy(
+    //     '$hostUrl/search/?q=${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${{
+    //           TagType.tag: 'tag',
+    //           TagType.artist: 'artists',
+    //           TagType.character: 'characters',
+    //           TagType.parody: 'parodies',
+    //           TagType.group: 'groups',
+    //         }[tag.tagType]}%3A"${tag.name.replaceAll(' ', '+')}"').join('+')}${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).isNotEmpty ? '+' : ''}${widget.keyTag.name.replaceAll(' ', '+')}&page=$pageIndex')));
     final document = html_parser.parse(response.body);
-    final newUploadsDiv =
-        document.querySelectorAll('.container.index-container').lastOrNull;
+    final galleryContainerDivs =
+        document.querySelectorAll('.container.index-container');
     final paginationSection = document.querySelector('.pagination');
-    if (newUploadsDiv != null) {
-      final galleries = newUploadsDiv.querySelectorAll('.gallery');
+    if (galleryContainerDivs.isNotEmpty) {
+      final galleries = [];
+      for (final galleryContainerDiv in galleryContainerDivs) {
+        galleries.addAll(galleryContainerDiv.querySelectorAll('.gallery'));
+      }
       setState(() {
         this.galleries = galleries.map((gallery) {
           final coverA = gallery.querySelector('.cover');
@@ -131,7 +141,8 @@ class _TagPageState extends State<TagPage> {
           final tagIds = gallery.attributes['data-tags']!
               .split(' ')
               .map((e) => int.parse(e))
-              .toList();
+              .toList()
+              .cast<int>();
           return Gallery(id, title, coverImageUrl, tagIds);
         }).toList();
       });

@@ -377,7 +377,7 @@ class _GalleryPageState extends State<GalleryPage> {
         final name = nameSpan!.text;
         final countSpan = tagA.querySelector('.count');
         final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
+        return Tag(id, name, TagType.character,
             count: count.endsWith('K')
                 ? int.parse(count.substring(0, count.length - 1)) * 1000
                 : int.parse(count));
@@ -389,7 +389,7 @@ class _GalleryPageState extends State<GalleryPage> {
         final name = nameSpan!.text;
         final countSpan = tagA.querySelector('.count');
         final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
+        return Tag(id, name, TagType.tag,
             count: count.endsWith('K')
                 ? int.parse(count.substring(0, count.length - 1)) * 1000
                 : int.parse(count));
@@ -401,7 +401,7 @@ class _GalleryPageState extends State<GalleryPage> {
         final name = nameSpan!.text;
         final countSpan = tagA.querySelector('.count');
         final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
+        return Tag(id, name, TagType.artist,
             count: count.endsWith('K')
                 ? int.parse(count.substring(0, count.length - 1)) * 1000
                 : int.parse(count));
@@ -413,7 +413,7 @@ class _GalleryPageState extends State<GalleryPage> {
         final name = nameSpan!.text;
         final countSpan = tagA.querySelector('.count');
         final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
+        return Tag(id, name, TagType.group,
             count: count.endsWith('K')
                 ? int.parse(count.substring(0, count.length - 1)) * 1000
                 : int.parse(count));
@@ -425,7 +425,7 @@ class _GalleryPageState extends State<GalleryPage> {
         final name = nameSpan!.text;
         final countSpan = tagA.querySelector('.count');
         final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
+        return Tag(id, name, TagType.language,
             count: count.endsWith('K')
                 ? int.parse(count.substring(0, count.length - 1)) * 1000
                 : int.parse(count));
@@ -437,7 +437,7 @@ class _GalleryPageState extends State<GalleryPage> {
         final name = nameSpan!.text;
         final countSpan = tagA.querySelector('.count');
         final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
+        return Tag(id, name, TagType.category,
             count: count.endsWith('K')
                 ? int.parse(count.substring(0, count.length - 1)) * 1000
                 : int.parse(count));
