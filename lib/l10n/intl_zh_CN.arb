@@ -30,5 +30,6 @@
     "jump": "转跳",
     "cancel": "取消",
     "networkError": "网络错误",
-    "updateTags": "更新标签"
+    "updateTags": "更新标签",
+    "scrollUpToLoadMore": "上拉加载更多（无限滚动）"
 }

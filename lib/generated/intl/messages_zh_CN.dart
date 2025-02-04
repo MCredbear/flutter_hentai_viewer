@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "parody": MessageLookupByLibrary.simpleMessage("原作"),
         "readingDirection": MessageLookupByLibrary.simpleMessage("阅读方向"),
         "rightToLeft": MessageLookupByLibrary.simpleMessage("从右往左"),
+        "scrollUpToLoadMore":
+            MessageLookupByLibrary.simpleMessage("上拉加载更多（无限滚动）"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
         "tag": MessageLookupByLibrary.simpleMessage("标签"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("标签过滤"),

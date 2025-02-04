@@ -30,5 +30,6 @@
     "jump": "ジャンプ",
     "cancel": "キャンセル",
     "networkError": "ネットワークエラー",
-    "updateTags": "タグを更新"
+    "updateTags": "タグを更新",
+    "scrollUpToLoadMore": "上にスクロールしてもっと読み込む（無限スクロール）"
 }

@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';
@@ -461,7 +462,7 @@ class _GalleryPageState extends State<GalleryPage> {
       });
     } else {
       toastification.show(
-          title: const Text('网络错误'),
+          title: Text(L10n.current.networkError),
           autoCloseDuration: const Duration(seconds: 3));
     }
   }

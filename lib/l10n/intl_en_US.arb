@@ -30,5 +30,6 @@
     "jump": "Jump",
     "cancel": "Cancel",
     "networkError": "Network error",
-    "updateTags": "Update tags"
+    "updateTags": "Update tags",
+    "scrollUpToLoadMore": "Scroll up to load more (infinite scroll)"
 }

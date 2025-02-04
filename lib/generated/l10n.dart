@@ -369,6 +369,16 @@ class L10n {
       args: [],
     );
   }
+
+  /// `Scroll up to load more (infinite scroll)`
+  String get scrollUpToLoadMore {
+    return Intl.message(
+      'Scroll up to load more (infinite scroll)',
+      name: 'scrollUpToLoadMore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<L10n> {

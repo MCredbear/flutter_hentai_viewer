@@ -99,17 +99,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 subtitle: Observer(
                   builder: (context) => Text(
                       (globalSettingsStore.themeData == null)
-                          ? 'Follow system'
+                          ? L10n.of(context).dependsOnSystem
                           : ((globalSettingsStore.themeData ==
                                   ThemeData.dark(useMaterial3: false))
-                              ? L10n.current.dark
-                              : L10n.current.light)),
+                              ? L10n.of(context).dark
+                              : L10n.of(context).light)),
                 ),
               ),
               itemBuilder: (BuildContext context) {
                 return <PopupMenuEntry<String>>[
                   PopupMenuItem<String>(
-                    child: const Text('Follow system'),
+                    child: Text(L10n.of(context).dependsOnSystem),
                     onTap: () => globalSettingsStore.setThemeData(null),
                   ),
                   PopupMenuItem<String>(
@@ -125,7 +125,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ];
               }),
           ListTile(
-            leading: const Text("Scroll down to load more"),
+            leading: Text(L10n.of(context).scrollUpToLoadMore),
             trailing: Observer(
               builder: (context) => Switch(
                 value: globalSettingsStore.scrollUpToLoadMore,

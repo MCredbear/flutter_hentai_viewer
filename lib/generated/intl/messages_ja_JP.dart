@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "parody": MessageLookupByLibrary.simpleMessage("パロディ"),
         "readingDirection": MessageLookupByLibrary.simpleMessage("読書方向"),
         "rightToLeft": MessageLookupByLibrary.simpleMessage("右から左"),
+        "scrollUpToLoadMore":
+            MessageLookupByLibrary.simpleMessage("上にスクロールしてもっと読み込む（無限スクロール）"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "tag": MessageLookupByLibrary.simpleMessage("タグ"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("タグフィルター"),

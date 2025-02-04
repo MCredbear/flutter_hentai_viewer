@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "readingDirection":
             MessageLookupByLibrary.simpleMessage("Reading direction"),
         "rightToLeft": MessageLookupByLibrary.simpleMessage("Right to left"),
+        "scrollUpToLoadMore": MessageLookupByLibrary.simpleMessage(
+            "Scroll up to load more (infinite scroll)"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "tag": MessageLookupByLibrary.simpleMessage("Tag"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("Tag filter"),
