@@ -138,11 +138,14 @@ class _HomePageState extends State<HomePage> {
     final response =
         await http.get(Uri.parse(proxy('$hostUrl?page=$pageIndex')));
     final document = html_parser.parse(response.body);
-    final newUploadsDiv =
-        document.querySelectorAll('.container.index-container').lastOrNull;
+    final galleryContainerDivs =
+        document.querySelectorAll('.container.index-container');
     final paginationSection = document.querySelector('.pagination');
-    if (newUploadsDiv != null) {
-      final galleries = newUploadsDiv.querySelectorAll('.gallery');
+    if (galleryContainerDivs.isNotEmpty) {
+      final galleries = [];
+      for (final galleryContainerDiv in galleryContainerDivs) {
+        galleries.addAll(galleryContainerDiv.querySelectorAll('.gallery'));
+      }
       setState(() {
         this.galleries = galleries.map((gallery) {
           final coverA = gallery.querySelector('.cover');
@@ -154,7 +157,8 @@ class _HomePageState extends State<HomePage> {
           final tagIds = gallery.attributes['data-tags']!
               .split(' ')
               .map((e) => int.parse(e))
-              .toList();
+              .toList()
+              .cast<int>();
           return Gallery(id, title, coverImageUrl, tagIds);
         }).toList();
       });
@@ -187,20 +191,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getSearchGalleries(int pageIndex) async {
-    final response = await http.get(Uri.parse(proxy(
-        '$hostUrl/search/?q=${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${{
-              TagType.tag: 'tag',
-              TagType.artist: 'artists',
-              TagType.character: 'characters',
-              TagType.parody: 'parodies',
-              TagType.group: 'groups',
-            }[tag.tagType]}%3A"${tag.name.replaceAll(' ', '+')}"').join('+')}${searching ? '+${searchController.text.replaceAll(' ', '+')}' : ''}&page=$pageIndex')));
+    final response = tagFilterStore.tags.isNotEmpty
+        ? await http.get(Uri.parse(proxy(
+            '$hostUrl/search/?q=${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${{
+                  TagType.tag: 'tag',
+                  TagType.artist: 'artists',
+                  TagType.character: 'characters',
+                  TagType.parody: 'parodies',
+                  TagType.group: 'groups',
+                }[tag.tagType]}%3A"${tag.name.replaceAll(' ', '+')}"').join('+')}${searching ? '+${searchController.text.replaceAll(' ', '+')}' : ''}&page=$pageIndex')))
+        : await http.get(Uri.parse(proxy('$hostUrl/?page=$pageIndex')));
     final document = html_parser.parse(response.body);
-    final newUploadsDiv =
-        document.querySelectorAll('.container.index-container').lastOrNull;
+    final galleryContainerDivs =
+        document.querySelectorAll('.container.index-container');
     final paginationSection = document.querySelector('.pagination');
-    if (newUploadsDiv != null) {
-      final galleries = newUploadsDiv.querySelectorAll('.gallery');
+    if (galleryContainerDivs.isNotEmpty) {
+      final galleries = [];
+      for (final galleryContainerDiv in galleryContainerDivs) {
+        galleries.addAll(galleryContainerDiv.querySelectorAll('.gallery'));
+      }
       setState(() {
         this.galleries = galleries.map((gallery) {
           final coverA = gallery.querySelector('.cover');
@@ -212,7 +221,8 @@ class _HomePageState extends State<HomePage> {
           final tagIds = gallery.attributes['data-tags']!
               .split(' ')
               .map((e) => int.parse(e))
-              .toList();
+              .toList()
+              .cast<int>();
           return Gallery(id, title, coverImageUrl, tagIds);
         }).toList();
       });
