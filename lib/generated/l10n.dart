@@ -379,6 +379,16 @@ class L10n {
       args: [],
     );
   }
+
+  /// `Preload image count`
+  String get preloadImageCount {
+    return Intl.message(
+      'Preload image count',
+      name: 'preloadImageCount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<L10n> {

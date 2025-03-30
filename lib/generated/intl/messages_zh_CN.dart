@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("预加载的图片数量"),
         "parody": MessageLookupByLibrary.simpleMessage("原作"),
+        "preloadImageCount": MessageLookupByLibrary.simpleMessage("预加载图片数量"),
         "readingDirection": MessageLookupByLibrary.simpleMessage("阅读方向"),
         "rightToLeft": MessageLookupByLibrary.simpleMessage("从右往左"),
         "scrollUpToLoadMore":

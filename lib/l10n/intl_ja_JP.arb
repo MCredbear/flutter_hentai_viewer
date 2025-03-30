@@ -31,5 +31,6 @@
     "cancel": "キャンセル",
     "networkError": "ネットワークエラー",
     "updateTags": "タグを更新",
-    "scrollUpToLoadMore": "上にスクロールしてもっと読み込む（無限スクロール）"
+    "scrollUpToLoadMore": "上にスクロールしてもっと読み込む（無限スクロール）",
+    "preloadImageCount": "プリロード画像数"
 }

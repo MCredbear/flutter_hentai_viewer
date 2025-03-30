@@ -88,6 +88,22 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
     });
   }
 
+  late final _$preloadImageCountAtom =
+      Atom(name: 'GlobalSettingsStoreBase.preloadImageCount', context: context);
+
+  @override
+  int get preloadImageCount {
+    _$preloadImageCountAtom.reportRead();
+    return super.preloadImageCount;
+  }
+
+  @override
+  set preloadImageCount(int value) {
+    _$preloadImageCountAtom.reportWrite(value, super.preloadImageCount, () {
+      super.preloadImageCount = value;
+    });
+  }
+
   late final _$GlobalSettingsStoreBaseActionController =
       ActionController(name: 'GlobalSettingsStoreBase', context: context);
 
@@ -136,12 +152,24 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
   }
 
   @override
+  void setPreloadImageCount(int number) {
+    final _$actionInfo = _$GlobalSettingsStoreBaseActionController.startAction(
+        name: 'GlobalSettingsStoreBase.setPreloadImageCount');
+    try {
+      return super.setPreloadImageCount(number);
+    } finally {
+      _$GlobalSettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 locale: ${locale},
 themeData: ${themeData},
 readingDirection: ${readingDirection},
 scrollUpToLoadMore: ${scrollUpToLoadMore},
+preloadImageCount: ${preloadImageCount},
 themeDataString: ${themeDataString},
 readingDirectionString: ${readingDirectionString}
     ''';

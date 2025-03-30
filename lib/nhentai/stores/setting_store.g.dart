@@ -8,13 +8,11 @@ part of 'setting_store.dart';
 
 _Settings _$SettingsFromJson(Map<String, dynamic> json) => _Settings(
       $enumDecode(_$TitleTypeEnumMap, json['titleType']),
-      (json['numberOfImageToPreload'] as num).toInt(),
       json['customizedUserAgent'] as String?,
     );
 
 Map<String, dynamic> _$SettingsToJson(_Settings instance) => <String, dynamic>{
       'titleType': _$TitleTypeEnumMap[instance.titleType]!,
-      'numberOfImageToPreload': instance.numberOfImageToPreload,
       'customizedUserAgent': instance.customizedUserAgent,
     };
 
@@ -55,23 +53,6 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     });
   }
 
-  late final _$numberOfImageToPreloadAtom =
-      Atom(name: 'SettingsStoreBase.numberOfImageToPreload', context: context);
-
-  @override
-  int get numberOfImageToPreload {
-    _$numberOfImageToPreloadAtom.reportRead();
-    return super.numberOfImageToPreload;
-  }
-
-  @override
-  set numberOfImageToPreload(int value) {
-    _$numberOfImageToPreloadAtom
-        .reportWrite(value, super.numberOfImageToPreload, () {
-      super.numberOfImageToPreload = value;
-    });
-  }
-
   late final _$customizedUserAgentAtom =
       Atom(name: 'SettingsStoreBase.customizedUserAgent', context: context);
 
@@ -103,21 +84,9 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   }
 
   @override
-  void setNumberOfImageToPreload(int number) {
-    final _$actionInfo = _$SettingsStoreBaseActionController.startAction(
-        name: 'SettingsStoreBase.setNumberOfImageToPreload');
-    try {
-      return super.setNumberOfImageToPreload(number);
-    } finally {
-      _$SettingsStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 titleType: ${titleType},
-numberOfImageToPreload: ${numberOfImageToPreload},
 customizedUserAgent: ${customizedUserAgent},
 titleTypeString: ${titleTypeString}
     ''';

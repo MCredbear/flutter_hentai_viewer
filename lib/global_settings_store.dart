@@ -63,6 +63,14 @@ abstract class GlobalSettingsStoreBase with Store {
     save();
   }
 
+  @observable
+  int preloadImageCount = 5;
+  @action
+  void setPreloadImageCount(int number) {
+    preloadImageCount = number;
+    save();
+  }
+
   Future<void> read() async {
     final appDir = await getApplicationSupportDirectory();
     final settingsFile = File('${appDir.path}/global_settings.json');
@@ -85,6 +93,7 @@ abstract class GlobalSettingsStoreBase with Store {
           ? TextDirection.ltr
           : TextDirection.rtl;
       scrollUpToLoadMore = settings['scrollUpToLoad'] ?? false;
+      preloadImageCount = settings['preloadImageCount'] ?? 5;
     }
   }
 
@@ -102,6 +111,7 @@ abstract class GlobalSettingsStoreBase with Store {
               : 'Light',
       'readingDirection': readingDirection.name,
       'scrollUpToLoad': scrollUpToLoadMore,
+      'preloadImageCount': preloadImageCount,
     };
     settingsFile.writeAsStringSync(json.encode(settings));
   }

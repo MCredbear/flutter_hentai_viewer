@@ -18,7 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   final _customizedUserAgentController =
-      TextEditingController(text: settingsStore.customizedUserAgent);
+      TextEditingController(text: nhentaiSettingsStore.customizedUserAgent);
 
   late final localeCode2Language = {
     'null': L10n.of(context).dependsOnSystem,
@@ -131,6 +131,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: globalSettingsStore.scrollUpToLoadMore,
                 onChanged: (value) =>
                     globalSettingsStore.setScrollUpToLoadMore(value),
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text(L10n.of(context).preloadImageCount),
+            subtitle: Observer(
+              builder: (context) => Slider(
+                min: 1,
+                max: 25,
+                divisions: 24,
+                value: globalSettingsStore.preloadImageCount.toDouble(),
+                onChanged: (value) {
+                  globalSettingsStore.setPreloadImageCount(value.toInt());
+                },
+              ),
+            ),
+            trailing: Observer(
+              builder: (context) => Text(
+                '${globalSettingsStore.preloadImageCount}',
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ),

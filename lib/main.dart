@@ -23,7 +23,7 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
-    globalSettingsStore.read().then((_) => settingsStore
+    globalSettingsStore.read().then((_) => nhentaiSettingsStore
         .read()
         .then((_) => tagFilterStore.read().then((_) => setState(() {
               settingsLoaded = true;

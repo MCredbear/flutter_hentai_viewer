@@ -31,5 +31,6 @@
     "cancel": "Cancel",
     "networkError": "Network error",
     "updateTags": "Update tags",
-    "scrollUpToLoadMore": "Scroll up to load more (infinite scroll)"
+    "scrollUpToLoadMore": "Scroll up to load more (infinite scroll)",
+    "preloadImageCount": "Preload image count"
 }

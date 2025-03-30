@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 
 part 'setting_store.g.dart';
 
-SettingsStore settingsStore = SettingsStore();
+SettingsStore nhentaiSettingsStore = SettingsStore();
 
 enum TitleType { english, japanese, all }
 
@@ -25,7 +25,7 @@ abstract class SettingsStoreBase with Store {
 
   @computed
   String get titleTypeString {
-    switch (settingsStore.titleType) {
+    switch (nhentaiSettingsStore.titleType) {
       case TitleType.japanese:
         return L10n.current.japanese;
       case TitleType.english:
@@ -33,14 +33,6 @@ abstract class SettingsStoreBase with Store {
       case TitleType.all:
         return L10n.current.all;
     }
-  }
-
-  @observable
-  int numberOfImageToPreload = 5;
-  @action
-  void setNumberOfImageToPreload(int number) {
-    numberOfImageToPreload = number;
-    save();
   }
 
   @observable
@@ -59,7 +51,6 @@ abstract class SettingsStoreBase with Store {
     } else {
       final settings = _Settings.fromJson(json.decode(file.readAsStringSync()));
       titleType = settings.titleType;
-      numberOfImageToPreload = settings.numberOfImageToPreload;
       customizedUserAgent = settings.customizedUserAgent;
     }
   }
@@ -67,20 +58,16 @@ abstract class SettingsStoreBase with Store {
   Future<void> save() async {
     final appDir = await getApplicationSupportDirectory();
     final file = File('${appDir.path}/nhentai_settings.json');
-    final settings =
-        _Settings(titleType, numberOfImageToPreload, customizedUserAgent);
+    final settings = _Settings(titleType, customizedUserAgent);
     file.writeAsStringSync(json.encode(settings.toJson()));
   }
 }
 
 @JsonSerializable()
 class _Settings {
-  _Settings(
-      this.titleType, this.numberOfImageToPreload, this.customizedUserAgent);
+  _Settings(this.titleType, this.customizedUserAgent);
 
   TitleType titleType = TitleType.all;
-
-  int numberOfImageToPreload = 5;
 
   String? customizedUserAgent;
 

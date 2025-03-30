@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("Number of image to preload"),
         "parody": MessageLookupByLibrary.simpleMessage("Parody"),
+        "preloadImageCount":
+            MessageLookupByLibrary.simpleMessage("Preload image count"),
         "readingDirection":
             MessageLookupByLibrary.simpleMessage("Reading direction"),
         "rightToLeft": MessageLookupByLibrary.simpleMessage("Right to left"),

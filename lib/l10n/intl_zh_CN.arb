@@ -31,5 +31,6 @@
     "cancel": "取消",
     "networkError": "网络错误",
     "updateTags": "更新标签",
-    "scrollUpToLoadMore": "上拉加载更多（无限滚动）"
+    "scrollUpToLoadMore": "上拉加载更多（无限滚动）",
+    "preloadImageCount": "预加载图片数量"
 }

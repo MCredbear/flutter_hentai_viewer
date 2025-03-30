@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
@@ -31,17 +32,21 @@ class _ReadingPageState extends State<ReadingPage> {
   late int currentPageIndex;
 
   void jumpTo(int index) async {
+    widget.readingImageUrls
+        .sublist(index, index + globalSettingsStore.preloadImageCount)
+        .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
+        .forEach((provider) => precacheImage(provider, context));
     await pageController.animateToPage(index,
         duration: const Duration(milliseconds: 200), curve: Curves.linear);
   }
 
   @override
   Widget build(BuildContext context) {
-    () async {
-      widget.readingImageUrls
-          .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
-          .forEach((provider) => precacheImage(provider, context));
-    }.call();
+    widget.readingImageUrls
+        .sublist(widget.initPageIndex,
+            widget.initPageIndex + globalSettingsStore.preloadImageCount)
+        .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
+        .forEach((provider) => precacheImage(provider, context));
     return Scaffold(
         appBar: AppBar(),
         bottomNavigationBar: SizedBox(
