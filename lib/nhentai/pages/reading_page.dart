@@ -33,7 +33,12 @@ class _ReadingPageState extends State<ReadingPage> {
 
   void jumpTo(int index) async {
     widget.readingImageUrls
-        .sublist(index, index + globalSettingsStore.preloadImageCount)
+        .sublist(
+            index,
+            widget.initPageIndex + globalSettingsStore.preloadImageCount <
+                    widget.readingImageUrls.length
+                ? (widget.initPageIndex + globalSettingsStore.preloadImageCount)
+                : null)
         .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
         .forEach((provider) => precacheImage(provider, context));
     await pageController.animateToPage(index,
@@ -43,8 +48,12 @@ class _ReadingPageState extends State<ReadingPage> {
   @override
   Widget build(BuildContext context) {
     widget.readingImageUrls
-        .sublist(widget.initPageIndex,
-            widget.initPageIndex + globalSettingsStore.preloadImageCount)
+        .sublist(
+            widget.initPageIndex,
+            widget.initPageIndex + globalSettingsStore.preloadImageCount <
+                    widget.readingImageUrls.length
+                ? (widget.initPageIndex + globalSettingsStore.preloadImageCount)
+                : null)
         .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
         .forEach((provider) => precacheImage(provider, context));
     return Scaffold(
