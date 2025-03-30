@@ -35,9 +35,9 @@ class _ReadingPageState extends State<ReadingPage> {
     widget.readingImageUrls
         .sublist(
             index,
-            widget.initPageIndex + globalSettingsStore.preloadImageCount <
+            index + globalSettingsStore.preloadImageCount <
                     widget.readingImageUrls.length
-                ? (widget.initPageIndex + globalSettingsStore.preloadImageCount)
+                ? (index + globalSettingsStore.preloadImageCount)
                 : null)
         .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
         .forEach((provider) => precacheImage(provider, context));
