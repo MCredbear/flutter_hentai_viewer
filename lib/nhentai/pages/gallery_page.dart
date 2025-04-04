@@ -329,8 +329,9 @@ class _GalleryPageState extends State<GalleryPage> {
                                                         .replaceFirst(
                                                             '/t', '/i')
                                                         .replaceFirst('t.', '.')
-                                                        .replaceAll(
-                                                            '.webp', ''))
+                                                        .split('.')
+                                                        .sublist(0, 4)
+                                                        .join('.'))
                                                     .toList(),
                                                 index)));
                                   },
