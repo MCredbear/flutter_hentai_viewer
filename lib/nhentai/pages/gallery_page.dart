@@ -39,6 +39,7 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   void initState() {
     super.initState();
+    print(widget.gallery.id);
     getGalleryInfo(widget.gallery.id);
   }
 
@@ -327,8 +328,9 @@ class _GalleryPageState extends State<GalleryPage> {
                                                     .map((url) => url
                                                         .replaceFirst(
                                                             '/t', '/i')
-                                                        .replaceFirst(
-                                                            't.', '.'))
+                                                        .replaceFirst('t.', '.')
+                                                        .replaceAll(
+                                                            '.webp', ''))
                                                     .toList(),
                                                 index)));
                                   },
@@ -443,6 +445,7 @@ class _GalleryPageState extends State<GalleryPage> {
       final previewImageUrls = lazyloadImgs
           .map((lazyloadImg) => lazyloadImg.attributes['data-src']!)
           .toList();
+      print(previewImageUrls);
 
       setState(() {
         this.title = title;
