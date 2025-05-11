@@ -1,12 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'tag.g.dart';
-
 enum TagType { parody, character, tag, artist, group, language, category }
 
-enum TagState { disabled, banned, required }
+enum TagState { banned, required }
 
-@JsonSerializable()
 class Tag {
   Tag(this.id, this.name, this.tagType, {this.count, this.tagState});
   int id;
@@ -16,7 +11,36 @@ class Tag {
 
   TagState? tagState;
 
-  factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
+  factory Tag.fromJson(Map<String, dynamic> json) {
+    return Tag(
+      json['id'] as int,
+      json['name'] as String,
+      switch (json['tagType'] as String) {
+        'parody' => TagType.parody,
+        'character' => TagType.character,
+        'tag' => TagType.tag,
+        'artist' => TagType.artist,
+        'group' => TagType.group,
+        'language' => TagType.language,
+        'category' => TagType.category,
+        _ => throw Exception('Unknown tag type'),
+      },
+      count: json['count'] as int?,
+      tagState: switch (json['tagState']) {
+        'banned' => TagState.banned,
+        'required' => TagState.required,
+        _ => null,
+      },
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$TagToJson(this);
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'tagType': tagType.name,
+      'count': count,
+      'tagState': tagState?.name,
+    };
+  }
 }

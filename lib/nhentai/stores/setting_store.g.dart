@@ -3,26 +3,6 @@
 part of 'setting_store.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_Settings _$SettingsFromJson(Map<String, dynamic> json) => _Settings(
-      $enumDecode(_$TitleTypeEnumMap, json['titleType']),
-      json['customizedUserAgent'] as String?,
-    );
-
-Map<String, dynamic> _$SettingsToJson(_Settings instance) => <String, dynamic>{
-      'titleType': _$TitleTypeEnumMap[instance.titleType]!,
-      'customizedUserAgent': instance.customizedUserAgent,
-    };
-
-const _$TitleTypeEnumMap = {
-  TitleType.english: 'english',
-  TitleType.japanese: 'japanese',
-  TitleType.all: 'all',
-};
-
-// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
@@ -53,19 +33,19 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     });
   }
 
-  late final _$customizedUserAgentAtom =
-      Atom(name: 'SettingsStoreBase.customizedUserAgent', context: context);
+  late final _$autoUpdateTagsAtom =
+      Atom(name: 'SettingsStoreBase.autoUpdateTags', context: context);
 
   @override
-  String? get customizedUserAgent {
-    _$customizedUserAgentAtom.reportRead();
-    return super.customizedUserAgent;
+  bool get autoUpdateTags {
+    _$autoUpdateTagsAtom.reportRead();
+    return super.autoUpdateTags;
   }
 
   @override
-  set customizedUserAgent(String? value) {
-    _$customizedUserAgentAtom.reportWrite(value, super.customizedUserAgent, () {
-      super.customizedUserAgent = value;
+  set autoUpdateTags(bool value) {
+    _$autoUpdateTagsAtom.reportWrite(value, super.autoUpdateTags, () {
+      super.autoUpdateTags = value;
     });
   }
 
@@ -84,10 +64,21 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   }
 
   @override
+  void setAutoUpdateTags(bool autoUpdateTags) {
+    final _$actionInfo = _$SettingsStoreBaseActionController.startAction(
+        name: 'SettingsStoreBase.setAutoUpdateTags');
+    try {
+      return super.setAutoUpdateTags(autoUpdateTags);
+    } finally {
+      _$SettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 titleType: ${titleType},
-customizedUserAgent: ${customizedUserAgent},
+autoUpdateTags: ${autoUpdateTags},
 titleTypeString: ${titleTypeString}
     ''';
   }

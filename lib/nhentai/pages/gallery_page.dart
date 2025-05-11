@@ -4,6 +4,8 @@ import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 import 'package:toastification/toastification.dart';
@@ -39,7 +41,6 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.gallery.id);
     getGalleryInfo(widget.gallery.id);
   }
 
@@ -464,6 +465,16 @@ class _GalleryPageState extends State<GalleryPage> {
 
         loaded = true;
       });
+
+      if (nhentaiSettingsStore.autoUpdateTags) {
+        tagFilterStore.updateTags(parodyTags +
+            characterTags +
+            tagTags +
+            artistTags +
+            groupTags +
+            languageTags +
+            categoryTags);
+      }
     } else {
       toastification.show(
           title: Text(L10n.current.networkError),

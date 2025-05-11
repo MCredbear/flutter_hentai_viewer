@@ -22,7 +22,30 @@ abstract class TagFilterStoreBase with Store {
   ObservableList<Tag> tags = ObservableList();
 
   @action
-  Future<void> updateTags() async {
+  Future<void> updateTags(List<Tag> tags) async {
+    bool isUpdated = false;
+    for (final tag in tags) {
+      final oldTag = this.tags.firstWhere((t) => t.id == tag.id, orElse: () {
+        isUpdated = true;
+        this.tags.add(tag);
+        return tag;
+      });
+      if (oldTag.name != tag.name ||
+          oldTag.tagType != tag.tagType ||
+          oldTag.count != tag.count) {
+        isUpdated = true;
+        oldTag.name = tag.name;
+        oldTag.tagType = tag.tagType;
+        oldTag.count = tag.count;
+      }
+    }
+    if (isUpdated) {
+      save();
+    }
+  }
+
+  @action
+  Future<void> pullTags() async {
     final tagTypeToName = {
       TagType.tag: 'tags',
       TagType.artist: 'artists',
@@ -39,25 +62,19 @@ abstract class TagFilterStoreBase with Store {
         final tagsDiv = document.querySelector('#tag-container.container');
         if (tagsDiv != null) {
           final tagsSpan = tagsDiv.querySelectorAll('.tag');
-          for (final tagA in tagsSpan) {
+          final tags = tagsSpan.map((tagA) {
             final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
             final nameSpan = tagA.querySelector('.name');
             final name = nameSpan!.text;
             final countSpan = tagA.querySelector('.count');
-            final count = countSpan!.text;
+            final countText = countSpan!.text;
+            final count = countText.endsWith('K')
+                ? int.parse(countText.substring(0, countText.length - 1)) * 1000
+                : int.parse(countText);
 
-            final oldTag = tags.firstWhere((tag) => tag.id == id, orElse: () {
-              final newTag = Tag(id, name, entry.key);
-              tags.add(newTag);
-              return newTag;
-            });
-
-            oldTag.name = name;
-            oldTag.tagType = entry.key;
-            oldTag.count = count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count);
-          }
+            return Tag(id, name, entry.key, count: count);
+          }).toList();
+          await updateTags(tags);
         } else {
           break;
         }
@@ -70,8 +87,6 @@ abstract class TagFilterStoreBase with Store {
         pageIndex += 1;
       }
     }
-
-    save();
   }
 
   @observable
@@ -81,7 +96,7 @@ abstract class TagFilterStoreBase with Store {
   ObservableList<int> requiredTagIds = ObservableList();
 
   @action
-  void setTagState(int tagId, TagState tagState) {
+  void setTagState(int tagId, TagState? tagState) {
     final tag = tags.firstWhere((tag) => tag.id == tagId);
     tag.tagState = tagState;
     bannedTagIds = tags

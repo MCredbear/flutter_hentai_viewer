@@ -61,8 +61,16 @@ mixin _$TagFilterStore on TagFilterStoreBase, Store {
       AsyncAction('TagFilterStoreBase.updateTags', context: context);
 
   @override
-  Future<void> updateTags() {
-    return _$updateTagsAsyncAction.run(() => super.updateTags());
+  Future<void> updateTags(List<Tag> tags) {
+    return _$updateTagsAsyncAction.run(() => super.updateTags(tags));
+  }
+
+  late final _$pullTagsAsyncAction =
+      AsyncAction('TagFilterStoreBase.pullTags', context: context);
+
+  @override
+  Future<void> pullTags() {
+    return _$pullTagsAsyncAction.run(() => super.pullTags());
   }
 
   late final _$readAsyncAction =
@@ -77,7 +85,7 @@ mixin _$TagFilterStore on TagFilterStoreBase, Store {
       ActionController(name: 'TagFilterStoreBase', context: context);
 
   @override
-  void setTagState(int tagId, TagState tagState) {
+  void setTagState(int tagId, TagState? tagState) {
     final _$actionInfo = _$TagFilterStoreBaseActionController.startAction(
         name: 'TagFilterStoreBase.setTagState');
     try {

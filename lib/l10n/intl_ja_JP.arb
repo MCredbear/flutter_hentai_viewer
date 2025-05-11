@@ -32,5 +32,6 @@
     "networkError": "ネットワークエラー",
     "updateTags": "タグを更新",
     "scrollUpToLoadMore": "上にスクロールしてもっと読み込む（無限スクロール）",
-    "preloadImageCount": "プリロード画像数"
+    "preloadImageCount": "プリロード画像数",
+    "autoUpdateTags": "タグを自動更新"
 }

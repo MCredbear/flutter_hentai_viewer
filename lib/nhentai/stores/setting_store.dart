@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -36,9 +35,10 @@ abstract class SettingsStoreBase with Store {
   }
 
   @observable
-  String? customizedUserAgent;
-  void setCustomizedUserAgent(String? userAgent) {
-    customizedUserAgent = userAgent;
+  bool autoUpdateTags = true;
+  @action
+  void setAutoUpdateTags(bool autoUpdateTags) {
+    this.autoUpdateTags = autoUpdateTags;
     save();
   }
 
@@ -49,30 +49,24 @@ abstract class SettingsStoreBase with Store {
       // init
       save();
     } else {
-      final settings = _Settings.fromJson(json.decode(file.readAsStringSync()));
-      titleType = settings.titleType;
-      customizedUserAgent = settings.customizedUserAgent;
+      final settings = json.decode(file.readAsStringSync());
+      titleType = switch (settings['titleType']) {
+        'english' => TitleType.english,
+        'japanese' => TitleType.japanese,
+        'all' => TitleType.all,
+        _ => TitleType.all,
+      };
+      autoUpdateTags = settings['autoUpdateTags'] ?? true;
     }
   }
 
   Future<void> save() async {
     final appDir = await getApplicationSupportDirectory();
     final file = File('${appDir.path}/nhentai_settings.json');
-    final settings = _Settings(titleType, customizedUserAgent);
-    file.writeAsStringSync(json.encode(settings.toJson()));
+    final settings = {
+      'titleType': titleType.name,
+      'autoUpdateTags': autoUpdateTags,
+    };
+    file.writeAsStringSync(json.encode(settings));
   }
-}
-
-@JsonSerializable()
-class _Settings {
-  _Settings(this.titleType, this.customizedUserAgent);
-
-  TitleType titleType = TitleType.all;
-
-  String? customizedUserAgent;
-
-  factory _Settings.fromJson(Map<String, dynamic> json) =>
-      _$SettingsFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SettingsToJson(this);
 }

@@ -79,21 +79,31 @@ abstract class GlobalSettingsStoreBase with Store {
       save();
     } else {
       final settings = json.decode(settingsFile.readAsStringSync());
-      locale = (settings['locale'] == null)
-          ? null
-          : Locale((settings['locale'] as String).substring(0, 2),
-              (settings['locale'] as String).substring(3));
-      themeData = ((settings['themeData'] == null)
-          ? null
-          : ((settings['themeData'] as String).startsWith('Dark'))
-              ? ThemeData.dark(useMaterial3: false)
-              : ThemeData.light(useMaterial3: false));
-      readingDirection = ((settings['readingDirection'] as String)
-              .startsWith(TextDirection.ltr.name))
-          ? TextDirection.ltr
-          : TextDirection.rtl;
-      scrollUpToLoadMore = settings['scrollUpToLoad'] ?? false;
-      preloadImageCount = settings['preloadImageCount'] ?? 5;
+      locale = switch (settings['locale']) {
+        null => null,
+        _ => Locale(
+            (settings['locale'] as String).substring(0, 2),
+            (settings['locale'] as String).substring(3),
+          ),
+      };
+      themeData = switch (settings['themeData']) {
+        'Light' => ThemeData(brightness: Brightness.light, useMaterial3: false),
+        'Dark' => ThemeData(brightness: Brightness.dark, useMaterial3: false),
+        _ => null,
+      };
+      readingDirection = switch (settings['readingDirection']) {
+        'ltr' => TextDirection.ltr,
+        'rtl' => TextDirection.rtl,
+        _ => TextDirection.ltr,
+      };
+      scrollUpToLoadMore = switch (settings['scrollUpToLoad']) {
+        null => false,
+        _ => settings['scrollUpToLoad'],
+      };
+      preloadImageCount = switch (settings['preloadImageCount']) {
+        null => 5,
+        _ => settings['preloadImageCount'],
+      };
     }
   }
 
@@ -104,11 +114,11 @@ abstract class GlobalSettingsStoreBase with Store {
       'locale': (locale == null)
           ? null
           : '${locale!.languageCode}_${locale!.countryCode}',
-      'themeData': (themeData == null)
-          ? 'Dark'
-          : (themeData == ThemeData.dark(useMaterial3: false))
-              ? 'Dark'
-              : 'Light',
+      'themeData': switch (themeData) {
+        ThemeData(brightness: Brightness.dark, useMaterial3: false) => 'Dark',
+        ThemeData(brightness: Brightness.light, useMaterial3: false) => 'Light',
+        _ => null,
+      },
       'readingDirection': readingDirection.name,
       'scrollUpToLoad': scrollUpToLoadMore,
       'preloadImageCount': preloadImageCount,

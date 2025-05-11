@@ -17,9 +17,6 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
-  final _customizedUserAgentController =
-      TextEditingController(text: nhentaiSettingsStore.customizedUserAgent);
-
   late final localeCode2Language = {
     'null': L10n.of(context).dependsOnSystem,
     'en_US': 'English',
@@ -155,14 +152,25 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
 
+          const Divider(),
+          const ListTile(
+            leading: Text(
+              "NHentai",
+              style: TextStyle(color: Colors.blueAccent),
+            ),
+          ),
+          ListTile(
+            leading: Text(L10n.of(context).autoUpdateTags),
+            trailing: Observer(
+              builder: (context) => Switch(
+                value: nhentaiSettingsStore.autoUpdateTags,
+                onChanged: (value) =>
+                    nhentaiSettingsStore.setAutoUpdateTags(value),
+              ),
+            ),
+          ),
+
           /// TODO: add these funcions
-          // const Divider(),
-          // const ListTile(
-          //   leading: Text(
-          //     "NHentai",
-          //     style: TextStyle(color: Colors.blueAccent),
-          //   ),
-          // ),
           // PopupMenuButton<String>(
           //     child: ListTile(
           //       title: Text(L10n.of(context).titleStyle),
@@ -184,44 +192,6 @@ class _SettingsPageState extends State<SettingsPage> {
           //         ),
           //       ];
           //     }),
-          // ListTile(
-          //   title: Text(L10n.of(context).numberOfImageToPreload),
-          //   subtitle: Row(
-          //     children: [
-          //       Expanded(
-          //         child: Observer(
-          //           builder: (_) => Slider(
-          //               min: 1,
-          //               max: 25,
-          //               divisions: 24,
-          //               value: settingsStore.numberOfImageToPreload.toDouble(),
-          //               onChanged: (value) {
-          //                 settingsStore
-          //                     .setNumberOfImageToPreload(value.toInt());
-          //               }),
-          //         ),
-          //       ),
-          //       SizedBox(
-          //         width: 20,
-          //         child: Observer(
-          //           builder: (_) =>
-          //               Text('${settingsStore.numberOfImageToPreload}'),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(L10n.of(context).customizeUserAgent),
-          //   subtitle: TextField(
-          //     controller: _customizedUserAgentController,
-          //     onChanged: (value) {
-          //       (value.isEmpty)
-          //           ? settingsStore.setCustomizedUserAgent(null)
-          //           : settingsStore.setCustomizedUserAgent(value);
-          //     },
-          //   ),
-          // )
         ],
       ),
     );

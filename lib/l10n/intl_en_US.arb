@@ -32,5 +32,6 @@
     "networkError": "Network error",
     "updateTags": "Update tags",
     "scrollUpToLoadMore": "Scroll up to load more (infinite scroll)",
-    "preloadImageCount": "Preload image count"
+    "preloadImageCount": "Preload image count",
+    "autoUpdateTags": "Auto update tags"
 }

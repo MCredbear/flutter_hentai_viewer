@@ -129,7 +129,7 @@ class _TagFilterPageState extends State<TagFilterPage>
               icon: const Icon(Icons.refresh),
               tooltip: L10n.of(context).updateTags,
               onPressed: () async {
-                await tagFilterStore.updateTags();
+                await tagFilterStore.pullTags();
                 tagFilterStore.save();
               })
         ],
@@ -344,10 +344,9 @@ class _TagChipState extends State<TagChip> {
                 tagFilterStore.setTagState(
                     widget.tag.id,
                     switch (widget.tag.tagState) {
-                      TagState.disabled => TagState.required,
                       TagState.required => TagState.banned,
-                      TagState.banned => TagState.disabled,
-                      null => TagState.disabled
+                      TagState.banned => null,
+                      null => TagState.required
                     });
               });
             },
@@ -360,7 +359,6 @@ class _TagChipState extends State<TagChip> {
                   SizedBox(
                     width: 30,
                     child: switch (widget.tag.tagState) {
-                      TagState.disabled => null,
                       TagState.banned => const Icon(Icons.close),
                       TagState.required => const Icon(Icons.check),
                       null => null

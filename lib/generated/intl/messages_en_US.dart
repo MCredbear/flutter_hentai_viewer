@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "artist": MessageLookupByLibrary.simpleMessage("Artist"),
+        "autoUpdateTags":
+            MessageLookupByLibrary.simpleMessage("Auto update tags"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "character": MessageLookupByLibrary.simpleMessage("Character"),
         "customizeUserAgent":
