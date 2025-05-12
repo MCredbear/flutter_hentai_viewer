@@ -447,7 +447,6 @@ class _GalleryPageState extends State<GalleryPage> {
       final previewImageUrls = lazyloadImgs
           .map((lazyloadImg) => lazyloadImg.attributes['data-src']!)
           .toList();
-      print(previewImageUrls);
 
       setState(() {
         this.title = title;
