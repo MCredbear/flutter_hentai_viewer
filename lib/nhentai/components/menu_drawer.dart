@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
+import 'package:flutter_hentai_viewer/nhentai/pages/favorite_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/settings_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_filter_page.dart';
 
@@ -32,15 +33,18 @@ class MenuDrawer extends StatelessWidget {
             ]),
           ),
         ),
+        ListTile(
+            leading: const Icon(Icons.favorite),
+            title: Text(L10n.of(context).favoriteGalleries),
+            onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const FavoritePage(),
+                  ),
+                )),
         // TODO: add these functions
         // ListTile(
         //   leading: const Icon(Icons.download),
         //   title: Text(L10n.of(context).downloadedGalleries),
-        //   onTap: () {},
-        // ),
-        // ListTile(
-        //   leading: const Icon(Icons.favorite),
-        //   title: Text(L10n.of(context).favoriteGalleries),
         //   onTap: () {},
         // ),
         // ListTile(
@@ -49,6 +53,7 @@ class MenuDrawer extends StatelessWidget {
         //   onTap: () {},
         // ),
         // const Divider(),
+        const Divider(),
         ListTile(
           leading: const Icon(Icons.tag),
           title: Text(L10n.of(context).tagFilter),
@@ -59,7 +64,6 @@ class MenuDrawer extends StatelessWidget {
                 .then((_) => refreshHomePage());
           },
         ),
-        const Divider(),
         ListTile(
           leading: const Icon(Icons.settings),
           title: Text(L10n.of(context).settings),

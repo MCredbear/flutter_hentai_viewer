@@ -5,10 +5,12 @@ import 'package:flutter_hentai_viewer/image_meta.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/favorite_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toastification/toastification.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as html_parser;
@@ -48,7 +50,21 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            Observer(
+              builder: (context) => IconButton(
+                  onPressed: () {
+                    favoriteStore.isFavorite(widget.gallery)
+                        ? favoriteStore.remove(widget.gallery)
+                        : favoriteStore.add(widget.gallery);
+                  },
+                  icon: Icon(favoriteStore.isFavorite(widget.gallery)
+                      ? Icons.favorite
+                      : Icons.favorite_outline)),
+            )
+          ],
+        ),
         body: loaded
             ? ListView(
                 // shrinkWrap: true,
