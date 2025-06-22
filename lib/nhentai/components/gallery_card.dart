@@ -33,34 +33,41 @@ class _GalleryCardState extends State<GalleryCard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ExtendedImage.network(
-                proxy(widget.gallery.coverImageUrl),
-                loadStateChanged: (state) {
-                  switch (state.extendedImageLoadState) {
-                    case LoadState.loading:
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    case LoadState.completed:
-                      return Hero(
-                          tag: widget.gallery.id, child: state.completedWidget);
-                    case LoadState.failed:
-                      return const Icon(Icons.broken_image, size: 64);
-                  }
-                },
+              AspectRatio(
+                aspectRatio: widget.gallery.coverImageMeta.width /
+                    widget.gallery.coverImageMeta.height,
+                child: ExtendedImage.network(
+                  proxy(widget.gallery.coverImageMeta.url),
+                  loadStateChanged: (state) {
+                    switch (state.extendedImageLoadState) {
+                      case LoadState.loading:
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        );
+                      case LoadState.completed:
+                        return state.completedWidget;
+                      case LoadState.failed:
+                        return const Icon(Icons.broken_image, size: 64);
+                    }
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: RichText(
-                    text: TextSpan(children: [
-                  if (widget.gallery.language != null)
-                    WidgetSpan(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: Flag(widget.gallery.language!),
-                    )),
-                  TextSpan(text: widget.gallery.title)
-                ])),
+                    text: TextSpan(
+                        children: widget.gallery.languages
+                                .map((language) => WidgetSpan(
+                                        child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
+                                      child: Flag(language),
+                                    )))
+                                .toList()
+                                .cast<InlineSpan>() +
+                            [TextSpan(text: widget.gallery.title)])),
               )
             ],
           ),

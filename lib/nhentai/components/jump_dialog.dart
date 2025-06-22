@@ -70,13 +70,15 @@ class _JumpDialogState extends State<JumpDialog> {
                         }
                       }),
                   icon: const Icon(Icons.keyboard_arrow_left)),
-              Slider(
-                  min: 1,
-                  max: widget.lastPageIndex.toDouble(),
-                  value: selectedPageIndex.toDouble(),
-                  onChanged: (value) => setState(() {
-                        selectedPageIndex = value.toInt();
-                      })),
+              Expanded(
+                child: Slider(
+                    min: 1,
+                    max: widget.lastPageIndex.toDouble(),
+                    value: selectedPageIndex.toDouble(),
+                    onChanged: (value) => setState(() {
+                          selectedPageIndex = value.toInt();
+                        })),
+              ),
               IconButton(
                   onPressed: () => setState(() {
                         if (selectedPageIndex < widget.lastPageIndex) {

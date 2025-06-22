@@ -399,6 +399,16 @@ class L10n {
       args: [],
     );
   }
+
+  /// `Pages`
+  String get pageCount {
+    return Intl.message(
+      'Pages',
+      name: 'pageCount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<L10n> {

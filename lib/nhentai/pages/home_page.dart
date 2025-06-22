@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
+import 'package:flutter_hentai_viewer/image_meta.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
@@ -175,13 +176,16 @@ class _HomePageState extends State<HomePage> {
             final captionDiv = gallery.querySelector('.caption');
             final title = captionDiv!.text;
             final lazyLoadImg = gallery.querySelector('.lazyload');
-            final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
+            final coverImageMeta = ImageMeta(
+                url: lazyLoadImg!.attributes['data-src']!,
+                width: double.parse(lazyLoadImg.attributes['width']!),
+                height: double.parse(lazyLoadImg.attributes['height']!));
             final tagIds = gallery.attributes['data-tags']!
                 .split(' ')
                 .map((e) => int.parse(e))
                 .toList()
                 .cast<int>();
-            return Gallery(id, title, coverImageUrl, tagIds);
+            return Gallery(id, title, coverImageMeta, tagIds);
           }).toList();
         } else {
           if (pageIndex == 1) {
@@ -193,13 +197,16 @@ class _HomePageState extends State<HomePage> {
                 final captionDiv = gallery.querySelector('.caption');
                 final title = captionDiv!.text;
                 final lazyLoadImg = gallery.querySelector('.lazyload');
-                final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
+                final coverImageMeta = ImageMeta(
+                    url: lazyLoadImg!.attributes['data-src']!,
+                    width: double.parse(lazyLoadImg.attributes['width']!),
+                    height: double.parse(lazyLoadImg.attributes['height']!));
                 final tagIds = gallery.attributes['data-tags']!
                     .split(' ')
                     .map((e) => int.parse(e))
                     .toList()
                     .cast<int>();
-                return Gallery(id, title, coverImageUrl, tagIds);
+                return Gallery(id, title, coverImageMeta, tagIds);
               }).toList());
         }
       });
@@ -259,13 +266,16 @@ class _HomePageState extends State<HomePage> {
             final captionDiv = gallery.querySelector('.caption');
             final title = captionDiv!.text;
             final lazyLoadImg = gallery.querySelector('.lazyload');
-            final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
+            final coverImageMeta = ImageMeta(
+                url: lazyLoadImg!.attributes['data-src']!,
+                width: double.parse(lazyLoadImg.attributes['width']!),
+                height: double.parse(lazyLoadImg.attributes['height']!));
             final tagIds = gallery.attributes['data-tags']!
                 .split(' ')
                 .map((e) => int.parse(e))
                 .toList()
                 .cast<int>();
-            return Gallery(id, title, coverImageUrl, tagIds);
+            return Gallery(id, title, coverImageMeta, tagIds);
           }).toList();
         } else {
           if (pageIndex == 1) {
@@ -277,13 +287,16 @@ class _HomePageState extends State<HomePage> {
                 final captionDiv = gallery.querySelector('.caption');
                 final title = captionDiv!.text;
                 final lazyLoadImg = gallery.querySelector('.lazyload');
-                final coverImageUrl = lazyLoadImg!.attributes['data-src']!;
+                final coverImageMeta = ImageMeta(
+                    url: lazyLoadImg!.attributes['data-src']!,
+                    width: double.parse(lazyLoadImg.attributes['width']!),
+                    height: double.parse(lazyLoadImg.attributes['height']!));
                 final tagIds = gallery.attributes['data-tags']!
                     .split(' ')
                     .map((e) => int.parse(e))
                     .toList()
                     .cast<int>();
-                return Gallery(id, title, coverImageUrl, tagIds);
+                return Gallery(id, title, coverImageMeta, tagIds);
               }).toList());
         }
       });

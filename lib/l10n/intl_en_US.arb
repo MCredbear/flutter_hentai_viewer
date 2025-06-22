@@ -33,5 +33,6 @@
     "updateTags": "Update tags",
     "scrollUpToLoadMore": "Scroll up to load more (infinite scroll)",
     "preloadImageCount": "Preload image count",
-    "autoUpdateTags": "Auto update tags"
+    "autoUpdateTags": "Auto update tags",
+    "pageCount": "Pages"
 }

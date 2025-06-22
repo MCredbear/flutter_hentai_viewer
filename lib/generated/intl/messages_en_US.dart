@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "networkError": MessageLookupByLibrary.simpleMessage("Network error"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("Number of image to preload"),
+        "pageCount": MessageLookupByLibrary.simpleMessage("Pages"),
         "parody": MessageLookupByLibrary.simpleMessage("Parody"),
         "preloadImageCount":
             MessageLookupByLibrary.simpleMessage("Preload image count"),

@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
+import 'package:flutter_hentai_viewer/image_meta.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';
@@ -34,7 +35,7 @@ class _GalleryPageState extends State<GalleryPage> {
   late final List<Tag> languageTags;
   late final List<Tag> categoryTags;
 
-  late final List<String> previewImageUrls;
+  late final List<ImageMeta> previewImageMetas;
 
   bool loaded = false;
 
@@ -47,303 +48,321 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
-        shrinkWrap: true,
-        children: !loaded
-            ? []
-            : [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                        child: Card(
-                            margin: const EdgeInsets.all(20),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: ExtendedImage.network(
-                              proxy(widget.gallery.coverImageUrl),
-                              fit: BoxFit.contain,
-                            ))),
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child:
-                              Text(title, style: const TextStyle(fontSize: 18)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 20, left: 20, right: 20),
-                          child: Text(subtitle,
-                              style: const TextStyle(fontSize: 14)),
-                        )
-                      ],
-                    ))
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
+        appBar: AppBar(),
+        body: loaded
+            ? ListView(
+                // shrinkWrap: true,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 20),
-                      parodyTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '原作: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => parodyTags
-                                      .map((parodyTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 2, right: 2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(
-                                                                parodyTag))),
-                                                label: Text(parodyTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
-                      characterTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '角色: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => characterTags
-                                      .map((characterTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(
-                                                                characterTag))),
-                                                label: Text(characterTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
-                      tagTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '标签: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => tagTags
-                                      .map((tagTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(tagTag))),
-                                                label: Text(tagTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
-                      artistTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '作者: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => artistTags
-                                      .map((artistTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(
-                                                                artistTag))),
-                                                label: Text(artistTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
-                      groupTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '社团: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => groupTags
-                                      .map((groupTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(groupTag))),
-                                                label: Text(groupTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
-                      languageTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '语言: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => languageTags
-                                      .map((languageTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(
-                                                                languageTag))),
-                                                label: Text(languageTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
-                      categoryTags.isNotEmpty
-                          ? RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text: '类别: ',
-                                  style: const TextStyle(fontSize: 16),
-                                  children: (() => categoryTags
-                                      .map((categoryTag) => WidgetSpan(
-                                          alignment:
-                                              PlaceholderAlignment.middle,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: RawChip(
-                                                onPressed: () => Navigator.of(
-                                                        context)
-                                                    .push(MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TagPage(
-                                                                categoryTag))),
-                                                label: Text(categoryTag.name,
-                                                    textAlign:
-                                                        TextAlign.center)),
-                                          )))
-                                      .toList()).call()))
-                          : Container(),
+                      Expanded(
+                          child: Card(
+                              margin: const EdgeInsets.all(20),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: AspectRatio(
+                                aspectRatio:
+                                    widget.gallery.coverImageMeta.width /
+                                        widget.gallery.coverImageMeta.height,
+                                child: ExtendedImage.network(
+                                  proxy(widget.gallery.coverImageMeta.url),
+                                  fit: BoxFit.contain,
+                                ),
+                              ))),
+                      Expanded(
+                          child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(title,
+                                style: const TextStyle(fontSize: 18)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 20, left: 20, right: 20),
+                            child: Text(subtitle,
+                                style: const TextStyle(fontSize: 14)),
+                          )
+                        ],
+                      ))
                     ],
                   ),
-                ),
-                WaterfallFlow.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4),
-                    itemCount: previewImageUrls.length,
-                    itemBuilder: (context, index) => Card(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: Stack(
-                            alignment: AlignmentDirectional.center,
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        parodyTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '原作: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => parodyTags
+                                        .map((parodyTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 2, right: 2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(
+                                                                  parodyTag))),
+                                                  label: Text(parodyTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        characterTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '角色: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => characterTags
+                                        .map((characterTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(
+                                                                  characterTag))),
+                                                  label: Text(characterTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        tagTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '标签: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => tagTags
+                                        .map((tagTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(tagTag))),
+                                                  label: Text(tagTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        artistTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '作者: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => artistTags
+                                        .map((artistTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(
+                                                                  artistTag))),
+                                                  label: Text(artistTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        groupTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '社团: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => groupTags
+                                        .map((groupTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(
+                                                                  groupTag))),
+                                                  label: Text(groupTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        languageTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '语言: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => languageTags
+                                        .map((languageTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(
+                                                                  languageTag))),
+                                                  label: Text(languageTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        categoryTags.isNotEmpty
+                            ? RichText(
+                                textAlign: TextAlign.start,
+                                text: TextSpan(
+                                    text: '类别: ',
+                                    style: const TextStyle(fontSize: 16),
+                                    children: (() => categoryTags
+                                        .map((categoryTag) => WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.middle,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: RawChip(
+                                                  onPressed: () => Navigator.of(
+                                                          context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TagPage(
+                                                                  categoryTag))),
+                                                  label: Text(categoryTag.name,
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            )))
+                                        .toList()).call()))
+                            : Container(),
+                        Text(
+                            '${L10n.current.pageCount}: ${previewImageMetas.length}',
+                            style: const TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                  WaterfallFlow.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4),
+                      itemCount: previewImageMetas.length,
+                      itemBuilder: (context, index) => Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AspectRatio(
-                                    aspectRatio: 1 / 1.414,
-                                    child: ExtendedImage.network(
-                                      proxy(previewImageUrls[index]),
-                                      cache: true,
-                                      loadStateChanged: (state) {
-                                        switch (state.extendedImageLoadState) {
-                                          case LoadState.loading:
-                                            return LinearProgressIndicator(
-                                              value: (state.loadingProgress
-                                                          ?.cumulativeBytesLoaded ??
-                                                      0) /
-                                                  (state.loadingProgress
-                                                          ?.expectedTotalBytes ??
-                                                      double.infinity),
-                                            );
-                                          case LoadState.completed:
-                                            return state.completedWidget;
-                                          case LoadState.failed:
-                                            return const Text(
-                                              "加载失败",
-                                              textAlign: TextAlign.center,
-                                            );
-                                        }
-                                      },
+                              Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        AspectRatio(
+                                          aspectRatio: 1 / 1.414,
+                                          child: ExtendedImage.network(
+                                            proxy(previewImageMetas[index].url),
+                                            loadStateChanged: (state) {
+                                              switch (state
+                                                  .extendedImageLoadState) {
+                                                case LoadState.loading:
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary,
+                                                    ),
+                                                  );
+                                                case LoadState.completed:
+                                                  return state.completedWidget;
+                                                case LoadState.failed:
+                                                  return const Text(
+                                                    "加载失败",
+                                                    textAlign: TextAlign.center,
+                                                  );
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Text(
+                                            '${index + 1}',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      '${index + 1}',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Positioned.fill(
-                                  child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => ReadingPage(
-                                                widget.gallery,
-                                                previewImageUrls
-                                                    .map((url) => url
-                                                        .replaceFirst(
-                                                            '/t', '/i')
-                                                        .replaceFirst('t.', '.')
-                                                        .split('.')
-                                                        .sublist(0, 4)
-                                                        .join('.'))
-                                                    .toList(),
-                                                index)));
-                                  },
+                                    Positioned.fill(
+                                        child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).push(MaterialPageRoute(
+                                              builder: (context) => ReadingPage(
+                                                  widget.gallery,
+                                                  previewImageMetas
+                                                      .map((previewImageMeta) =>
+                                                          previewImageMeta.url
+                                                              .replaceFirst(
+                                                                  '/t', '/i')
+                                                              .replaceFirst(
+                                                                  't.', '.')
+                                                              .split('.')
+                                                              .sublist(0, 4)
+                                                              .join('.'))
+                                                      .toList(),
+                                                  index)));
+                                        },
+                                      ),
+                                    ))
+                                  ],
                                 ),
-                              ))
+                              ),
                             ],
-                          ),
-                        ))
-              ],
-      ),
-    );
+                          ))
+                ],
+              )
+            : Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.secondary)));
   }
 
   void getGalleryInfo(int galleryId) async {
@@ -444,8 +463,11 @@ class _GalleryPageState extends State<GalleryPage> {
 
       final thumbsDiv = document.querySelector('.thumbs')!;
       final lazyloadImgs = thumbsDiv.querySelectorAll('.lazyload');
-      final previewImageUrls = lazyloadImgs
-          .map((lazyloadImg) => lazyloadImg.attributes['data-src']!)
+      final previewImageMetas = lazyloadImgs
+          .map((lazyloadImg) => ImageMeta(
+              url: lazyloadImg.attributes['data-src']!,
+              width: double.parse(lazyloadImg.attributes['width']!),
+              height: double.parse(lazyloadImg.attributes['height']!)))
           .toList();
 
       setState(() {
@@ -460,7 +482,7 @@ class _GalleryPageState extends State<GalleryPage> {
         this.languageTags = languageTags;
         this.categoryTags = categoryTags;
 
-        this.previewImageUrls = previewImageUrls;
+        this.previewImageMetas = previewImageMetas;
 
         loaded = true;
       });

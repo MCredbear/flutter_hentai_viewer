@@ -47,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "networkError": MessageLookupByLibrary.simpleMessage("网络错误"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("预加载的图片数量"),
+        "pageCount": MessageLookupByLibrary.simpleMessage("页数"),
         "parody": MessageLookupByLibrary.simpleMessage("原作"),
         "preloadImageCount": MessageLookupByLibrary.simpleMessage("预加载图片数量"),
         "readingDirection": MessageLookupByLibrary.simpleMessage("阅读方向"),
