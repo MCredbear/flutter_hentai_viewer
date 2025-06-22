@@ -38,19 +38,14 @@ class _GalleryCardState extends State<GalleryCard> {
                 loadStateChanged: (state) {
                   switch (state.extendedImageLoadState) {
                     case LoadState.loading:
-                      return LinearProgressIndicator(
-                        value: (state.loadingProgress?.cumulativeBytesLoaded ??
-                                0) /
-                            (state.loadingProgress?.expectedTotalBytes ??
-                                double.infinity),
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
                     case LoadState.completed:
-                      return state.completedWidget;
+                      return Hero(
+                          tag: widget.gallery.id, child: state.completedWidget);
                     case LoadState.failed:
-                      return const Text(
-                        "加载失败",
-                        textAlign: TextAlign.center,
-                      );
+                      return const Icon(Icons.broken_image, size: 64);
                   }
                 },
               ),
@@ -58,11 +53,12 @@ class _GalleryCardState extends State<GalleryCard> {
                 padding: const EdgeInsets.all(5),
                 child: RichText(
                     text: TextSpan(children: [
-                  WidgetSpan(
-                      child: Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: Flag(widget.gallery.language),
-                  )),
+                  if (widget.gallery.language != null)
+                    WidgetSpan(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Flag(widget.gallery.language!),
+                    )),
                   TextSpan(text: widget.gallery.title)
                 ])),
               )

@@ -6,7 +6,10 @@ part 'gallery.g.dart';
 @JsonSerializable()
 class Gallery {
   Gallery(this.id, this.title, this.coverImageUrl, this.tagIds) {
-    // if (tagIds.contains(6346)) return Language.japanese;
+    if (tagIds.contains(6346)) {
+      language = Language.japanese;
+      return;
+    }
     if (tagIds.contains(29963)) {
       language = Language.chinese;
       return;
@@ -15,13 +18,12 @@ class Gallery {
       language = Language.english;
       return;
     }
-    language = Language.japanese;
   }
 
   final int id;
   final String title;
   final String coverImageUrl;
-  late final Language language;
+  late final Language? language;
   final List<int> tagIds;
 
   factory Gallery.fromJson(Map<String, dynamic> json) =>
