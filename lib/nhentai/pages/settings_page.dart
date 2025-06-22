@@ -151,7 +151,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
           ),
-
           const Divider(),
           const ListTile(
             leading: Text(
@@ -169,29 +168,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
           ),
-
-          /// TODO: add these funcions
-          // PopupMenuButton<String>(
-          //     child: ListTile(
-          //       title: Text(L10n.of(context).titleStyle),
-          //       subtitle: Text(settingsStore.titleTypeString),
-          //     ),
-          //     itemBuilder: (BuildContext context) {
-          //       return <PopupMenuEntry<String>>[
-          //         PopupMenuItem<String>(
-          //           child: Text(L10n.of(context).japanese),
-          //           onTap: () => settingsStore.setTitleType(TitleType.japanese),
-          //         ),
-          //         PopupMenuItem<String>(
-          //           child: Text(L10n.of(context).english),
-          //           onTap: () => settingsStore.setTitleType(TitleType.english),
-          //         ),
-          //         PopupMenuItem<String>(
-          //           child: Text(L10n.of(context).all),
-          //           onTap: () => settingsStore.setTitleType(TitleType.all),
-          //         ),
-          //       ];
-          //     }),
         ],
       ),
     );
