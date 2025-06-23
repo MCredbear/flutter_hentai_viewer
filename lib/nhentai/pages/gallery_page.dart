@@ -12,9 +12,8 @@ import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toastification/toastification.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' as html_parser;
 import 'package:waterfall_flow/waterfall_flow.dart';
+import 'package:flutter_hentai_viewer/nhentai/api/api.dart' as api;
 
 class GalleryPage extends StatefulWidget {
   const GalleryPage(this.gallery, {super.key});
@@ -67,7 +66,6 @@ class _GalleryPageState extends State<GalleryPage> {
         ),
         body: loaded
             ? ListView(
-                // shrinkWrap: true,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -382,114 +380,22 @@ class _GalleryPageState extends State<GalleryPage> {
   }
 
   void getGalleryInfo(int galleryId) async {
-    final response = await http.get(Uri.parse(proxy('$hostUrl/g/$galleryId/')));
-    final document = html_parser.parse(response.body);
-    var infoDiv = document.querySelector('#info');
-    if (infoDiv != null) {
-      final titleHs = infoDiv.querySelectorAll('.title');
-      final title = titleHs.first.children.map((span) => span.text).join();
-      final subtitle =
-          titleHs.lastOrNull?.children.map((span) => span.text).join() ?? '';
-
-      final tagsSection = infoDiv.querySelector('#tags');
-      final parodyTags =
-          tagsSection!.children[0].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.parody,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-      final characterTags =
-          tagsSection.children[1].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.character,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-      final tagTags =
-          tagsSection.children[2].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.tag,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-      final artistTags =
-          tagsSection.children[3].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.artist,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-      final groupTags =
-          tagsSection.children[4].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.group,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-      final languageTags =
-          tagsSection.children[5].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.language,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-      final categoryTags =
-          tagsSection.children[6].children.first.children.map((tagA) {
-        final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-        final nameSpan = tagA.querySelector('.name');
-        final name = nameSpan!.text;
-        final countSpan = tagA.querySelector('.count');
-        final count = countSpan!.text;
-        return Tag(id, name, TagType.category,
-            count: count.endsWith('K')
-                ? int.parse(count.substring(0, count.length - 1)) * 1000
-                : int.parse(count));
-      }).toList();
-
-      final thumbsDiv = document.querySelector('.thumbs')!;
-      final lazyloadImgs = thumbsDiv.querySelectorAll('.lazyload');
-      final previewImageMetas = lazyloadImgs
-          .map((lazyloadImg) => ImageMeta(
-              url: lazyloadImg.attributes['data-src']!,
-              width: double.parse(lazyloadImg.attributes['width']!),
-              height: double.parse(lazyloadImg.attributes['height']!)))
-          .toList();
-
+    try {
+      final (
+        title,
+        subtitle,
+        parodyTags,
+        characterTags,
+        tagTags,
+        artistTags,
+        groupTags,
+        languageTags,
+        categoryTags,
+        previewImageMetas
+      ) = await api.galleryInfo(galleryId);
       setState(() {
         this.title = title;
         this.subtitle = subtitle;
-
         this.parodyTags = parodyTags;
         this.characterTags = characterTags;
         this.tagTags = tagTags;
@@ -497,25 +403,26 @@ class _GalleryPageState extends State<GalleryPage> {
         this.groupTags = groupTags;
         this.languageTags = languageTags;
         this.categoryTags = categoryTags;
-
         this.previewImageMetas = previewImageMetas;
-
         loaded = true;
       });
-
       if (nhentaiSettingsStore.autoUpdateTags) {
-        tagFilterStore.updateTags(parodyTags +
-            characterTags +
-            tagTags +
-            artistTags +
-            groupTags +
-            languageTags +
-            categoryTags);
+        tagFilterStore.updateTags(
+          parodyTags +
+              characterTags +
+              tagTags +
+              artistTags +
+              groupTags +
+              languageTags +
+              categoryTags,
+        );
       }
-    } else {
+    } catch (e) {
       toastification.show(
-          title: Text(L10n.current.networkError),
-          autoCloseDuration: const Duration(seconds: 3));
+        title: Text(L10n.current.networkError),
+        autoCloseDuration: const Duration(seconds: 3),
+      );
+      return;
     }
   }
 }

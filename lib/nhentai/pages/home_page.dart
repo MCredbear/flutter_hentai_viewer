@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
-import 'package:flutter_hentai_viewer/image_meta.dart';
+import 'package:flutter_hentai_viewer/nhentai/api/api.dart' as api;
 import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
-import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/menu_drawer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' as html_parser;
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -38,8 +35,8 @@ class _HomePageState extends State<HomePage> {
               tag.tagState == TagState.banned ||
               tag.tagState == TagState.required)
           .isEmpty
-      ? getLatestUpdateGalleries(pageIndex)
-      : getSearchGalleries(pageIndex);
+      ? getLatestGalleries(pageIndex)
+      : searchGalleries(pageIndex);
 
   List<Gallery>? galleries;
 
@@ -156,172 +153,56 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  void getLatestUpdateGalleries(int pageIndex) async {
-    final response =
-        await http.get(Uri.parse(proxy('$hostUrl?page=$pageIndex')));
-    final document = html_parser.parse(response.body);
-    final galleryContainerDivs =
-        document.querySelectorAll('.container.index-container');
-    final paginationSection = document.querySelector('.pagination');
-    if (galleryContainerDivs.isNotEmpty) {
-      final galleries = [];
-      for (final galleryContainerDiv in galleryContainerDivs) {
-        galleries.addAll(galleryContainerDiv.querySelectorAll('.gallery'));
-      }
+  void getLatestGalleries(int pageIndex) async {
+    try {
+      final (galleries, currentPageIndex, lastPageIndex) =
+          await api.latestUpdateGalleries(pageIndex);
       setState(() {
-        if (!globalSettingsStore.scrollUpToLoadMore) {
-          this.galleries = galleries.map((gallery) {
-            final coverA = gallery.querySelector('.cover');
-            final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
-            final captionDiv = gallery.querySelector('.caption');
-            final title = captionDiv!.text;
-            final lazyLoadImg = gallery.querySelector('.lazyload');
-            final coverImageMeta = ImageMeta(
-                url: lazyLoadImg!.attributes['data-src']!,
-                width: double.parse(lazyLoadImg.attributes['width']!),
-                height: double.parse(lazyLoadImg.attributes['height']!));
-            final tagIds = gallery.attributes['data-tags']!
-                .split(' ')
-                .map((e) => int.parse(e))
-                .toList()
-                .cast<int>();
-            return Gallery(id, title, coverImageMeta, tagIds);
-          }).toList();
-        } else {
-          if (pageIndex == 1) {
-            this.galleries = [];
-          }
-          this.galleries!.addAll(galleries.map((gallery) {
-                final coverA = gallery.querySelector('.cover');
-                final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
-                final captionDiv = gallery.querySelector('.caption');
-                final title = captionDiv!.text;
-                final lazyLoadImg = gallery.querySelector('.lazyload');
-                final coverImageMeta = ImageMeta(
-                    url: lazyLoadImg!.attributes['data-src']!,
-                    width: double.parse(lazyLoadImg.attributes['width']!),
-                    height: double.parse(lazyLoadImg.attributes['height']!));
-                final tagIds = gallery.attributes['data-tags']!
-                    .split(' ')
-                    .map((e) => int.parse(e))
-                    .toList()
-                    .cast<int>();
-                return Gallery(id, title, coverImageMeta, tagIds);
-              }).toList());
-        }
+        this.galleries = galleries;
+        this.currentPageIndex = currentPageIndex;
+        this.lastPageIndex = lastPageIndex;
+        paginationTextController.text = '$currentPageIndex / $lastPageIndex';
+      });
+    } catch (e) {
+      setState(() {
+        galleries = [];
+        currentPageIndex = 1;
+        lastPageIndex = 1;
+        paginationTextController.text = '$currentPageIndex / $lastPageIndex';
       });
 
-      if (paginationSection == null) {
-        setState(() {
-          currentPageIndex = 1;
-          lastPageIndex = 1;
-          paginationTextController.text =
-              '$currentPageIndex / ${lastPageIndex ?? 1}';
-        });
-      } else {
-        setState(() {
-          final pageCurrentA =
-              paginationSection.querySelector('.page.current')!;
-          currentPageIndex = int.parse(pageCurrentA.text);
-          final lastA = paginationSection.querySelector('.last');
-          lastPageIndex = (lastA != null)
-              ? int.parse(lastA.attributes['href']!.split('page=')[1])
-              : currentPageIndex;
-          paginationTextController.text =
-              '$currentPageIndex / ${lastPageIndex ?? 1}';
-        });
-      }
-    } else {
       toastification.show(
           title: Text(L10n.current.networkError),
           autoCloseDuration: const Duration(seconds: 3));
     }
   }
 
-  void getSearchGalleries(int pageIndex) async {
-    final response = tagFilterStore.tags.isNotEmpty
-        ? await http.get(Uri.parse(proxy(
-            '$hostUrl/search/?q=${tagFilterStore.tags.where((tag) => tag.tagState == TagState.banned || tag.tagState == TagState.required).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${{
-                  TagType.tag: 'tag',
-                  TagType.artist: 'artists',
-                  TagType.character: 'characters',
-                  TagType.parody: 'parodies',
-                  TagType.group: 'groups',
-                }[tag.tagType]}%3A"${tag.name.replaceAll(' ', '+')}"').join('+')}${searching ? '+${searchController.text.replaceAll(' ', '+')}' : ''}&page=$pageIndex')))
-        : await http.get(Uri.parse(proxy('$hostUrl/?page=$pageIndex')));
-    final document = html_parser.parse(response.body);
-    final galleryContainerDivs =
-        document.querySelectorAll('.container.index-container');
-    final paginationSection = document.querySelector('.pagination');
-    if (galleryContainerDivs.isNotEmpty) {
-      final galleries = [];
-      for (final galleryContainerDiv in galleryContainerDivs) {
-        galleries.addAll(galleryContainerDiv.querySelectorAll('.gallery'));
-      }
+  void searchGalleries(int pageIndex) async {
+    try {
+      final (galleries, currentPageIndex, lastPageIndex) =
+          await api.searchGalleries(
+              searchController.text,
+              tagFilterStore.tags
+                  .where((tag) => tag.tagState == TagState.required)
+                  .toList(),
+              tagFilterStore.tags
+                  .where((tag) => tag.tagState == TagState.banned)
+                  .toList(),
+              pageIndex);
       setState(() {
-        if (!globalSettingsStore.scrollUpToLoadMore) {
-          this.galleries = galleries.map((gallery) {
-            final coverA = gallery.querySelector('.cover');
-            final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
-            final captionDiv = gallery.querySelector('.caption');
-            final title = captionDiv!.text;
-            final lazyLoadImg = gallery.querySelector('.lazyload');
-            final coverImageMeta = ImageMeta(
-                url: lazyLoadImg!.attributes['data-src']!,
-                width: double.parse(lazyLoadImg.attributes['width']!),
-                height: double.parse(lazyLoadImg.attributes['height']!));
-            final tagIds = gallery.attributes['data-tags']!
-                .split(' ')
-                .map((e) => int.parse(e))
-                .toList()
-                .cast<int>();
-            return Gallery(id, title, coverImageMeta, tagIds);
-          }).toList();
-        } else {
-          if (pageIndex == 1) {
-            this.galleries = [];
-          }
-          this.galleries!.addAll(galleries.map((gallery) {
-                final coverA = gallery.querySelector('.cover');
-                final id = int.parse(coverA!.attributes['href']!.split('/')[2]);
-                final captionDiv = gallery.querySelector('.caption');
-                final title = captionDiv!.text;
-                final lazyLoadImg = gallery.querySelector('.lazyload');
-                final coverImageMeta = ImageMeta(
-                    url: lazyLoadImg!.attributes['data-src']!,
-                    width: double.parse(lazyLoadImg.attributes['width']!),
-                    height: double.parse(lazyLoadImg.attributes['height']!));
-                final tagIds = gallery.attributes['data-tags']!
-                    .split(' ')
-                    .map((e) => int.parse(e))
-                    .toList()
-                    .cast<int>();
-                return Gallery(id, title, coverImageMeta, tagIds);
-              }).toList());
-        }
+        this.galleries = galleries;
+        this.currentPageIndex = currentPageIndex;
+        this.lastPageIndex = lastPageIndex;
+        paginationTextController.text = '$currentPageIndex / $lastPageIndex';
+      });
+    } catch (e) {
+      setState(() {
+        galleries = [];
+        currentPageIndex = 1;
+        lastPageIndex = 1;
+        paginationTextController.text = '$currentPageIndex / $lastPageIndex';
       });
 
-      if (paginationSection == null) {
-        setState(() {
-          currentPageIndex = 1;
-          lastPageIndex = 1;
-          paginationTextController.text =
-              '$currentPageIndex / ${lastPageIndex ?? 1}';
-        });
-      } else {
-        setState(() {
-          final pageCurrentA =
-              paginationSection.querySelector('.page.current')!;
-          currentPageIndex = int.parse(pageCurrentA.text);
-          final lastA = paginationSection.querySelector('.last');
-          lastPageIndex = (lastA != null)
-              ? int.parse(lastA.attributes['href']!.split('page=')[1])
-              : currentPageIndex;
-          paginationTextController.text =
-              '$currentPageIndex / ${lastPageIndex ?? 1}';
-        });
-      }
-    } else {
       toastification.show(
           title: Text(L10n.current.networkError),
           autoCloseDuration: const Duration(seconds: 3));

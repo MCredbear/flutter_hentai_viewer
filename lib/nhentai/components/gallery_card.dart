@@ -19,9 +19,8 @@ class GalleryCard extends StatefulWidget {
 }
 
 class _GalleryCardState extends State<GalleryCard> {
-  late bool isMasked = widget.gallery.tagIds
-      .where((tagId) => tagFilterStore.bannedTagIds.contains(tagId))
-      .isNotEmpty;
+  late bool isMasked =
+      widget.gallery.tagIds.any(tagFilterStore.bannedTagIds.contains);
 
   @override
   Widget build(BuildContext context) {
