@@ -8,8 +8,6 @@ part 'setting_store.g.dart';
 
 SettingsStore nhentaiSettingsStore = SettingsStore();
 
-enum TitleType { english, japanese, all }
-
 class SettingsStore = SettingsStoreBase with _$SettingsStore;
 
 abstract class SettingsStoreBase with Store {
