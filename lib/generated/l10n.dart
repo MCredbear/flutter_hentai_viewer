@@ -50,21 +50,21 @@ class L10n {
     return Localizations.of<L10n>(context, L10n);
   }
 
-  /// `Downloaded galleries`
-  String get downloadedGalleries {
+  /// `Downloaded`
+  String get downloaded {
     return Intl.message(
-      'Downloaded galleries',
-      name: 'downloadedGalleries',
+      'Downloaded',
+      name: 'downloaded',
       desc: '',
       args: [],
     );
   }
 
-  /// `Favorite galleries`
-  String get favoriteGalleries {
+  /// `Favorite`
+  String get favorite {
     return Intl.message(
-      'Favorite galleries',
-      name: 'favoriteGalleries',
+      'Favorite',
+      name: 'favorite',
       desc: '',
       args: [],
     );
@@ -465,6 +465,106 @@ class L10n {
     return Intl.message(
       'Unreachable',
       name: 'unreachable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `History mode`
+  String get historyMode {
+    return Intl.message(
+      'History mode',
+      name: 'historyMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disabled`
+  String get disabled {
+    return Intl.message(
+      'Disabled',
+      name: 'disabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Infinite`
+  String get infinite {
+    return Intl.message(
+      'Infinite',
+      name: 'infinite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limited`
+  String get limited {
+    return Intl.message(
+      'Limited',
+      name: 'limited',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `History limit`
+  String get historyLimit {
+    return Intl.message(
+      'History limit',
+      name: 'historyLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show history mode`
+  String get showHistoryMode {
+    return Intl.message(
+      'Show history mode',
+      name: 'showHistoryMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a pin on history gallery cover`
+  String get addAPin {
+    return Intl.message(
+      'Add a pin on history gallery cover',
+      name: 'addAPin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do not show history gallery`
+  String get doNotShow {
+    return Intl.message(
+      'Do not show history gallery',
+      name: 'doNotShow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No more else process`
+  String get showNormally {
+    return Intl.message(
+      'No more else process',
+      name: 'showNormally',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show favorite mode`
+  String get showFavoriteMode {
+    return Intl.message(
+      'Show favorite mode',
+      name: 'showFavoriteMode',
       desc: '',
       args: [],
     );

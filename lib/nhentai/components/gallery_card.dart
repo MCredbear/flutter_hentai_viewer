@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/flags.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/gallery_page.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/favorite_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/history_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class GalleryCard extends StatefulWidget {
   const GalleryCard(
@@ -26,70 +30,122 @@ class _GalleryCardState extends State<GalleryCard> {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AspectRatio(
-                aspectRatio: widget.gallery.coverImageMeta.width /
-                    widget.gallery.coverImageMeta.height,
-                child: ExtendedImage.network(
-                  proxy(widget.gallery.coverImageMeta.url),
-                  loadStateChanged: (state) {
-                    switch (state.extendedImageLoadState) {
-                      case LoadState.loading:
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        );
-                      case LoadState.completed:
-                        return state.completedWidget;
-                      case LoadState.failed:
-                        return const Icon(Icons.broken_image, size: 64);
-                    }
-                  },
+      child: Observer(
+        builder: (context) => Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AspectRatio(
+                  aspectRatio: widget.gallery.coverImageMeta.width /
+                      widget.gallery.coverImageMeta.height,
+                  child: ExtendedImage.network(
+                    proxy(widget.gallery.coverImageMeta.url),
+                    loadStateChanged: (state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          );
+                        case LoadState.completed:
+                          return state.completedWidget;
+                        case LoadState.failed:
+                          return const Icon(Icons.broken_image, size: 64);
+                      }
+                    },
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: RichText(
-                    text: TextSpan(
-                        children: widget.gallery.languages
-                                .map((language) => WidgetSpan(
-                                        child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      child: Flag(language),
-                                    )))
-                                .toList()
-                                .cast<InlineSpan>() +
-                            [TextSpan(text: widget.gallery.title)])),
-              )
-            ],
-          ),
-          if (isMasked)
-            Positioned.fill(
-                child: Container(color: Colors.black.withValues(alpha: 0.5))),
-          Positioned.fill(
-              child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                if (isMasked) {
-                  setState(() {
-                    isMasked = false;
-                  });
-                } else {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => GalleryPage(widget.gallery)));
-                }
-              },
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: RichText(
+                      text: TextSpan(
+                          children: widget.gallery.languages
+                                  .map((language) => WidgetSpan(
+                                          child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5, right: 5),
+                                        child: Flag(language),
+                                      )))
+                                  .toList()
+                                  .cast<InlineSpan>() +
+                              [
+                                TextSpan(
+                                    text: widget.gallery.title,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface))
+                              ])),
+                )
+              ],
             ),
-          ))
-        ],
+            if (nhentaiSettingsStore.historyMode != HistoryMode.disabled &&
+                nhentaiSettingsStore.showHistoryMode ==
+                    ShowHistoryMode.addAPin &&
+                historyStore.isInHistory(widget.gallery))
+              Positioned(
+                  top: 5,
+                  right: 5,
+                  child: Icon(Icons.beenhere,
+                      shadows: [
+                        Shadow(
+                            offset: const Offset(0, 1),
+                            blurRadius: 2,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .shadow
+                                .withValues(alpha: 0.5))
+                      ],
+                      color: Theme.of(context).colorScheme.tertiary)),
+            if (favoriteStore.isFavorite(widget.gallery))
+              Positioned(
+                  top: 5,
+                  right: nhentaiSettingsStore.showHistoryMode ==
+                              ShowHistoryMode.addAPin &&
+                          historyStore.isInHistory(widget.gallery) &&
+                          nhentaiSettingsStore.showFavoriteMode ==
+                              ShowFavoriteMode.addAPin
+                      ? 30
+                      : 5,
+                  child: Icon(Icons.favorite,
+                      shadows: [
+                        Shadow(
+                            offset: const Offset(0, 1),
+                            blurRadius: 2,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .shadow
+                                .withValues(alpha: 0.5))
+                      ],
+                      color: Theme.of(context).colorScheme.tertiary)),
+            if (isMasked)
+              Positioned.fill(
+                  child: Container(color: Colors.black.withValues(alpha: 0.5))),
+            Positioned.fill(
+                child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  if (isMasked) {
+                    setState(() {
+                      isMasked = false;
+                    });
+                  } else {
+                    if (nhentaiSettingsStore.historyMode !=
+                        HistoryMode.disabled) {
+                      historyStore.add(widget.gallery);
+                    }
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => GalleryPage(widget.gallery)));
+                  }
+                },
+              ),
+            ))
+          ],
+        ),
       ),
     );
   }

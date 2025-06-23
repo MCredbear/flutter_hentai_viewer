@@ -1,13 +1,11 @@
-import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
-import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/pages/home_page.dart' as nhentai;
+import 'package:flutter_hentai_viewer/jm/pages/home_page.dart' as jm;
 import 'package:flutter_hentai_viewer/switch_source_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_hentai_viewer/nhentai/pages/home_page.dart' as nhentai;
-import 'package:flutter_hentai_viewer/jm/pages/home_page.dart' as jm;
 import 'package:toastification/toastification.dart';
 
 void main() => runApp(const MainApp());
@@ -20,22 +18,21 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  bool settingsLoaded = false;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    globalSettingsStore.read().then((_) => nhentaiSettingsStore
-        .read()
-        .then((_) => tagFilterStore.read().then((_) => setState(() {
-              settingsLoaded = true;
-            }))));
+    globalSettingsStore.read().then((_) => setState(() {
+          isLoading = false;
+        }));
   }
 
   @override
   Widget build(BuildContext context) {
-    return settingsLoaded
-        ? ToastificationWrapper(
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : ToastificationWrapper(
             child: Observer(
               builder: (context) => MaterialApp(
                 localizationsDelegates: const [
@@ -60,9 +57,6 @@ class _MainAppState extends State<MainApp> {
                 },
               ),
             ),
-          )
-        : Container(
-            color: Colors.white10,
           );
   }
 }

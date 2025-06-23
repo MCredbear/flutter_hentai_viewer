@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addAPin": MessageLookupByLibrary.simpleMessage(
+            "Add a pin on history gallery cover"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "artist": MessageLookupByLibrary.simpleMessage("Artist"),
         "autoUpdateTags":
@@ -33,15 +35,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "dependsOnSystem":
             MessageLookupByLibrary.simpleMessage("Depends on system"),
-        "downloadedGalleries":
-            MessageLookupByLibrary.simpleMessage("Downloaded galleries"),
+        "disabled": MessageLookupByLibrary.simpleMessage("Disabled"),
+        "doNotShow":
+            MessageLookupByLibrary.simpleMessage("Do not show history gallery"),
+        "downloaded": MessageLookupByLibrary.simpleMessage("Downloaded"),
         "enabledTag": MessageLookupByLibrary.simpleMessage("Enabled tag"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
-        "favoriteGalleries":
-            MessageLookupByLibrary.simpleMessage("Favorite galleries"),
+        "favorite": MessageLookupByLibrary.simpleMessage("Favorite"),
         "global": MessageLookupByLibrary.simpleMessage("Global type"),
         "group": MessageLookupByLibrary.simpleMessage("Group"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
+        "historyLimit": MessageLookupByLibrary.simpleMessage("History limit"),
+        "historyMode": MessageLookupByLibrary.simpleMessage("History mode"),
+        "infinite": MessageLookupByLibrary.simpleMessage("Infinite"),
         "japanese": MessageLookupByLibrary.simpleMessage("Japanese"),
         "jump": MessageLookupByLibrary.simpleMessage("Jump"),
         "jumpTo": MessageLookupByLibrary.simpleMessage("Jump to"),
@@ -49,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "latency": MessageLookupByLibrary.simpleMessage("Latency"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("Left to right"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
+        "limited": MessageLookupByLibrary.simpleMessage("Limited"),
         "networkError": MessageLookupByLibrary.simpleMessage("Network error"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("Number of image to preload"),
@@ -64,6 +71,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Scroll up to load more (infinite scroll)"),
         "selectDomain": MessageLookupByLibrary.simpleMessage("Select domain"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "showFavoriteMode":
+            MessageLookupByLibrary.simpleMessage("Show favorite mode"),
+        "showHistoryMode":
+            MessageLookupByLibrary.simpleMessage("Show history mode"),
+        "showNormally":
+            MessageLookupByLibrary.simpleMessage("No more else process"),
         "switchSource": MessageLookupByLibrary.simpleMessage("Switch source"),
         "tag": MessageLookupByLibrary.simpleMessage("Tag"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("Tag filter"),

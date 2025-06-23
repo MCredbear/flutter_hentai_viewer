@@ -15,21 +15,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    () async {
+      await jmSettingsStore.read();
+    }.call().then((_) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  bool isLoading = true;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("JM"),
-      ),
-      drawer: Drawer(child: MenuDrawer(() {})),
-      body: Observer(
-          builder: (context) => jmSettingsStore.domain == null
-              ? const SelectDomainDialog()
-              : Center(
-                  child: Text(
-                    "Current domain: ${jmSettingsStore.domain}",
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                )),
-    );
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text("JM"),
+            ),
+            drawer: Drawer(child: MenuDrawer(() {})),
+            body: Observer(
+                builder: (context) => jmSettingsStore.domain == null
+                    ? const SelectDomainDialog()
+                    : Center(
+                        child: Text(
+                          "Current domain: ${jmSettingsStore.domain}",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      )),
+          );
   }
 }

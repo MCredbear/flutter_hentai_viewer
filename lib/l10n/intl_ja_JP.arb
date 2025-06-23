@@ -1,6 +1,6 @@
 {
-    "downloadedGalleries": "ダウンロードしたギャラリー",
-    "favoriteGalleries": "お気に入りギャラリー",
+    "downloaded": "ダウンロード完了",
+    "favorite": "お気に入り",
     "history": "履歴",
     "tagFilter": "タグフィルター",
     "settings": "設定",
@@ -40,5 +40,15 @@
     "selectDomain": "ドメインを選択",
     "testSpeed": "速度をテスト",
     "latency": "レイテンシ",
-    "unreachable": "接続できません"
+    "unreachable": "接続できません",
+    "historyMode": "履歴モード",
+    "disabled": "無効",
+    "infinite": "無限",
+    "limited": "制限付き",
+    "historyLimit": "履歴制限",
+    "showHistoryMode": "履歴の表示モード",
+    "addAPin": "履歴ギャラリーのカバーにピンを追加",
+    "doNotShow": "履歴ギャラリーを表示しない",
+    "showNormally": "通常通り表示",
+    "showFavoriteMode": "お気に入りの表示モード"
 }

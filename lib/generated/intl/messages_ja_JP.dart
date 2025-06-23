@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addAPin": MessageLookupByLibrary.simpleMessage("履歴ギャラリーのカバーにピンを追加"),
         "all": MessageLookupByLibrary.simpleMessage("すべて"),
         "artist": MessageLookupByLibrary.simpleMessage("アーティスト"),
         "autoUpdateTags": MessageLookupByLibrary.simpleMessage("タグを自動更新"),
@@ -31,14 +32,18 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("User-Agent をカスタマイズ"),
         "dark": MessageLookupByLibrary.simpleMessage("闇い"),
         "dependsOnSystem": MessageLookupByLibrary.simpleMessage("システムによって"),
-        "downloadedGalleries":
-            MessageLookupByLibrary.simpleMessage("ダウンロードしたギャラリー"),
+        "disabled": MessageLookupByLibrary.simpleMessage("無効"),
+        "doNotShow": MessageLookupByLibrary.simpleMessage("履歴ギャラリーを表示しない"),
+        "downloaded": MessageLookupByLibrary.simpleMessage("ダウンロード完了"),
         "enabledTag": MessageLookupByLibrary.simpleMessage("有効なタグ"),
         "english": MessageLookupByLibrary.simpleMessage("英語"),
-        "favoriteGalleries": MessageLookupByLibrary.simpleMessage("お気に入りギャラリー"),
+        "favorite": MessageLookupByLibrary.simpleMessage("お気に入り"),
         "global": MessageLookupByLibrary.simpleMessage("グローバルタイプ"),
         "group": MessageLookupByLibrary.simpleMessage("グループ"),
         "history": MessageLookupByLibrary.simpleMessage("履歴"),
+        "historyLimit": MessageLookupByLibrary.simpleMessage("履歴制限"),
+        "historyMode": MessageLookupByLibrary.simpleMessage("履歴モード"),
+        "infinite": MessageLookupByLibrary.simpleMessage("無限"),
         "japanese": MessageLookupByLibrary.simpleMessage("日本語"),
         "jump": MessageLookupByLibrary.simpleMessage("ジャンプ"),
         "jumpTo": MessageLookupByLibrary.simpleMessage("ジャンプ先"),
@@ -46,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "latency": MessageLookupByLibrary.simpleMessage("レイテンシ"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("左から右"),
         "light": MessageLookupByLibrary.simpleMessage("明るい"),
+        "limited": MessageLookupByLibrary.simpleMessage("制限付き"),
         "networkError": MessageLookupByLibrary.simpleMessage("ネットワークエラー"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("プリロードする画像の数"),
@@ -59,6 +65,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("上にスクロールしてもっと読み込む（無限スクロール）"),
         "selectDomain": MessageLookupByLibrary.simpleMessage("ドメインを選択"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "showFavoriteMode": MessageLookupByLibrary.simpleMessage("お気に入りの表示モード"),
+        "showHistoryMode": MessageLookupByLibrary.simpleMessage("履歴の表示モード"),
+        "showNormally": MessageLookupByLibrary.simpleMessage("通常通り表示"),
         "switchSource": MessageLookupByLibrary.simpleMessage("ソースを切り替える"),
         "tag": MessageLookupByLibrary.simpleMessage("タグ"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("タグフィルター"),

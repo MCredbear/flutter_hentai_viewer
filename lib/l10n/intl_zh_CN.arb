@@ -1,6 +1,6 @@
 {
-    "downloadedGalleries": "下载的漫画",
-    "favoriteGalleries":"收藏的漫画",
+    "downloaded": "下载",
+    "favorite":"收藏",
     "history":"历史记录",
     "tagFilter": "标签过滤",
     "settings":"设置",
@@ -40,5 +40,15 @@
     "selectDomain": "选择域名",
     "testSpeed": "测试速度",
     "latency": "延迟",
-    "unreachable": "无法连接"
+    "unreachable": "无法连接",
+    "historyMode": "历史记录模式",
+    "disabled": "禁用",
+    "infinite": "无限",
+    "limited": "有限",
+    "historyLimit": "历史记录限制",
+    "showHistoryMode": "历史记录显示模式",
+    "addAPin": "在历史画廊封面添加一个标记",
+    "doNotShow": "不现实示历史画廊",
+    "showNormally": "不做额外处理",
+    "showFavoriteMode": "收藏显示模式"
 }

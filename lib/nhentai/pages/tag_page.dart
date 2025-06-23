@@ -4,6 +4,8 @@ import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/api/api.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/history_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/menu_drawer.dart';
@@ -131,6 +133,9 @@ class _TagPageState extends State<TagPage> {
     try {
       final (galleries, currentPageIndex, lastPageIndex) =
           await searchBySingleTag(widget.keyTag, pageIndex);
+      if (nhentaiSettingsStore.showHistoryMode == ShowHistoryMode.doNotShow) {
+        galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
+      }
       setState(() {
         this.galleries = galleries;
         this.currentPageIndex = currentPageIndex;

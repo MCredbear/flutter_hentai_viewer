@@ -1,6 +1,6 @@
 {
-    "downloadedGalleries": "Downloaded galleries",
-    "favoriteGalleries":"Favorite galleries",
+    "downloaded": "Downloaded",
+    "favorite":"Favorite",
     "history":"History",
     "tagFilter": "Tag filter",
     "settings":"Settings",
@@ -40,5 +40,15 @@
     "selectDomain": "Select domain",
     "testSpeed": "Test speed",
     "latency": "Latency",
-    "unreachable": "Unreachable"
+    "unreachable": "Unreachable",
+    "historyMode": "History mode",
+    "disabled": "Disabled",
+    "infinite": "Infinite",
+    "limited": "Limited",
+    "historyLimit": "History limit",
+    "showHistoryMode": "Show history mode",
+    "addAPin": "Add a pin on history gallery cover",
+    "doNotShow": "Do not show history gallery",
+    "showNormally": "No more else process",
+    "showFavoriteMode": "Show favorite mode"
 }

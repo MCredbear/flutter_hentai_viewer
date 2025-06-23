@@ -10,12 +10,61 @@ SettingsStore nhentaiSettingsStore = SettingsStore();
 
 class SettingsStore = SettingsStoreBase with _$SettingsStore;
 
+enum HistoryMode {
+  disabled,
+  infinite,
+  limited,
+}
+
+enum ShowHistoryMode {
+  addAPin,
+  doNotShow,
+  showNormally,
+}
+
+enum ShowFavoriteMode {
+  addAPin,
+  showNormally,
+}
+
 abstract class SettingsStoreBase with Store {
   @observable
   bool autoUpdateTags = true;
   @action
   void setAutoUpdateTags(bool autoUpdateTags) {
     this.autoUpdateTags = autoUpdateTags;
+    save();
+  }
+
+  @observable
+  HistoryMode historyMode = HistoryMode.limited;
+  @action
+  void setHistoryState(HistoryMode state) {
+    historyMode = state;
+    save();
+  }
+
+  @observable
+  int maxHistoryGalleries = 100;
+  @action
+  void setMaxHistoryGalleries(int max) {
+    maxHistoryGalleries = max;
+    save();
+  }
+
+  @observable
+  ShowHistoryMode showHistoryMode = ShowHistoryMode.addAPin;
+  @action
+  void setShowHistoryState(ShowHistoryMode state) {
+    showHistoryMode = state;
+    save();
+  }
+
+  @observable
+  ShowFavoriteMode showFavoriteMode = ShowFavoriteMode.addAPin;
+  @action
+  void setShowFavoriteState(ShowFavoriteMode state) {
+    showFavoriteMode = state;
     save();
   }
 

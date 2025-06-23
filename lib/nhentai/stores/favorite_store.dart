@@ -24,11 +24,13 @@ abstract class FavoriteStoreBase with Store {
       return;
     }
     favoriteGalleries.add(gallery);
+    save();
   }
 
   @action
   void remove(Gallery gallery) {
     favoriteGalleries.removeWhere((e) => e.id == gallery.id);
+    save();
   }
 
   Future<void> read() async {
