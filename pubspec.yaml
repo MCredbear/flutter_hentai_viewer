@@ -37,6 +37,7 @@ flutter:
   assets:
     - assets/nhentai_tags.json
     - assets/nhentai_logo.png
+    - assets/jm_logo.png
     - assets/cn_flag.gif
     - assets/en_flag.gif
     - assets/jp_flag.gif

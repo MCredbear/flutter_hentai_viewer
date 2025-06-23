@@ -29,10 +29,16 @@
     "jumpTo": "转跳至",
     "jump": "转跳",
     "cancel": "取消",
+    "ok": "确定",
     "networkError": "网络错误",
     "updateTags": "更新标签",
     "scrollUpToLoadMore": "上拉加载更多（无限滚动）",
     "preloadImageCount": "预加载图片数量",
     "autoUpdateTags": "自动更新标签",
-    "pageCount": "页数"
+    "pageCount": "页数",
+    "switchSource": "切换源",
+    "selectDomain": "选择域名",
+    "testSpeed": "测试速度",
+    "latency": "延迟",
+    "unreachable": "无法连接"
 }

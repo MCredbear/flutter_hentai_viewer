@@ -46,11 +46,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "jump": MessageLookupByLibrary.simpleMessage("Jump"),
         "jumpTo": MessageLookupByLibrary.simpleMessage("Jump to"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "latency": MessageLookupByLibrary.simpleMessage("Latency"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("Left to right"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "networkError": MessageLookupByLibrary.simpleMessage("Network error"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("Number of image to preload"),
+        "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "pageCount": MessageLookupByLibrary.simpleMessage("Pages"),
         "parody": MessageLookupByLibrary.simpleMessage("Parody"),
         "preloadImageCount":
@@ -60,12 +62,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "rightToLeft": MessageLookupByLibrary.simpleMessage("Right to left"),
         "scrollUpToLoadMore": MessageLookupByLibrary.simpleMessage(
             "Scroll up to load more (infinite scroll)"),
+        "selectDomain": MessageLookupByLibrary.simpleMessage("Select domain"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "switchSource": MessageLookupByLibrary.simpleMessage("Switch source"),
         "tag": MessageLookupByLibrary.simpleMessage("Tag"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("Tag filter"),
+        "testSpeed": MessageLookupByLibrary.simpleMessage("Test speed"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "thisLanguage": MessageLookupByLibrary.simpleMessage("English"),
         "titleStyle": MessageLookupByLibrary.simpleMessage("Title style"),
+        "unreachable": MessageLookupByLibrary.simpleMessage("Unreachable"),
         "updateTags": MessageLookupByLibrary.simpleMessage("Update tags")
       };
 }

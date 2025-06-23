@@ -1,11 +1,13 @@
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
+import 'package:flutter_hentai_viewer/switch_source_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/home_page.dart' as nhentai;
+import 'package:flutter_hentai_viewer/jm/pages/home_page.dart' as jm;
 import 'package:toastification/toastification.dart';
 
 void main() => runApp(const MainApp());
@@ -32,11 +34,10 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    rootContext = context;
     return settingsLoaded
         ? ToastificationWrapper(
             child: Observer(
-              builder: (_) => MaterialApp(
+              builder: (context) => MaterialApp(
                 localizationsDelegates: const [
                   L10n.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -52,7 +53,11 @@ class _MainAppState extends State<MainApp> {
                         : ThemeData.light(useMaterial3: false))
                     : globalSettingsStore.themeData,
                 title: "FhViewer",
-                home: const nhentai.HomePage(),
+                home: switch (globalSettingsStore.source) {
+                  "nhentai" => const nhentai.HomePage(),
+                  "jm" => const jm.HomePage(),
+                  _ => const SwitchSourceDialog(),
+                },
               ),
             ),
           )

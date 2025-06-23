@@ -104,6 +104,22 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
     });
   }
 
+  late final _$sourceAtom =
+      Atom(name: 'GlobalSettingsStoreBase.source', context: context);
+
+  @override
+  String? get source {
+    _$sourceAtom.reportRead();
+    return super.source;
+  }
+
+  @override
+  set source(String? value) {
+    _$sourceAtom.reportWrite(value, super.source, () {
+      super.source = value;
+    });
+  }
+
   late final _$GlobalSettingsStoreBaseActionController =
       ActionController(name: 'GlobalSettingsStoreBase', context: context);
 
@@ -163,6 +179,17 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
   }
 
   @override
+  void setSource(String? source) {
+    final _$actionInfo = _$GlobalSettingsStoreBaseActionController.startAction(
+        name: 'GlobalSettingsStoreBase.setSource');
+    try {
+      return super.setSource(source);
+    } finally {
+      _$GlobalSettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 locale: ${locale},
@@ -170,6 +197,7 @@ themeData: ${themeData},
 readingDirection: ${readingDirection},
 scrollUpToLoadMore: ${scrollUpToLoadMore},
 preloadImageCount: ${preloadImageCount},
+source: ${source},
 themeDataString: ${themeDataString},
 readingDirectionString: ${readingDirectionString}
     ''';

@@ -43,11 +43,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "jump": MessageLookupByLibrary.simpleMessage("ジャンプ"),
         "jumpTo": MessageLookupByLibrary.simpleMessage("ジャンプ先"),
         "language": MessageLookupByLibrary.simpleMessage("言語"),
+        "latency": MessageLookupByLibrary.simpleMessage("レイテンシ"),
         "leftToRight": MessageLookupByLibrary.simpleMessage("左から右"),
         "light": MessageLookupByLibrary.simpleMessage("明るい"),
         "networkError": MessageLookupByLibrary.simpleMessage("ネットワークエラー"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("プリロードする画像の数"),
+        "ok": MessageLookupByLibrary.simpleMessage("確認"),
         "pageCount": MessageLookupByLibrary.simpleMessage("ページの数"),
         "parody": MessageLookupByLibrary.simpleMessage("パロディ"),
         "preloadImageCount": MessageLookupByLibrary.simpleMessage("プリロード画像数"),
@@ -55,12 +57,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "rightToLeft": MessageLookupByLibrary.simpleMessage("右から左"),
         "scrollUpToLoadMore":
             MessageLookupByLibrary.simpleMessage("上にスクロールしてもっと読み込む（無限スクロール）"),
+        "selectDomain": MessageLookupByLibrary.simpleMessage("ドメインを選択"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "switchSource": MessageLookupByLibrary.simpleMessage("ソースを切り替える"),
         "tag": MessageLookupByLibrary.simpleMessage("タグ"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("タグフィルター"),
+        "testSpeed": MessageLookupByLibrary.simpleMessage("速度をテスト"),
         "theme": MessageLookupByLibrary.simpleMessage("テーマ"),
         "thisLanguage": MessageLookupByLibrary.simpleMessage("日本語"),
         "titleStyle": MessageLookupByLibrary.simpleMessage("タイトルスタイル"),
+        "unreachable": MessageLookupByLibrary.simpleMessage("接続できません"),
         "updateTags": MessageLookupByLibrary.simpleMessage("タグを更新")
       };
 }

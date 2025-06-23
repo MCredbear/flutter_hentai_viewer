@@ -29,10 +29,16 @@
     "jumpTo": "ジャンプ先",
     "jump": "ジャンプ",
     "cancel": "キャンセル",
+    "ok": "確認",
     "networkError": "ネットワークエラー",
     "updateTags": "タグを更新",
     "scrollUpToLoadMore": "上にスクロールしてもっと読み込む（無限スクロール）",
     "preloadImageCount": "プリロード画像数",
     "autoUpdateTags": "タグを自動更新",
-    "pageCount": "ページの数"
+    "pageCount": "ページの数",
+    "switchSource": "ソースを切り替える",
+    "selectDomain": "ドメインを選択",
+    "testSpeed": "速度をテスト",
+    "latency": "レイテンシ",
+    "unreachable": "接続できません"
 }

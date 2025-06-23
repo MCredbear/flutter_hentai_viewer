@@ -29,10 +29,16 @@
     "jumpTo": "Jump to",
     "jump": "Jump",
     "cancel": "Cancel",
+    "ok": "OK",
     "networkError": "Network error",
     "updateTags": "Update tags",
     "scrollUpToLoadMore": "Scroll up to load more (infinite scroll)",
     "preloadImageCount": "Preload image count",
     "autoUpdateTags": "Auto update tags",
-    "pageCount": "Pages"
+    "pageCount": "Pages",
+    "switchSource": "Switch source",
+    "selectDomain": "Select domain",
+    "testSpeed": "Test speed",
+    "latency": "Latency",
+    "unreachable": "Unreachable"
 }

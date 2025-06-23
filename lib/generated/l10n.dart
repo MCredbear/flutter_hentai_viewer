@@ -350,6 +350,16 @@ class L10n {
     );
   }
 
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Network error`
   String get networkError {
     return Intl.message(
@@ -405,6 +415,56 @@ class L10n {
     return Intl.message(
       'Pages',
       name: 'pageCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Switch source`
+  String get switchSource {
+    return Intl.message(
+      'Switch source',
+      name: 'switchSource',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select domain`
+  String get selectDomain {
+    return Intl.message(
+      'Select domain',
+      name: 'selectDomain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test speed`
+  String get testSpeed {
+    return Intl.message(
+      'Test speed',
+      name: 'testSpeed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latency`
+  String get latency {
+    return Intl.message(
+      'Latency',
+      name: 'latency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unreachable`
+  String get unreachable {
+    return Intl.message(
+      'Unreachable',
+      name: 'unreachable',
       desc: '',
       args: [],
     );

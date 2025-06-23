@@ -71,6 +71,14 @@ abstract class GlobalSettingsStoreBase with Store {
     save();
   }
 
+  @observable
+  String? source;
+  @action
+  void setSource(String? source) {
+    this.source = source;
+    save();
+  }
+
   Future<void> read() async {
     final appDir = await getApplicationSupportDirectory();
     final settingsFile = File('${appDir.path}/global_settings.json');
@@ -104,6 +112,10 @@ abstract class GlobalSettingsStoreBase with Store {
         null => 5,
         _ => settings['preloadImageCount'],
       };
+      source = switch (settings['source']) {
+        null => null,
+        _ => settings['source'] as String,
+      };
     }
   }
 
@@ -122,6 +134,7 @@ abstract class GlobalSettingsStoreBase with Store {
       'readingDirection': readingDirection.name,
       'scrollUpToLoad': scrollUpToLoadMore,
       'preloadImageCount': preloadImageCount,
+      'source': source,
     };
     settingsFile.writeAsStringSync(json.encode(settings));
   }
