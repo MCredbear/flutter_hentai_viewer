@@ -103,10 +103,13 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             drawer: const MenuDrawer(),
-            onDrawerChanged: (isOpened) {
+            onDrawerChanged: (isOpened) async {
               if (!isOpened) {
+                setState(() {
+                  galleries = null;
+                });
                 if (globalSettingsStore.scrollUpToLoadMore) {
-                  getGalleries(1);
+                  await getGalleries(1);
                   scrollController.jumpTo(0);
                 } else {
                   getGalleries(currentPageIndex);
@@ -207,7 +210,9 @@ class _HomePageState extends State<HomePage> {
         galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
       }
       setState(() {
-        this.galleries = galleries;
+        this.galleries = globalSettingsStore.scrollUpToLoadMore
+            ? (this.galleries ?? <Gallery>[]) + galleries
+            : galleries;
         this.currentPageIndex = currentPageIndex;
         this.lastPageIndex = lastPageIndex;
         paginationTextController.text = '$currentPageIndex / $lastPageIndex';
@@ -242,7 +247,9 @@ class _HomePageState extends State<HomePage> {
         galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
       }
       setState(() {
-        this.galleries = galleries;
+        this.galleries = globalSettingsStore.scrollUpToLoadMore
+            ? (this.galleries ?? <Gallery>[]) + galleries
+            : galleries;
         this.currentPageIndex = currentPageIndex;
         this.lastPageIndex = lastPageIndex;
         paginationTextController.text = '$currentPageIndex / $lastPageIndex';

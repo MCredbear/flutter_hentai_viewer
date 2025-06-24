@@ -64,6 +64,9 @@ class _TagPageState extends State<TagPage> {
         drawer: const MenuDrawer(),
         onDrawerChanged: (isOpened) async {
           if (!isOpened) {
+            setState(() {
+              galleries = null;
+            });
             if (globalSettingsStore.scrollUpToLoadMore) {
               await getGalleries(1);
               scrollController.jumpTo(0);
@@ -161,7 +164,9 @@ class _TagPageState extends State<TagPage> {
         galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
       }
       setState(() {
-        this.galleries = galleries;
+        this.galleries = globalSettingsStore.scrollUpToLoadMore
+            ? (this.galleries ?? <Gallery>[]) + galleries
+            : galleries;
         this.currentPageIndex = currentPageIndex;
         this.lastPageIndex = lastPageIndex;
         paginationTextController.text = '$currentPageIndex / $lastPageIndex';
