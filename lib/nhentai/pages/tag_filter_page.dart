@@ -366,8 +366,13 @@ class _TagChipState extends State<TagChip> {
                   ),
                   const SizedBox(width: 5),
                   Expanded(
-                    child: Text(widget.tag.name,
-                        maxLines: 2, overflow: TextOverflow.ellipsis),
+                    child: Text(
+                      widget.tag.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
                   ),
                   const SizedBox(width: 5),
                   Text('${widget.tag.count}')
