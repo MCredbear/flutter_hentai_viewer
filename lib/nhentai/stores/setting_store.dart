@@ -77,6 +77,24 @@ abstract class SettingsStoreBase with Store {
     } else {
       final settings = json.decode(file.readAsStringSync());
       autoUpdateTags = settings['autoUpdateTags'] ?? true;
+      historyMode = switch (settings['historyMode']) {
+        'disabled' => HistoryMode.disabled,
+        'infinite' => HistoryMode.infinite,
+        'limited' => HistoryMode.limited,
+        _ => HistoryMode.limited,
+      };
+      maxHistoryGalleries = settings['maxHistoryGalleries'] ?? 100;
+      showHistoryMode = switch (settings['showHistoryMode']) {
+        'addAPin' => ShowHistoryMode.addAPin,
+        'doNotShow' => ShowHistoryMode.doNotShow,
+        'showNormally' => ShowHistoryMode.showNormally,
+        _ => ShowHistoryMode.addAPin,
+      };
+      showFavoriteMode = switch (settings['showFavoriteMode']) {
+        'addAPin' => ShowFavoriteMode.addAPin,
+        'showNormally' => ShowFavoriteMode.showNormally,
+        _ => ShowFavoriteMode.addAPin,
+      };
     }
   }
 
@@ -85,6 +103,10 @@ abstract class SettingsStoreBase with Store {
     final file = File('${appDir.path}/nhentai_settings.json');
     final settings = {
       'autoUpdateTags': autoUpdateTags,
+      'historyMode': historyMode.name,
+      'maxHistoryGalleries': maxHistoryGalleries,
+      'showHistoryMode': showHistoryMode.name,
+      'showFavoriteMode': showFavoriteMode.name,
     };
     file.writeAsStringSync(json.encode(settings));
   }
