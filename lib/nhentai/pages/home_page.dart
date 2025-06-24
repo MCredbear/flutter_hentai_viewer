@@ -44,10 +44,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getGalleries(int pageIndex) => tagFilterStore.tags
-          .where((tag) =>
-              tag.tagState == TagState.banned ||
-              tag.tagState == TagState.required)
-          .isEmpty
+              .where((tag) =>
+                  tag.tagState == TagState.banned ||
+                  tag.tagState == TagState.required)
+              .isEmpty &&
+          !searching
       ? getLatestGalleries(pageIndex)
       : searchGalleries(pageIndex);
 
