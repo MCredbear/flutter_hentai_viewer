@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   List<Gallery>? galleries;
 
   int currentPageIndex = 1;
+  int loadingPageIndex = 1;
   int? lastPageIndex;
   final paginationTextController = TextEditingController();
 
@@ -67,8 +68,10 @@ class _HomePageState extends State<HomePage> {
     if (globalSettingsStore.scrollUpToLoadMore &&
         scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 100 &&
-        currentPageIndex < (lastPageIndex ?? 1)) {
-      getGalleries(currentPageIndex + 1);
+        currentPageIndex < (lastPageIndex ?? 1) &&
+        currentPageIndex == loadingPageIndex) {
+      loadingPageIndex = currentPageIndex + 1;
+      getGalleries(loadingPageIndex);
     }
   }
 
