@@ -13,48 +13,56 @@ class SelectDomainDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
-      return AlertDialog(
-        title: Text(L10n.of(context).selectDomain),
-        actions: [
-          TextButton(
-            child: Text(L10n.of(context).testSpeed),
-            onPressed: () {
-              for (var domain in domains) {
-                pingDomain(domain).then((latency) {
-                  jmSettingsStore.setDomainLatency(domain, latency);
-                });
-              }
-            },
-          ),
-          TextButton(
-            child: Text(L10n.of(context).ok),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-        content: Observer(
-          builder: (context) => RadioGroup(
-            groupValue: jmSettingsStore.domain,
-            onChanged: (_) {},
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: domains
-                    .map((domain) => ListTile(
-                          leading: Radio(value: domain),
-                          title: Text(domain),
-                          subtitle: Observer(
-                            builder: (context) => Text(
-                              jmSettingsStore.domain2latency[domain] == -1
-                                  ? L10n.of(context).unreachable
-                                  : jmSettingsStore.domain2latency[domain] ==
-                                          null
-                                      ? '? ms'
-                                      : '${jmSettingsStore.domain2latency[domain]} ms',
-                            ),
-                          ),
-                          onTap: () => jmSettingsStore.setDomain(domain),
-                        ))
-                    .toList(),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 64),
+        child: AlertDialog(
+          title: Text(L10n.of(context).selectDomain),
+          actions: [
+            TextButton(
+              child: Text(L10n.of(context).testSpeed),
+              onPressed: () {
+                for (var domain in domains) {
+                  pingDomain(domain).then((latency) {
+                    jmSettingsStore.setDomainLatency(domain, latency);
+                  });
+                }
+              },
+            ),
+            TextButton(
+              child: Text(L10n.of(context).ok),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+          content: Observer(
+            builder: (context) => RadioGroup(
+              groupValue: jmSettingsStore.domain,
+              onChanged: (_) {},
+              child: Scrollbar(
+                thumbVisibility: true,
+                trackVisibility: true,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: domains
+                        .map((domain) => ListTile(
+                              leading: Radio(value: domain),
+                              title: Text(domain),
+                              subtitle: Observer(
+                                builder: (context) => Text(
+                                  jmSettingsStore.domain2latency[domain] == -1
+                                      ? L10n.of(context).unreachable
+                                      : jmSettingsStore
+                                                  .domain2latency[domain] ==
+                                              null
+                                          ? '? ms'
+                                          : '${jmSettingsStore.domain2latency[domain]} ms',
+                                ),
+                              ),
+                              onTap: () => jmSettingsStore.setDomain(domain),
+                            ))
+                        .toList(),
+                  ),
+                ),
               ),
             ),
           ),
