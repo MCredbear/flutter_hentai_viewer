@@ -11,6 +11,7 @@ import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/menu_drawer.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -37,13 +38,11 @@ class _HomePageState extends State<HomePage> {
         isLoading = false;
       });
       getGalleries(currentPageIndex);
-      if (globalSettingsStore.scrollUpToLoadMore) {
-        scrollController.addListener(scrollListener);
-      }
+      scrollController.addListener(scrollListener);
     });
   }
 
-  void getGalleries(int pageIndex) => tagFilterStore.tags
+  Future<void> getGalleries(int pageIndex) => tagFilterStore.tags
               .where((tag) =>
                   tag.tagState == TagState.banned ||
                   tag.tagState == TagState.required)
@@ -65,7 +64,8 @@ class _HomePageState extends State<HomePage> {
 
   final scrollController = ScrollController();
   void scrollListener() {
-    if (scrollController.position.pixels >=
+    if (globalSettingsStore.scrollUpToLoadMore &&
+        scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 100 &&
         currentPageIndex < (lastPageIndex ?? 1)) {
       getGalleries(currentPageIndex + 1);
@@ -102,7 +102,17 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(!searching ? Icons.search : Icons.cancel))
               ],
             ),
-            drawer: MenuDrawer(() => getGalleries(1)),
+            drawer: const MenuDrawer(),
+            onDrawerChanged: (isOpened) {
+              if (!isOpened) {
+                if (globalSettingsStore.scrollUpToLoadMore) {
+                  getGalleries(1);
+                  scrollController.jumpTo(0);
+                } else {
+                  getGalleries(currentPageIndex);
+                }
+              }
+            },
             bottomNavigationBar: (lastPageIndex == null || lastPageIndex == 1)
                 ? null
                 : SizedBox(
@@ -112,17 +122,21 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(
-                              flex: 1,
-                              child: (currentPageIndex == 1 ||
-                                      globalSettingsStore.scrollUpToLoadMore)
-                                  ? Container()
-                                  : IconButton(
-                                      onPressed: () {
-                                        getGalleries(currentPageIndex - 1);
-                                      },
-                                      icon: const Icon(
-                                          Icons.keyboard_arrow_left))),
+                          Observer(
+                            builder: (context) => Expanded(
+                                flex: 1,
+                                child: (currentPageIndex == 1 ||
+                                        globalSettingsStore.scrollUpToLoadMore)
+                                    ? Container()
+                                    : IconButton(
+                                        onPressed: () async {
+                                          await getGalleries(
+                                              currentPageIndex - 1);
+                                          scrollController.jumpTo(0);
+                                        },
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_left))),
+                          ),
                           Expanded(
                               flex: 1,
                               child: Padding(
@@ -146,17 +160,21 @@ class _HomePageState extends State<HomePage> {
                                     textAlign: TextAlign.center,
                                     controller: paginationTextController),
                               )),
-                          Expanded(
-                              flex: 1,
-                              child: (currentPageIndex == lastPageIndex ||
-                                      globalSettingsStore.scrollUpToLoadMore)
-                                  ? Container()
-                                  : IconButton(
-                                      onPressed: () {
-                                        getGalleries(currentPageIndex + 1);
-                                      },
-                                      icon: const Icon(
-                                          Icons.keyboard_arrow_right))),
+                          Observer(
+                            builder: (context) => Expanded(
+                                flex: 1,
+                                child: (currentPageIndex == lastPageIndex ||
+                                        globalSettingsStore.scrollUpToLoadMore)
+                                    ? Container()
+                                    : IconButton(
+                                        onPressed: () async {
+                                          await getGalleries(
+                                              currentPageIndex + 1);
+                                          scrollController.jumpTo(0);
+                                        },
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_right))),
+                          ),
                         ],
                       ),
                     ),
@@ -164,19 +182,24 @@ class _HomePageState extends State<HomePage> {
             body: Center(
               child: (galleries == null)
                   ? const CircularProgressIndicator()
-                  : WaterfallFlow.builder(
-                      controller: scrollController,
-                      gridDelegate:
-                          const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
-                      itemCount: galleries!.length,
-                      itemBuilder: (context, index) =>
-                          GalleryCard(galleries![index]),
+                  : RefreshIndicator(
+                      onRefresh: () async {
+                        await getGalleries(currentPageIndex);
+                      },
+                      child: WaterfallFlow.builder(
+                        controller: scrollController,
+                        gridDelegate:
+                            const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2),
+                        itemCount: galleries!.length,
+                        itemBuilder: (context, index) =>
+                            GalleryCard(galleries![index]),
+                      ),
                     ),
             ));
   }
 
-  void getLatestGalleries(int pageIndex) async {
+  Future<void> getLatestGalleries(int pageIndex) async {
     try {
       final (galleries, currentPageIndex, lastPageIndex) =
           await api.latestUpdateGalleries(pageIndex);
@@ -203,7 +226,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void searchGalleries(int pageIndex) async {
+  Future<void> searchGalleries(int pageIndex) async {
     try {
       final (galleries, currentPageIndex, lastPageIndex) =
           await api.searchGalleries(

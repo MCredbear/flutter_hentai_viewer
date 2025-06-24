@@ -9,12 +9,9 @@ import 'package:flutter_hentai_viewer/switch_source_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class MenuDrawer extends StatelessWidget {
-  const MenuDrawer(
-    this.refreshHomePage, {
+  const MenuDrawer({
     super.key,
   });
-
-  final Function refreshHomePage;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +65,8 @@ class MenuDrawer extends StatelessWidget {
             leading: const Icon(Icons.tag),
             title: Text(L10n.of(context).tagFilter),
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                      builder: (context) => const TagFilterPage()))
-                  .then((_) => refreshHomePage());
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const TagFilterPage()));
             },
           ),
           ListTile(

@@ -83,8 +83,8 @@ class _GalleryCardState extends State<GalleryCard> {
               ],
             ),
             if (nhentaiSettingsStore.historyMode != HistoryMode.disabled &&
-                nhentaiSettingsStore.showHistoryMode ==
-                    ShowHistoryMode.addAPin &&
+                nhentaiSettingsStore.showHistoryMode !=
+                    ShowHistoryMode.showNormally &&
                 historyStore.isInHistory(widget.gallery))
               Positioned(
                   top: 5,

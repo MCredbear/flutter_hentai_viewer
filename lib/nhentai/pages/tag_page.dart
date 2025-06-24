@@ -9,6 +9,7 @@ import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/menu_drawer.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -60,7 +61,17 @@ class _TagPageState extends State<TagPage> {
             ),
           ],
         ),
-        drawer: MenuDrawer(() => getGalleries(1)),
+        drawer: const MenuDrawer(),
+        onDrawerChanged: (isOpened) async {
+          if (!isOpened) {
+            if (globalSettingsStore.scrollUpToLoadMore) {
+              await getGalleries(1);
+              scrollController.jumpTo(0);
+            } else {
+              getGalleries(currentPageIndex);
+            }
+          }
+        },
         bottomNavigationBar: (lastPageIndex == null || lastPageIndex == 1)
             ? null
             : SizedBox(
@@ -70,16 +81,20 @@ class _TagPageState extends State<TagPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                          flex: 1,
-                          child: (currentPageIndex == 1 ||
-                                  globalSettingsStore.scrollUpToLoadMore)
-                              ? Container()
-                              : IconButton(
-                                  onPressed: () {
-                                    getGalleries(currentPageIndex - 1);
-                                  },
-                                  icon: const Icon(Icons.keyboard_arrow_left))),
+                      Observer(
+                        builder: (context) => Expanded(
+                            flex: 1,
+                            child: (currentPageIndex == 1 ||
+                                    globalSettingsStore.scrollUpToLoadMore)
+                                ? Container()
+                                : IconButton(
+                                    onPressed: () async {
+                                      await getGalleries(currentPageIndex - 1);
+                                      scrollController.jumpTo(0);
+                                    },
+                                    icon:
+                                        const Icon(Icons.keyboard_arrow_left))),
+                      ),
                       Expanded(
                           flex: 1,
                           child: Padding(
@@ -100,17 +115,20 @@ class _TagPageState extends State<TagPage> {
                                 textAlign: TextAlign.center,
                                 controller: paginationTextController),
                           )),
-                      Expanded(
-                          flex: 1,
-                          child: (currentPageIndex == lastPageIndex ||
-                                  globalSettingsStore.scrollUpToLoadMore)
-                              ? Container()
-                              : IconButton(
-                                  onPressed: () {
-                                    getGalleries(currentPageIndex + 1);
-                                  },
-                                  icon:
-                                      const Icon(Icons.keyboard_arrow_right))),
+                      Observer(
+                        builder: (context) => Expanded(
+                            flex: 1,
+                            child: (currentPageIndex == lastPageIndex ||
+                                    globalSettingsStore.scrollUpToLoadMore)
+                                ? Container()
+                                : IconButton(
+                                    onPressed: () async {
+                                      await getGalleries(currentPageIndex + 1);
+                                      scrollController.jumpTo(0);
+                                    },
+                                    icon: const Icon(
+                                        Icons.keyboard_arrow_right))),
+                      ),
                     ],
                   ),
                 ),
@@ -118,18 +136,24 @@ class _TagPageState extends State<TagPage> {
         body: Center(
           child: (galleries == null)
               ? const CircularProgressIndicator()
-              : WaterfallFlow.builder(
-                  controller: scrollController,
-                  gridDelegate:
-                      const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                  itemCount: galleries!.length,
-                  itemBuilder: (context, index) =>
-                      GalleryCard(galleries![index])),
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    await getGalleries(currentPageIndex);
+                  },
+                  child: WaterfallFlow.builder(
+                    controller: scrollController,
+                    gridDelegate:
+                        const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                    itemCount: galleries!.length,
+                    itemBuilder: (context, index) =>
+                        GalleryCard(galleries![index]),
+                  ),
+                ),
         ));
   }
 
-  void getGalleries(int pageIndex) async {
+  Future<void> getGalleries(int pageIndex) async {
     try {
       final (galleries, currentPageIndex, lastPageIndex) =
           await searchBySingleTag(widget.keyTag, pageIndex);
