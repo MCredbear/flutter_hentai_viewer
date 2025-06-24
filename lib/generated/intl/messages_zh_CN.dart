@@ -33,7 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dark": MessageLookupByLibrary.simpleMessage("黑暗"),
         "dependsOnSystem": MessageLookupByLibrary.simpleMessage("跟随系统"),
         "disabled": MessageLookupByLibrary.simpleMessage("禁用"),
-        "doNotShow": MessageLookupByLibrary.simpleMessage("不现实示历史画廊"),
+        "doNotShow": MessageLookupByLibrary.simpleMessage("不显示历史画廊"),
         "downloaded": MessageLookupByLibrary.simpleMessage("下载"),
         "enabledTag": MessageLookupByLibrary.simpleMessage("已启用的标签"),
         "english": MessageLookupByLibrary.simpleMessage("英语"),
