@@ -21,7 +21,7 @@ class MenuDrawer extends StatelessWidget {
           Card(
             margin: const EdgeInsets.all(0),
             child: Container(
-              decoration: const BoxDecoration(color: Colors.black),
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
               height: 100,
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Image.asset(
