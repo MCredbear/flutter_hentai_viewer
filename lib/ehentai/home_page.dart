@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({
+class HomePage extends StatelessWidget {
+  const HomePage({
     super.key,
   });
 
@@ -9,7 +9,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("FhViewer"),
+        title: const Text("EHentai"),
       ),
       drawer: Drawer(
         child: ListView(children: const []),

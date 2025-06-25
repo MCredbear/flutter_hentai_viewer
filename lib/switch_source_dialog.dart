@@ -28,6 +28,18 @@ class SwitchSourceDialog extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: Image.asset(
+              "assets/ehentai_logo.ico",
+              width: 50,
+            ),
+            title: const Text("EHentai"),
+            onTap: () {
+              globalSettingsStore.setSource("nhentai");
+              Navigator.of(context).pop();
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: Image.asset(
               "assets/jm_logo.png",
               width: 50,
             ),
