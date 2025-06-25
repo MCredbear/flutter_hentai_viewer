@@ -1,4 +1,5 @@
 import 'package:flutter_hentai_viewer/nhentai/pages/home_page.dart' as nhentai;
+import 'package:flutter_hentai_viewer/ehentai/pages/home_page.dart' as ehentai;
 import 'package:flutter_hentai_viewer/jm/pages/home_page.dart' as jm;
 import 'package:flutter_hentai_viewer/switch_source_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -52,6 +53,7 @@ class _MainAppState extends State<MainApp> {
                 title: "FhViewer",
                 home: switch (globalSettingsStore.source) {
                   "nhentai" => const nhentai.HomePage(),
+                  "ehentai" => const ehentai.HomePage(),
                   "jm" => const jm.HomePage(),
                   _ => const SwitchSourceDialog(),
                 },

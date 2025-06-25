@@ -33,7 +33,7 @@ class SwitchSourceDialog extends StatelessWidget {
             ),
             title: const Text("EHentai"),
             onTap: () {
-              globalSettingsStore.setSource("nhentai");
+              globalSettingsStore.setSource("ehentai");
               Navigator.of(context).pop();
             },
           ),
