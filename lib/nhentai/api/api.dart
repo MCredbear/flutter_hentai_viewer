@@ -51,6 +51,8 @@ part 'gallery_info.dart';
         final lastA = paginationSection.querySelector('.last');
         if (lastA != null) {
           totalPages = int.parse(lastA.attributes['href']!.split('page=')[1]);
+        } else {
+          totalPages = currentPageIndex;
         }
       }
     }
