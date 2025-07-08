@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/components/jump_dialog.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
-import 'package:flutter_hentai_viewer/nhentai/utils.dart';
+import 'package:flutter_hentai_viewer/utils.dart';
 
 class ReadingPage extends StatefulWidget {
   const ReadingPage(this.gallery, this.readingImageUrls, this.initPageIndex,

@@ -7,7 +7,7 @@ import 'package:flutter_hentai_viewer/nhentai/stores/favorite_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/history_store.dart';
-import 'package:flutter_hentai_viewer/nhentai/utils.dart';
+import 'package:flutter_hentai_viewer/utils.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class GalleryCard extends StatefulWidget {

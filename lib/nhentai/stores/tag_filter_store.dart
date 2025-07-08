@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
+import 'package:flutter_hentai_viewer/utils.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
