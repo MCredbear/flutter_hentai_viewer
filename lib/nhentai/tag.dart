@@ -23,7 +23,7 @@ class Tag {
         'group' => TagType.group,
         'language' => TagType.language,
         'category' => TagType.category,
-        _ => throw Exception('Unknown tag type'),
+        _ => throw Exception('Unknown tag type: ${json['tagType']}'),
       },
       count: json['count'] as int?,
       tagState: switch (json['tagState']) {
