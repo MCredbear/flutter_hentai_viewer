@@ -50,5 +50,7 @@
     "addAPin": "Add a pin on history gallery cover",
     "doNotShow": "Do not show history gallery",
     "showNormally": "No more else process",
-    "showFavoriteMode": "Show favorite mode"
+    "showFavoriteMode": "Show favorite mode",
+    "proxyMode": "Proxy mode",
+    "none": "None"
 }

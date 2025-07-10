@@ -14,6 +14,12 @@ GlobalSettingsStore globalSettingsStore = GlobalSettingsStore();
 
 class GlobalSettingsStore = GlobalSettingsStoreBase with _$GlobalSettingsStore;
 
+enum ProxyMode {
+  cloudflare,
+  vercel,
+  none,
+}
+
 abstract class GlobalSettingsStoreBase with Store {
   @observable
   Locale? locale;
@@ -79,6 +85,14 @@ abstract class GlobalSettingsStoreBase with Store {
     save();
   }
 
+  @observable
+  Enum proxyMode = ProxyMode.vercel;
+  @action
+  void setProxyMode(ProxyMode mode) {
+    proxyMode = mode;
+    save();
+  }
+
   Future<void> read() async {
     final appDir = await getApplicationSupportDirectory();
     final settingsFile = File('${appDir.path}/global_settings.json');
@@ -116,6 +130,12 @@ abstract class GlobalSettingsStoreBase with Store {
         null => null,
         _ => settings['source'] as String,
       };
+      proxyMode = switch (settings['proxyMode']) {
+        'cloudflare' => ProxyMode.cloudflare,
+        'vercel' => ProxyMode.vercel,
+        'none' => ProxyMode.none,
+        _ => ProxyMode.vercel,
+      };
     }
   }
 
@@ -135,6 +155,12 @@ abstract class GlobalSettingsStoreBase with Store {
       'scrollUpToLoad': scrollUpToLoadMore,
       'preloadImageCount': preloadImageCount,
       'source': source,
+      'proxyMode': switch (proxyMode) {
+        ProxyMode.cloudflare => 'cloudflare',
+        ProxyMode.vercel => 'vercel',
+        ProxyMode.none => 'none',
+        _ => 'vercel',
+      },
     };
     settingsFile.writeAsStringSync(json.encode(settings));
   }

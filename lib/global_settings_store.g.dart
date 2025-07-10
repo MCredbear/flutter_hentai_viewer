@@ -120,6 +120,22 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
     });
   }
 
+  late final _$proxyModeAtom =
+      Atom(name: 'GlobalSettingsStoreBase.proxyMode', context: context);
+
+  @override
+  Enum get proxyMode {
+    _$proxyModeAtom.reportRead();
+    return super.proxyMode;
+  }
+
+  @override
+  set proxyMode(Enum value) {
+    _$proxyModeAtom.reportWrite(value, super.proxyMode, () {
+      super.proxyMode = value;
+    });
+  }
+
   late final _$GlobalSettingsStoreBaseActionController =
       ActionController(name: 'GlobalSettingsStoreBase', context: context);
 
@@ -190,6 +206,17 @@ mixin _$GlobalSettingsStore on GlobalSettingsStoreBase, Store {
   }
 
   @override
+  void setProxyMode(ProxyMode mode) {
+    final _$actionInfo = _$GlobalSettingsStoreBaseActionController.startAction(
+        name: 'GlobalSettingsStoreBase.setProxyMode');
+    try {
+      return super.setProxyMode(mode);
+    } finally {
+      _$GlobalSettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 locale: ${locale},
@@ -198,6 +225,7 @@ readingDirection: ${readingDirection},
 scrollUpToLoadMore: ${scrollUpToLoadMore},
 preloadImageCount: ${preloadImageCount},
 source: ${source},
+proxyMode: ${proxyMode},
 themeDataString: ${themeDataString},
 readingDirectionString: ${readingDirectionString}
     ''';

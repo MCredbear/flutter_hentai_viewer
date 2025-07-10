@@ -151,6 +151,38 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
           ),
+          PopupMenuButton<String>(
+              child: ListTile(
+                title: Text(L10n.of(context).proxyMode),
+                subtitle: Observer(
+                  builder: (context) =>
+                      Text(switch (globalSettingsStore.proxyMode) {
+                    ProxyMode.cloudflare => "Cloudflare",
+                    ProxyMode.vercel => "Vercel",
+                    ProxyMode.none => L10n.of(context).none,
+                    _ => "Vercel",
+                  }),
+                ),
+              ),
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    child: const Text("Cloudflare"),
+                    onTap: () =>
+                        globalSettingsStore.setProxyMode(ProxyMode.cloudflare),
+                  ),
+                  PopupMenuItem<String>(
+                    child: const Text("Vercel"),
+                    onTap: () =>
+                        globalSettingsStore.setProxyMode(ProxyMode.vercel),
+                  ),
+                  PopupMenuItem<String>(
+                    child: Text(L10n.of(context).none),
+                    onTap: () =>
+                        globalSettingsStore.setProxyMode(ProxyMode.none),
+                  ),
+                ];
+              }),
           const Divider(),
           const ListTile(
             leading: Text(

@@ -569,6 +569,26 @@ class L10n {
       args: [],
     );
   }
+
+  /// `Proxy mode`
+  String get proxyMode {
+    return Intl.message(
+      'Proxy mode',
+      name: 'proxyMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None`
+  String get none {
+    return Intl.message(
+      'None',
+      name: 'none',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<L10n> {

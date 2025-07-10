@@ -50,5 +50,7 @@
     "addAPin": "履歴ギャラリーのカバーにピンを追加",
     "doNotShow": "履歴ギャラリーを表示しない",
     "showNormally": "通常通り表示",
-    "showFavoriteMode": "お気に入りの表示モード"
+    "showFavoriteMode": "お気に入りの表示モード",
+    "proxyMode": "プロキシモード",
+    "none": "なし"
 }
