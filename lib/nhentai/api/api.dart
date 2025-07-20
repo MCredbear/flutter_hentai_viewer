@@ -1,4 +1,4 @@
-import 'package:flutter_hentai_viewer/image_meta.dart';
+import 'package:flutter_hentai_viewer/nhentai/image_meta.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
 import 'package:flutter_hentai_viewer/nhentai/utils.dart';
