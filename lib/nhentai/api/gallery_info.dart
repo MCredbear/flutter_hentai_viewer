@@ -26,7 +26,7 @@ Future<
   try {
     final response = await http.get(Uri.parse(proxy('$hostUrl/g/$galleryId/')));
     final document = html_parser.parse(response.body);
-    var infoDiv = document.querySelector('#info')!;
+    final infoDiv = document.querySelector('#info')!;
     final titleHs = infoDiv.querySelectorAll('.title');
     title = titleHs.first.children.map((span) => span.text).join();
     subtitle =
