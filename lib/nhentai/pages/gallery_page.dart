@@ -1,7 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
-import 'package:flutter_hentai_viewer/image_meta.dart';
+import 'package:flutter_hentai_viewer/nhentai/image_meta.dart';
 import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';

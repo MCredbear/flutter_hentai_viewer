@@ -1,5 +1,5 @@
 import 'package:flutter_hentai_viewer/flags.dart';
-import 'package:flutter_hentai_viewer/image_meta.dart';
+import 'package:flutter_hentai_viewer/nhentai/image_meta.dart';
 
 class Gallery {
   Gallery(this.id, this.title, this.coverImageMeta, this.tagIds) {
