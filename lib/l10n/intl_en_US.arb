@@ -26,6 +26,7 @@
     "character": "Character",
     "parody": "Parody",
     "group": "Group",
+    "category": "Category",
     "jumpTo": "Jump to",
     "jump": "Jump",
     "cancel": "Cancel",
@@ -52,5 +53,6 @@
     "showNormally": "No more else process",
     "showFavoriteMode": "Show favorite mode",
     "proxyMode": "Proxy mode",
-    "none": "None"
+    "none": "None",
+    "loadingFailed": "Loading failed"
 }

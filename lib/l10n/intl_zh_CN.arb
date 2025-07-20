@@ -26,6 +26,7 @@
     "character": "角色",
     "parody": "原作",
     "group": "社团",
+    "category": "类别",
     "jumpTo": "转跳至",
     "jump": "转跳",
     "cancel": "取消",
@@ -52,5 +53,6 @@
     "showNormally": "不做额外处理",
     "showFavoriteMode": "收藏显示模式",
     "proxyMode": "代理模式",
-    "none": "无"
+    "none": "无",
+    "loadingFailed": "加载失败"
 }

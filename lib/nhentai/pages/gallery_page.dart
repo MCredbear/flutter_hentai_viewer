@@ -111,7 +111,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '原作: ',
+                                    text: '${L10n.current.parody}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => parodyTags
                                         .map((parodyTag) => WidgetSpan(
@@ -137,7 +137,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '角色: ',
+                                    text: '${L10n.current.character}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => characterTags
                                         .map((characterTag) => WidgetSpan(
@@ -162,7 +162,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '标签: ',
+                                    text: '${L10n.current.tag}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => tagTags
                                         .map((tagTag) => WidgetSpan(
@@ -186,7 +186,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '作者: ',
+                                    text: '${L10n.current.artist}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => artistTags
                                         .map((artistTag) => WidgetSpan(
@@ -211,7 +211,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '社团: ',
+                                    text: '${L10n.current.group}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => groupTags
                                         .map((groupTag) => WidgetSpan(
@@ -236,7 +236,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '语言: ',
+                                    text: '${L10n.current.language}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => languageTags
                                         .map((languageTag) => WidgetSpan(
@@ -261,7 +261,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             ? RichText(
                                 textAlign: TextAlign.start,
                                 text: TextSpan(
-                                    text: '类别: ',
+                                    text: '${L10n.current.category}: ',
                                     style: const TextStyle(fontSize: 16),
                                     children: (() => categoryTags
                                         .map((categoryTag) => WidgetSpan(
@@ -327,8 +327,8 @@ class _GalleryPageState extends State<GalleryPage> {
                                                 case LoadState.completed:
                                                   return state.completedWidget;
                                                 case LoadState.failed:
-                                                  return const Text(
-                                                    "加载失败",
+                                                  return Text(
+                                                    L10n.current.loadingFailed,
                                                     textAlign: TextAlign.center,
                                                   );
                                               }

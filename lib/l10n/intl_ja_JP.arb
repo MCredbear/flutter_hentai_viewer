@@ -26,6 +26,7 @@
     "character": "キャラクター",
     "parody": "パロディ",
     "group": "グループ",
+    "category": "カテゴリー",
     "jumpTo": "ジャンプ先",
     "jump": "ジャンプ",
     "cancel": "キャンセル",
@@ -52,5 +53,6 @@
     "showNormally": "通常通り表示",
     "showFavoriteMode": "お気に入りの表示モード",
     "proxyMode": "プロキシモード",
-    "none": "なし"
+    "none": "なし",
+    "loadingFailed": "ロドー失敗"
 }
