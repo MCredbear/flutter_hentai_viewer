@@ -189,6 +189,7 @@ class _TagFilterPageState extends State<TagFilterPage>
                                     tagChip.tag.name.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
+                            break;
                           case 5:
                             groupTagChips = tagChips
                                 .where((tagChip) =>
@@ -197,6 +198,7 @@ class _TagFilterPageState extends State<TagFilterPage>
                                     tagChip.tag.name.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
+                            break;
                           default:
                         }
                       });
@@ -238,12 +240,14 @@ class _TagFilterPageState extends State<TagFilterPage>
                                     tagChip.tag.tagType == TagType.parody)
                                 .toList()
                               ..sort(compareTagChip);
+                            break;
                           case 5:
                             groupTagChips = tagChips
                                 .where((tagChip) =>
                                     tagChip.tag.tagType == TagType.group)
                                 .toList()
                               ..sort(compareTagChip);
+                            break;
                           default:
                         }
                       });
