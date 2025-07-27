@@ -190,13 +190,6 @@ class _TagFilterPageState extends State<TagFilterPage>
                                 .toList()
                               ..sort(compareTagChip);
                           case 5:
-                            parodyTagChips = tagChips
-                                .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.parody)
-                                .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
-                                .toList()
-                              ..sort(compareTagChip);
                             groupTagChips = tagChips
                                 .where((tagChip) =>
                                     tagChip.tag.tagType == TagType.group)
@@ -246,11 +239,6 @@ class _TagFilterPageState extends State<TagFilterPage>
                                 .toList()
                               ..sort(compareTagChip);
                           case 5:
-                            parodyTagChips = tagChips
-                                .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.parody)
-                                .toList()
-                              ..sort(compareTagChip);
                             groupTagChips = tagChips
                                 .where((tagChip) =>
                                     tagChip.tag.tagType == TagType.group)
