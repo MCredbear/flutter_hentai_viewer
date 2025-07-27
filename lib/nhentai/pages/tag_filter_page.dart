@@ -52,15 +52,13 @@ class _TagFilterPageState extends State<TagFilterPage>
                   .where((tagChip) => tagChip.tag.tagType == TagType.parody)
                   .toList()
                 ..sort(compareTagChip);
+              break;
             case 5:
               parodyTagChips = tagChips
                   .where((tagChip) => tagChip.tag.tagType == TagType.parody)
                   .toList()
                 ..sort(compareTagChip);
-              groupTagChips = tagChips
-                  .where((tagChip) => tagChip.tag.tagType == TagType.group)
-                  .toList()
-                ..sort(compareTagChip);
+              break;
             default:
           }
         });
