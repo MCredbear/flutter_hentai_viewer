@@ -45,10 +45,9 @@ class _TagPageState extends State<TagPage> {
   void scrollListener() {
     if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 100 &&
-        hasNextPage) {
-      if (hasNextPage) {
-        getGalleries(nextGalleryId: galleries?.last.id);
-      }
+        hasNextPage &&
+        globalSettingsStore.scrollUpToLoadMore) {
+      getGalleries(nextGalleryId: galleries?.last.id);
     }
   }
 

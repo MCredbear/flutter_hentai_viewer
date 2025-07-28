@@ -44,7 +44,8 @@ class _TagPageState extends State<TagPage> {
 
   final scrollController = ScrollController();
   void scrollListener() {
-    if (scrollController.position.pixels >=
+    if (globalSettingsStore.scrollUpToLoadMore &&
+        scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 100 &&
         currentPageIndex < (lastPageIndex ?? 1) &&
         currentPageIndex == loadingPageIndex) {
