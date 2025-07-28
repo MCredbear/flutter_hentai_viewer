@@ -27,6 +27,10 @@
     "parody": "原作",
     "group": "社团",
     "category": "类别",
+    "female": "女性",
+    "male": "男性",
+    "mixed": "混合",
+    "other": "其他",
     "jumpTo": "转跳至",
     "jump": "转跳",
     "cancel": "取消",
@@ -54,5 +58,7 @@
     "showFavoriteMode": "收藏显示模式",
     "proxyMode": "代理模式",
     "none": "无",
-    "loadingFailed": "加载失败"
+    "loadingFailed": "加载失败",
+    "loading": "加载中",
+    "tapToRetry": "点击重试"
 }

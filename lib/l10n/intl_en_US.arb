@@ -27,6 +27,10 @@
     "parody": "Parody",
     "group": "Group",
     "category": "Category",
+    "female": "Female",
+    "male": "Male",
+    "mixed": "Mixed",
+    "other": "Other",
     "jumpTo": "Jump to",
     "jump": "Jump",
     "cancel": "Cancel",
@@ -54,5 +58,7 @@
     "showFavoriteMode": "Show favorite mode",
     "proxyMode": "Proxy mode",
     "none": "None",
-    "loadingFailed": "Loading failed"
+    "loadingFailed": "Loading failed",
+    "loading": "Loading",
+    "tapToRetry": "Tap to retry"
 }

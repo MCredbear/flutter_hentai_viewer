@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "autoUpdateTags":
             MessageLookupByLibrary.simpleMessage("Auto update tags"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "category": MessageLookupByLibrary.simpleMessage("Category"),
         "character": MessageLookupByLibrary.simpleMessage("Character"),
         "customizeUserAgent":
             MessageLookupByLibrary.simpleMessage("Customize User-Agent"),
@@ -42,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enabledTag": MessageLookupByLibrary.simpleMessage("Enabled tag"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "favorite": MessageLookupByLibrary.simpleMessage("Favorite"),
+        "female": MessageLookupByLibrary.simpleMessage("Female"),
         "global": MessageLookupByLibrary.simpleMessage("Global type"),
         "group": MessageLookupByLibrary.simpleMessage("Group"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
@@ -56,14 +58,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "leftToRight": MessageLookupByLibrary.simpleMessage("Left to right"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "limited": MessageLookupByLibrary.simpleMessage("Limited"),
+        "loading": MessageLookupByLibrary.simpleMessage("Loading"),
+        "loadingFailed": MessageLookupByLibrary.simpleMessage("Loading failed"),
+        "male": MessageLookupByLibrary.simpleMessage("Male"),
+        "mixed": MessageLookupByLibrary.simpleMessage("Mixed"),
         "networkError": MessageLookupByLibrary.simpleMessage("Network error"),
+        "none": MessageLookupByLibrary.simpleMessage("None"),
         "numberOfImageToPreload":
             MessageLookupByLibrary.simpleMessage("Number of image to preload"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "other": MessageLookupByLibrary.simpleMessage("Other"),
         "pageCount": MessageLookupByLibrary.simpleMessage("Pages"),
         "parody": MessageLookupByLibrary.simpleMessage("Parody"),
         "preloadImageCount":
             MessageLookupByLibrary.simpleMessage("Preload image count"),
+        "proxyMode": MessageLookupByLibrary.simpleMessage("Proxy mode"),
         "readingDirection":
             MessageLookupByLibrary.simpleMessage("Reading direction"),
         "rightToLeft": MessageLookupByLibrary.simpleMessage("Right to left"),
@@ -80,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "switchSource": MessageLookupByLibrary.simpleMessage("Switch source"),
         "tag": MessageLookupByLibrary.simpleMessage("Tag"),
         "tagFilter": MessageLookupByLibrary.simpleMessage("Tag filter"),
+        "tapToRetry": MessageLookupByLibrary.simpleMessage("Tap to retry"),
         "testSpeed": MessageLookupByLibrary.simpleMessage("Test speed"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "thisLanguage": MessageLookupByLibrary.simpleMessage("English"),

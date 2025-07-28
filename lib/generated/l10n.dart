@@ -320,6 +320,56 @@ class L10n {
     );
   }
 
+  /// `Category`
+  String get category {
+    return Intl.message(
+      'Category',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get female {
+    return Intl.message(
+      'Female',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message(
+      'Male',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mixed`
+  String get mixed {
+    return Intl.message(
+      'Mixed',
+      name: 'mixed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get other {
+    return Intl.message(
+      'Other',
+      name: 'other',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Jump to`
   String get jumpTo {
     return Intl.message(
@@ -585,6 +635,36 @@ class L10n {
     return Intl.message(
       'None',
       name: 'none',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading failed`
+  String get loadingFailed {
+    return Intl.message(
+      'Loading failed',
+      name: 'loadingFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading`
+  String get loading {
+    return Intl.message(
+      'Loading',
+      name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap to retry`
+  String get tapToRetry {
+    return Intl.message(
+      'Tap to retry',
+      name: 'tapToRetry',
       desc: '',
       args: [],
     );

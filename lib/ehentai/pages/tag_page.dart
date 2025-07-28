@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hentai_viewer/ehentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
 import 'package:flutter_hentai_viewer/ehentai/api/api.dart';
 import 'package:flutter_hentai_viewer/ehentai/components/gallery_card.dart';
 import 'package:flutter_hentai_viewer/ehentai/stores/history_store.dart';
 import 'package:flutter_hentai_viewer/ehentai/stores/setting_store.dart';
+import 'package:flutter_hentai_viewer/ehentai/tag.dart';
 import 'package:flutter_hentai_viewer/ehentai/gallery.dart';
 import 'package:flutter_hentai_viewer/ehentai/components/menu_drawer.dart';
 import 'package:toastification/toastification.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class TagPage extends StatefulWidget {
+  const TagPage(
+    this.keyTag, {
     super.key,
   });
 
+  final Tag keyTag;
+
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<TagPage> createState() => _TagPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TagPageState extends State<TagPage> {
   @override
   void initState() {
     super.initState();
@@ -38,9 +41,6 @@ class _HomePageState extends State<HomePage> {
   (int? previousGalleryId, int? nextGalleryId) previousSearchParams =
       (null, null);
 
-  final searchController = TextEditingController();
-  bool searching = false;
-
   final scrollController = ScrollController();
   void scrollListener() {
     if (scrollController.position.pixels >=
@@ -56,27 +56,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: !searching
-              ? const Text("EHentai")
-              : TextField(
-                  controller: searchController,
-                  decoration: const InputDecoration(label: Icon(Icons.search)),
-                  onSubmitted: (value) {
-                    if (value.isNotEmpty) {
-                      getGalleries();
-                    }
-                  },
-                ),
+          title: Text(widget.keyTag.name),
           actions: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searching = !searching;
-                  });
-                  searchController.text = '';
-                  getGalleries();
-                },
-                icon: Icon(!searching ? Icons.search : Icons.cancel))
+            BackButton(
+              onPressed: () => Navigator.pop(context),
+            ),
           ],
         ),
         drawer: const MenuDrawer(),
@@ -95,7 +79,7 @@ class _HomePageState extends State<HomePage> {
             }
           }
         },
-        bottomNavigationBar: !((hasPreviousPage || hasNextPage) &&
+        bottomNavigationBar: ((hasPreviousPage || hasNextPage) &&
                 !globalSettingsStore.scrollUpToLoadMore)
             ? null
             : SizedBox(
@@ -107,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Expanded(
                           flex: 1,
-                          child: !hasPreviousPage
+                          child: hasPreviousPage
                               ? Container()
                               : IconButton(
                                   onPressed: () async {
@@ -119,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(flex: 1, child: Container()),
                       Expanded(
                           flex: 1,
-                          child: !hasNextPage
+                          child: hasNextPage
                               ? Container()
                               : IconButton(
                                   onPressed: () async {
@@ -158,19 +142,11 @@ class _HomePageState extends State<HomePage> {
   Future<void> getGalleries({int? prevGalleryId, int? nextGalleryId}) async {
     try {
       previousSearchParams = (prevGalleryId, nextGalleryId);
-      var keyword = tagFilterStore.requiredTags
-              .map((tag) =>
-                  '${tag.tagType.name}:"${tag.name.split('|').first.trim()}%24"')
-              .join(' ') +
-          tagFilterStore.bannedTags
-              .map((tag) =>
-                  '-${tag.tagType.name}:"${tag.name.split('|').first.trim()}%24"')
-              .join(' ') +
-          (searching ? ' ${searchController.text}' : '');
-      keyword = keyword.replaceAll(' ', '+');
       final (galleries, hasPreviousPage, hasNextPage) = await searchGalleries(
           categories: ehentaiSettingsStore.enabledCategories,
-          keyword: keyword,
+          keyword:
+              '${widget.keyTag.tagType.name}:"${widget.keyTag.name.split('|').first.trim()}%24"'
+                  .replaceAll(' ', '+'),
           prevGalleryId: prevGalleryId,
           nextGalleryId: nextGalleryId);
       if (ehentaiSettingsStore.showHistoryMode == ShowHistoryMode.doNotShow) {
