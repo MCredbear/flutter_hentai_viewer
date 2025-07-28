@@ -71,15 +71,34 @@ class _ReadingPageState extends State<ReadingPage> {
 
   @override
   Widget build(BuildContext context) {
-    widget.readingImageHrefs
-        .sublist(
-            widget.initPageIndex,
-            widget.initPageIndex + globalSettingsStore.preloadImageCount <
-                    widget.readingImageHrefs.length
+    for (var i = widget.initPageIndex;
+        i <
+            ((widget.initPageIndex + globalSettingsStore.preloadImageCount <
+                    widget.readingImageHrefs.length)
                 ? (widget.initPageIndex + globalSettingsStore.preloadImageCount)
-                : null)
-        .map((url) => ExtendedNetworkImageProvider(proxy(url), cache: true))
-        .forEach((provider) => precacheImage(provider, context));
+                : widget.readingImageHrefs.length);
+        i += 1) {
+      if (readingImageUrls[i] == null) {
+        thumbHrefToFullImage(widget.readingImageHrefs[i]).then((url) {
+          readingImageUrls[i] = url;
+          if (context.mounted) {
+            precacheImage(
+                ExtendedNetworkImageProvider(
+                  proxy(url),
+                  cache: true,
+                ),
+                context);
+          }
+        });
+      } else {
+        precacheImage(
+            ExtendedNetworkImageProvider(
+              proxy(readingImageUrls[i]!),
+              cache: true,
+            ),
+            context);
+      }
+    }
     return Scaffold(
         appBar: AppBar(),
         bottomNavigationBar: SizedBox(
