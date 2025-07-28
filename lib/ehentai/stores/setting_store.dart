@@ -96,14 +96,14 @@ abstract class SettingsStoreBase with Store {
 
   Future<void> read() async {
     final appDir = await getApplicationSupportDirectory();
-    final file = File('${appDir.path}/nhentai_settings.json');
+    final file = File('${appDir.path}/ehentai_settings.json');
     if (!file.existsSync()) {
       // init
       save();
     } else {
       final settings = json.decode(file.readAsStringSync());
       enabledCategories = ObservableList.of(
-        (settings['enabledCategories'] as List<dynamic>)
+        ((settings['enabledCategories'] ?? []) as List<dynamic>)
             .map((e) => Category.values.firstWhere((c) => c.name == e))
             .toList(),
       );
@@ -131,7 +131,7 @@ abstract class SettingsStoreBase with Store {
 
   Future<void> save() async {
     final appDir = await getApplicationSupportDirectory();
-    final file = File('${appDir.path}/nhentai_settings.json');
+    final file = File('${appDir.path}/ehentai_settings.json');
     final settings = {
       'enabledCategories': enabledCategories.map((e) => e.name).toList(),
       'autoUpdateTags': autoUpdateTags,

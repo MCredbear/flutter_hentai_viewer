@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hentai_viewer/ehentai/stores/favorite_store.dart';
 import 'package:flutter_hentai_viewer/ehentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/generated/l10n.dart';
 import 'package:flutter_hentai_viewer/global_settings_store.dart';
@@ -24,11 +25,21 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getGalleries();
-    if (globalSettingsStore.scrollUpToLoadMore) {
+    () async {
+      await ehentaiSettingsStore.read();
+      await tagFilterStore.read();
+      await favoriteStore.read();
+      await historyStore.read();
+    }.call().then((_) {
+      setState(() {
+        isLoading = false;
+      });
+      getGalleries();
       scrollController.addListener(scrollListener);
-    }
+    });
   }
+
+  bool isLoading = true;
 
   List<Gallery>? galleries;
 
@@ -54,105 +65,109 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: !searching
-              ? const Text("EHentai")
-              : TextField(
-                  controller: searchController,
-                  decoration: const InputDecoration(label: Icon(Icons.search)),
-                  onSubmitted: (value) {
-                    if (value.isNotEmpty) {
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : Scaffold(
+            appBar: AppBar(
+              title: !searching
+                  ? const Text("EHentai")
+                  : TextField(
+                      controller: searchController,
+                      decoration:
+                          const InputDecoration(label: Icon(Icons.search)),
+                      onSubmitted: (value) {
+                        if (value.isNotEmpty) {
+                          getGalleries();
+                        }
+                      },
+                    ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        searching = !searching;
+                      });
+                      searchController.text = '';
                       getGalleries();
-                    }
-                  },
-                ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    searching = !searching;
-                  });
-                  searchController.text = '';
-                  getGalleries();
-                },
-                icon: Icon(!searching ? Icons.search : Icons.cancel))
-          ],
-        ),
-        drawer: const MenuDrawer(),
-        onDrawerChanged: (isOpened) async {
-          if (!isOpened) {
-            setState(() {
-              galleries = null;
-            });
-            if (globalSettingsStore.scrollUpToLoadMore) {
-              await getGalleries();
-              scrollController.jumpTo(0);
-            } else {
-              getGalleries(
-                  prevGalleryId: previousSearchParams.$1,
-                  nextGalleryId: previousSearchParams.$2);
-            }
-          }
-        },
-        bottomNavigationBar: !((hasPreviousPage || hasNextPage) &&
-                !globalSettingsStore.scrollUpToLoadMore)
-            ? null
-            : SizedBox(
-                height: 50,
-                child: BottomAppBar(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                          flex: 1,
-                          child: !hasPreviousPage
-                              ? Container()
-                              : IconButton(
-                                  onPressed: () async {
-                                    await getGalleries(
-                                        prevGalleryId: galleries?.first.id);
-                                    scrollController.jumpTo(0);
-                                  },
-                                  icon: const Icon(Icons.keyboard_arrow_left))),
-                      Expanded(flex: 1, child: Container()),
-                      Expanded(
-                          flex: 1,
-                          child: !hasNextPage
-                              ? Container()
-                              : IconButton(
-                                  onPressed: () async {
-                                    await getGalleries(
-                                        nextGalleryId: galleries?.last.id);
-                                    scrollController.jumpTo(0);
-                                  },
-                                  icon:
-                                      const Icon(Icons.keyboard_arrow_right))),
-                    ],
+                    },
+                    icon: Icon(!searching ? Icons.search : Icons.cancel))
+              ],
+            ),
+            drawer: const MenuDrawer(),
+            onDrawerChanged: (isOpened) async {
+              if (!isOpened) {
+                setState(() {
+                  galleries = null;
+                });
+                if (globalSettingsStore.scrollUpToLoadMore) {
+                  await getGalleries();
+                  scrollController.jumpTo(0);
+                } else {
+                  getGalleries(
+                      prevGalleryId: previousSearchParams.$1,
+                      nextGalleryId: previousSearchParams.$2);
+                }
+              }
+            },
+            bottomNavigationBar: !((hasPreviousPage || hasNextPage) &&
+                    !globalSettingsStore.scrollUpToLoadMore)
+                ? null
+                : SizedBox(
+                    height: 50,
+                    child: BottomAppBar(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: !hasPreviousPage
+                                  ? Container()
+                                  : IconButton(
+                                      onPressed: () async {
+                                        await getGalleries(
+                                            prevGalleryId: galleries?.first.id);
+                                        scrollController.jumpTo(0);
+                                      },
+                                      icon: const Icon(
+                                          Icons.keyboard_arrow_left))),
+                          Expanded(flex: 1, child: Container()),
+                          Expanded(
+                              flex: 1,
+                              child: !hasNextPage
+                                  ? Container()
+                                  : IconButton(
+                                      onPressed: () async {
+                                        await getGalleries(
+                                            nextGalleryId: galleries?.last.id);
+                                        scrollController.jumpTo(0);
+                                      },
+                                      icon: const Icon(
+                                          Icons.keyboard_arrow_right))),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-        body: Center(
-          child: (galleries == null)
-              ? const CircularProgressIndicator()
-              : RefreshIndicator(
-                  onRefresh: () async {
-                    await getGalleries(
-                        prevGalleryId: previousSearchParams.$1,
-                        nextGalleryId: previousSearchParams.$2);
-                  },
-                  child: WaterfallFlow.builder(
-                    controller: scrollController,
-                    gridDelegate:
-                        const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                    itemCount: galleries!.length,
-                    itemBuilder: (context, index) =>
-                        GalleryCard(galleries![index]),
-                  ),
-                ),
-        ));
+            body: Center(
+              child: (galleries == null)
+                  ? const CircularProgressIndicator()
+                  : RefreshIndicator(
+                      onRefresh: () async {
+                        await getGalleries(
+                            prevGalleryId: previousSearchParams.$1,
+                            nextGalleryId: previousSearchParams.$2);
+                      },
+                      child: WaterfallFlow.builder(
+                        controller: scrollController,
+                        gridDelegate:
+                            const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2),
+                        itemCount: galleries!.length,
+                        itemBuilder: (context, index) =>
+                            GalleryCard(galleries![index]),
+                      ),
+                    ),
+            ));
   }
 
   Future<void> getGalleries({int? prevGalleryId, int? nextGalleryId}) async {
