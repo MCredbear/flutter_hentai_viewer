@@ -31,6 +31,7 @@ class MenuDrawer extends StatelessWidget {
                 const Text(
                   "NHentai",
                   textScaler: TextScaler.linear(2.5),
+                  style: TextStyle(color: Colors.white),
                 )
               ]),
             ),

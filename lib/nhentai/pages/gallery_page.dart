@@ -119,8 +119,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.parody}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => parodyTags
                                                 .map((parodyTag) => WidgetSpan(
                                                     alignment:
@@ -151,8 +155,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.character}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => characterTags
                                                 .map((characterTag) =>
                                                     WidgetSpan(
@@ -185,8 +193,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.tag}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => tagTags
                                                 .map((tagTag) => WidgetSpan(
                                                     alignment:
@@ -216,8 +228,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.artist}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => artistTags
                                                 .map((artistTag) => WidgetSpan(
                                                     alignment:
@@ -247,8 +263,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.group}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => groupTags
                                                 .map((groupTag) => WidgetSpan(
                                                     alignment:
@@ -278,8 +298,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.language}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => languageTags
                                                 .map((languageTag) =>
                                                     WidgetSpan(
@@ -312,8 +336,12 @@ class _GalleryPageState extends State<GalleryPage> {
                                         textAlign: TextAlign.start,
                                         text: TextSpan(
                                             text: '${L10n.current.category}: ',
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color),
                                             children: (() => categoryTags
                                                 .map((categoryTag) =>
                                                     WidgetSpan(
