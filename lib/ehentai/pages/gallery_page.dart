@@ -664,7 +664,9 @@ class _GalleryPageState extends State<GalleryPage> {
       }
 
       while (totalPagesCount > index + 1) {
-        index += 1;
+        setState(() {
+          index += 1;
+        });
         final (
           _,
           _,
