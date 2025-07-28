@@ -65,315 +65,376 @@ class _GalleryPageState extends State<GalleryPage> {
           ],
         ),
         body: loaded
-            ? ListView(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Card(
-                              margin: const EdgeInsets.all(20),
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: AspectRatio(
-                                aspectRatio:
-                                    widget.gallery.coverImageMeta.width /
-                                        widget.gallery.coverImageMeta.height,
-                                child: ExtendedImage.network(
-                                  proxy(widget.gallery.coverImageMeta.url),
-                                  fit: BoxFit.contain,
-                                ),
-                              ))),
-                      Expanded(
-                          child: Column(
+            ? NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return [
+                    SliverToBoxAdapter(
+                      child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(title,
-                                style: const TextStyle(fontSize: 18)),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  child: Card(
+                                      margin: const EdgeInsets.all(20),
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      child: AspectRatio(
+                                        aspectRatio: widget
+                                                .gallery.coverImageMeta.width /
+                                            widget
+                                                .gallery.coverImageMeta.height,
+                                        child: ExtendedImage.network(
+                                          proxy(widget
+                                              .gallery.coverImageMeta.url),
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ))),
+                              Expanded(
+                                  child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Text(title,
+                                        style: const TextStyle(fontSize: 18)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20, left: 20, right: 20),
+                                    child: Text(subtitle,
+                                        style: const TextStyle(fontSize: 14)),
+                                  )
+                                ],
+                              ))
+                            ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 20, left: 20, right: 20),
-                            child: Text(subtitle,
-                                style: const TextStyle(fontSize: 14)),
-                          )
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20),
+                                parodyTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.parody}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => parodyTags
+                                                .map((parodyTag) => WidgetSpan(
+                                                    alignment:
+                                                        PlaceholderAlignment
+                                                            .middle,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 2,
+                                                              right: 2),
+                                                      child: RawChip(
+                                                          onPressed: () => Navigator
+                                                                  .of(context)
+                                                              .push(MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      TagPage(
+                                                                          parodyTag))),
+                                                          label: Text(
+                                                              parodyTag.name,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center)),
+                                                    )))
+                                                .toList()).call()))
+                                    : Container(),
+                                characterTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.character}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => characterTags
+                                                .map((characterTag) =>
+                                                    WidgetSpan(
+                                                        alignment:
+                                                            PlaceholderAlignment
+                                                                .middle,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(2),
+                                                          child: RawChip(
+                                                              onPressed: () => Navigator
+                                                                      .of(
+                                                                          context)
+                                                                  .push(MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          TagPage(
+                                                                              characterTag))),
+                                                              label: Text(
+                                                                  characterTag
+                                                                      .name,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center)),
+                                                        )))
+                                                .toList()).call()))
+                                    : Container(),
+                                tagTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.tag}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => tagTags
+                                                .map((tagTag) => WidgetSpan(
+                                                    alignment:
+                                                        PlaceholderAlignment
+                                                            .middle,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      child: RawChip(
+                                                          onPressed: () => Navigator
+                                                                  .of(context)
+                                                              .push(MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      TagPage(
+                                                                          tagTag))),
+                                                          label: Text(
+                                                              tagTag.name,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center)),
+                                                    )))
+                                                .toList()).call()))
+                                    : Container(),
+                                artistTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.artist}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => artistTags
+                                                .map((artistTag) => WidgetSpan(
+                                                    alignment:
+                                                        PlaceholderAlignment
+                                                            .middle,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      child: RawChip(
+                                                          onPressed: () => Navigator
+                                                                  .of(context)
+                                                              .push(MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      TagPage(
+                                                                          artistTag))),
+                                                          label: Text(
+                                                              artistTag.name,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center)),
+                                                    )))
+                                                .toList()).call()))
+                                    : Container(),
+                                groupTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.group}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => groupTags
+                                                .map((groupTag) => WidgetSpan(
+                                                    alignment:
+                                                        PlaceholderAlignment
+                                                            .middle,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      child: RawChip(
+                                                          onPressed: () => Navigator
+                                                                  .of(context)
+                                                              .push(MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      TagPage(
+                                                                          groupTag))),
+                                                          label: Text(
+                                                              groupTag.name,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center)),
+                                                    )))
+                                                .toList()).call()))
+                                    : Container(),
+                                languageTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.language}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => languageTags
+                                                .map((languageTag) =>
+                                                    WidgetSpan(
+                                                        alignment:
+                                                            PlaceholderAlignment
+                                                                .middle,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(2),
+                                                          child: RawChip(
+                                                              onPressed: () => Navigator
+                                                                      .of(
+                                                                          context)
+                                                                  .push(MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          TagPage(
+                                                                              languageTag))),
+                                                              label: Text(
+                                                                  languageTag
+                                                                      .name,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center)),
+                                                        )))
+                                                .toList()).call()))
+                                    : Container(),
+                                categoryTags.isNotEmpty
+                                    ? RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: '${L10n.current.category}: ',
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            children: (() => categoryTags
+                                                .map((categoryTag) =>
+                                                    WidgetSpan(
+                                                        alignment:
+                                                            PlaceholderAlignment
+                                                                .middle,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(2),
+                                                          child: RawChip(
+                                                              onPressed: () => Navigator
+                                                                      .of(
+                                                                          context)
+                                                                  .push(MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          TagPage(
+                                                                              categoryTag))),
+                                                              label: Text(
+                                                                  categoryTag
+                                                                      .name,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center)),
+                                                        )))
+                                                .toList()).call()))
+                                    : Container(),
+                                Text(
+                                    '${L10n.current.pageCount}: ${previewImageMetas.length}',
+                                    style: const TextStyle(fontSize: 16)),
+                              ],
+                            ),
+                          ),
                         ],
-                      ))
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 20),
-                        parodyTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.parody}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => parodyTags
-                                        .map((parodyTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 2, right: 2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(
-                                                                  parodyTag))),
-                                                  label: Text(parodyTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        characterTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.character}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => characterTags
-                                        .map((characterTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(
-                                                                  characterTag))),
-                                                  label: Text(characterTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        tagTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.tag}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => tagTags
-                                        .map((tagTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(tagTag))),
-                                                  label: Text(tagTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        artistTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.artist}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => artistTags
-                                        .map((artistTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(
-                                                                  artistTag))),
-                                                  label: Text(artistTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        groupTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.group}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => groupTags
-                                        .map((groupTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(
-                                                                  groupTag))),
-                                                  label: Text(groupTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        languageTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.language}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => languageTags
-                                        .map((languageTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(
-                                                                  languageTag))),
-                                                  label: Text(languageTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        categoryTags.isNotEmpty
-                            ? RichText(
-                                textAlign: TextAlign.start,
-                                text: TextSpan(
-                                    text: '${L10n.current.category}: ',
-                                    style: const TextStyle(fontSize: 16),
-                                    children: (() => categoryTags
-                                        .map((categoryTag) => WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: RawChip(
-                                                  onPressed: () => Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              TagPage(
-                                                                  categoryTag))),
-                                                  label: Text(categoryTag.name,
-                                                      textAlign:
-                                                          TextAlign.center)),
-                                            )))
-                                        .toList()).call()))
-                            : Container(),
-                        Text(
-                            '${L10n.current.pageCount}: ${previewImageMetas.length}',
-                            style: const TextStyle(fontSize: 16)),
-                      ],
-                    ),
-                  ),
-                  WaterfallFlow.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4),
-                      itemCount: previewImageMetas.length,
-                      itemBuilder: (context, index) => Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        AspectRatio(
-                                          aspectRatio: 1 / 1.414,
-                                          child: ExtendedImage.network(
-                                            proxy(previewImageMetas[index].url),
-                                            loadStateChanged: (state) {
-                                              switch (state
-                                                  .extendedImageLoadState) {
-                                                case LoadState.loading:
-                                                  return Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                    ),
-                                                  );
-                                                case LoadState.completed:
-                                                  return state.completedWidget;
-                                                case LoadState.failed:
-                                                  return Text(
-                                                    L10n.current.loadingFailed,
-                                                    textAlign: TextAlign.center,
-                                                  );
-                                              }
-                                            },
-                                          ),
+                      ),
+                    )
+                  ];
+                },
+                body: WaterfallFlow.builder(
+                    gridDelegate:
+                        const SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4),
+                    itemCount: previewImageMetas.length,
+                    itemBuilder: (context, index) => Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      AspectRatio(
+                                        aspectRatio: 1 / 1.414,
+                                        child: ExtendedImage.network(
+                                          proxy(previewImageMetas[index].url),
+                                          loadStateChanged: (state) {
+                                            switch (
+                                                state.extendedImageLoadState) {
+                                              case LoadState.loading:
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                  ),
+                                                );
+                                              case LoadState.completed:
+                                                return state.completedWidget;
+                                              case LoadState.failed:
+                                                return Text(
+                                                  L10n.current.loadingFailed,
+                                                  textAlign: TextAlign.center,
+                                                );
+                                            }
+                                          },
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(5),
-                                          child: Text(
-                                            '${index + 1}',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Positioned.fill(
-                                        child: Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).push(MaterialPageRoute(
-                                              builder: (context) => ReadingPage(
-                                                  widget.gallery,
-                                                  previewImageMetas
-                                                      .map((previewImageMeta) =>
-                                                          previewImageMeta.url
-                                                              .replaceFirst(
-                                                                  '/t', '/i')
-                                                              .replaceFirst(
-                                                                  't.', '.')
-                                                              .split('.')
-                                                              .sublist(0, 4)
-                                                              .join('.'))
-                                                      .toList(),
-                                                  index)));
-                                        },
                                       ),
-                                    ))
-                                  ],
-                                ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Text(
+                                          '${index + 1}',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Positioned.fill(
+                                      child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) => ReadingPage(
+                                                    widget.gallery,
+                                                    previewImageMetas
+                                                        .map((previewImageMeta) =>
+                                                            previewImageMeta.url
+                                                                .replaceFirst(
+                                                                    '/t', '/i')
+                                                                .replaceFirst(
+                                                                    't.', '.')
+                                                                .split('.')
+                                                                .sublist(0, 4)
+                                                                .join('.'))
+                                                        .toList(),
+                                                    index)));
+                                      },
+                                    ),
+                                  ))
+                                ],
                               ),
-                            ],
-                          ))
-                ],
-              )
+                            ),
+                          ],
+                        )))
             : Center(
                 child: CircularProgressIndicator(
                     color: Theme.of(context).colorScheme.secondary)));
