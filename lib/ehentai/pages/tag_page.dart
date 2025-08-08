@@ -144,7 +144,7 @@ class _TagPageState extends State<TagPage> {
       final (galleries, hasPreviousPage, hasNextPage) = await searchGalleries(
           categories: ehentaiSettingsStore.enabledCategories,
           keyword:
-              '${widget.keyTag.tagType.name}:"${widget.keyTag.name.split('|').first.trim()}%24"'
+              '${widget.keyTag.tagType.name}:"${widget.keyTag.name.split('|').first.trim()}\$"'
                   .replaceAll(' ', '+'),
           prevGalleryId: prevGalleryId,
           nextGalleryId: nextGalleryId);

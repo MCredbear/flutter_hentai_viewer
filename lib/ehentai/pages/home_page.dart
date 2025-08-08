@@ -172,15 +172,16 @@ class _HomePageState extends State<HomePage> {
   Future<void> getGalleries({int? prevGalleryId, int? nextGalleryId}) async {
     try {
       previousSearchParams = (prevGalleryId, nextGalleryId);
-      var keyword = tagFilterStore.requiredTags
-              .map((tag) =>
-                  '${tag.tagType.name}:"${tag.name.split('|').first.trim()}%24"')
-              .join(' ') +
-          tagFilterStore.bannedTags
-              .map((tag) =>
-                  '-${tag.tagType.name}:"${tag.name.split('|').first.trim()}%24"')
-              .join(' ') +
-          (searching ? ' ${searchController.text}' : '');
+      var keyword = (tagFilterStore.requiredTags
+                  .map((tag) =>
+                      '${tag.tagType.name}:"${tag.name.split('|').first.trim()}\$"')
+                  .toList() +
+              tagFilterStore.bannedTags
+                  .map((tag) =>
+                      '-${tag.tagType.name}:"${tag.name.split('|').first.trim()}\$"')
+                  .toList() +
+              [(searching ? ' ${searchController.text}' : '')])
+          .join(' ');
       keyword = keyword.replaceAll(' ', '+');
       final (galleries, hasPreviousPage, hasNextPage) = await searchGalleries(
           categories: ehentaiSettingsStore.enabledCategories,
