@@ -18,7 +18,9 @@ class Gallery {
       json['hash'] as String,
       json['title'] as String,
       ImageMeta.fromJson(json['coverImageMeta'] as Map<String, dynamic>),
-      json['tags'] as List<Tag>,
+      (json['tags'] as List<dynamic>)
+          .map((tag) => Tag.fromJson(tag as Map<String, dynamic>))
+          .toList(),
       json['pages'] as int,
     );
   }
