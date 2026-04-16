@@ -7,6 +7,7 @@ import 'package:flutter_hentai_viewer/nhentai/stores/favorite_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/history_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/utils.dart';
 import 'package:flutter_hentai_viewer/utils.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -23,8 +24,9 @@ class GalleryCard extends StatefulWidget {
 }
 
 class _GalleryCardState extends State<GalleryCard> {
-  late bool isMasked =
-      widget.gallery.tagIds.any(tagFilterStore.bannedTagIds.contains);
+  late bool isMasked = widget.gallery.tags
+      .map((tag) => tag.id)
+      .any(tagFilterStore.bannedTagIds.contains);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +40,11 @@ class _GalleryCardState extends State<GalleryCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AspectRatio(
-                  aspectRatio: widget.gallery.coverImageMeta.width /
-                      widget.gallery.coverImageMeta.height,
+                  aspectRatio: widget.gallery.coverThumbnailMeta.width /
+                      widget.gallery.coverThumbnailMeta.height,
                   child: ExtendedImage.network(
-                    proxy(widget.gallery.coverImageMeta.url),
+                    proxy(
+                        '$thumbnailCdn/${widget.gallery.coverThumbnailMeta.path}'),
                     loadStateChanged: (state) {
                       switch (state.extendedImageLoadState) {
                         case LoadState.loading:
@@ -73,7 +76,7 @@ class _GalleryCardState extends State<GalleryCard> {
                                   .cast<InlineSpan>() +
                               [
                                 TextSpan(
-                                    text: widget.gallery.title,
+                                    text: widget.gallery.japaneseTitle,
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme

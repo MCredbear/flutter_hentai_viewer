@@ -58,7 +58,7 @@ class _TagPageState extends State<TagPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.keyTag.name),
+          title: Text(widget.keyTag.name!),
           actions: [
             BackButton(
               onPressed: () => Navigator.pop(context),
@@ -162,7 +162,7 @@ class _TagPageState extends State<TagPage> {
 
   Future<void> getGalleries(int pageIndex) async {
     try {
-      final (galleries, currentPageIndex, lastPageIndex) =
+      final (galleries, lastPageIndex) =
           await searchBySingleTag(widget.keyTag, pageIndex);
       if (nhentaiSettingsStore.showHistoryMode == ShowHistoryMode.doNotShow) {
         galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
@@ -171,7 +171,7 @@ class _TagPageState extends State<TagPage> {
         this.galleries = globalSettingsStore.scrollUpToLoadMore
             ? (this.galleries ?? <Gallery>[]) + galleries
             : galleries;
-        this.currentPageIndex = currentPageIndex;
+        currentPageIndex = pageIndex;
         this.lastPageIndex = lastPageIndex;
         paginationTextController.text = '$currentPageIndex / $lastPageIndex';
       });

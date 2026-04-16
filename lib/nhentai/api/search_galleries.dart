@@ -1,21 +1,13 @@
 part of 'api.dart';
 
-Future<(List<Gallery>, int, int)> searchGalleries(String keyword,
+Future<(List<Gallery>, int)> searchGalleries(String keyword,
     List<Tag> requiredTags, List<Tag> bannedTags, int pageIndex) async {
   try {
-    final response = (keyword.isNotEmpty ||
-            requiredTags.isNotEmpty ||
-            bannedTags.isNotEmpty)
-        ? await http.get(Uri.parse(proxy(
-            '$hostUrl/search/?q=${(requiredTags + bannedTags).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${{
-                  TagType.tag: 'tag',
-                  TagType.artist: 'artists',
-                  TagType.character: 'characters',
-                  TagType.parody: 'parodies',
-                  TagType.group: 'groups',
-                }[tag.tagType]}%3A"${tag.name.replaceAll(' ', '+')}"').join('+')}${keyword.isNotEmpty ? '+${keyword.replaceAll(' ', '+')}' : ''}&page=$pageIndex')))
-        : await http.get(Uri.parse(proxy('$hostUrl/?page=$pageIndex')));
-    return parseGalleriesHtml(response.body);
+    final query =
+        '${(requiredTags + bannedTags).map((tag) => '${tag.tagState == TagState.banned ? '-' : ''}${tag.type!.name}:"${tag.name}"').join(' ')} $keyword';
+    final response = await http.get(Uri.parse(proxy(
+        '$hostUrl/api/v2/search?query=$query&sort=date&page=$pageIndex')));
+    return parseGalleries(response.bodyBytes);
   } catch (e) {
     throw Exception('Failed to fetch search galleries: $e');
   }

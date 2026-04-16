@@ -1,25 +1,25 @@
 class ImageMeta {
-  final String url;
-  final double width;
-  final double height;
+  final String path;
+  final num width;
+  final num height;
 
   ImageMeta({
-    required this.url,
+    required this.path,
     required this.width,
     required this.height,
   });
 
   factory ImageMeta.fromJson(Map<String, dynamic> json) {
     return ImageMeta(
-      url: json['url'] as String,
-      width: (json['width'] as num).toDouble(),
-      height: (json['height'] as num).toDouble(),
+      path: json['path'] as String,
+      width: json['width'] as num,
+      height: json['height'] as num,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'url': url,
+      'path': path,
       'width': width,
       'height': height,
     };

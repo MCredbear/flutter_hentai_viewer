@@ -1,137 +1,61 @@
 part of 'api.dart';
 
-Future<
-    (
-      String,
-      String,
-      List<Tag>,
-      List<Tag>,
-      List<Tag>,
-      List<Tag>,
-      List<Tag>,
-      List<Tag>,
-      List<Tag>,
-      List<ImageMeta>
-    )> galleryInfo(int galleryId) async {
-  String title = '';
-  String subtitle = '';
-  List<Tag> parodyTags = [];
-  List<Tag> characterTags = [];
-  List<Tag> tagTags = [];
-  List<Tag> artistTags = [];
-  List<Tag> groupTags = [];
-  List<Tag> languageTags = [];
-  List<Tag> categoryTags = [];
-  List<ImageMeta> previewImageMetas = [];
+Future<Gallery> galleryInfo(int galleryId) async {
   try {
-    final response = await http.get(Uri.parse(proxy('$hostUrl/g/$galleryId/')));
-    final document = html_parser.parse(response.body);
-    final infoDiv = document.querySelector('#info')!;
-    final titleHs = infoDiv.querySelectorAll('.title');
-    title = titleHs.first.children.map((span) => span.text).join();
-    subtitle =
-        titleHs.lastOrNull?.children.map((span) => span.text).join() ?? '';
-
-    final tagsSection = infoDiv.querySelector('#tags');
-    parodyTags = tagsSection!.children[0].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.parody,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-    characterTags = tagsSection.children[1].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.character,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-    tagTags = tagsSection.children[2].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.tag,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-    artistTags = tagsSection.children[3].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.artist,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-    groupTags = tagsSection.children[4].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.group,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-    languageTags = tagsSection.children[5].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.language,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-    categoryTags = tagsSection.children[6].children.first.children.map((tagA) {
-      final id = int.parse(tagA.className.split(' ')[1].split('-')[1]);
-      final nameSpan = tagA.querySelector('.name');
-      final name = nameSpan!.text;
-      final countSpan = tagA.querySelector('.count');
-      final count = countSpan!.text;
-      return Tag(id, name, TagType.category,
-          count: count.endsWith('K')
-              ? int.parse(count.substring(0, count.length - 1)) * 1000
-              : int.parse(count));
-    }).toList();
-
-    final thumbsDiv = document.querySelector('.thumbs')!;
-    final lazyloadImgs = thumbsDiv.querySelectorAll('.lazyload');
-    previewImageMetas = lazyloadImgs
-        .map((lazyloadImg) => ImageMeta(
-            url: lazyloadImg.attributes['data-src']!,
-            width: double.parse(lazyloadImg.attributes['width']!),
-            height: double.parse(lazyloadImg.attributes['height']!)))
+    final response = await http
+        .get(Uri.parse(proxy('$hostUrl/api/v2/galleries/$galleryId')));
+    final data =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    final id = data['id'] as int;
+    final mediaId = data['media_id'] as String;
+    final englishTitle = data['title']['english'] as String;
+    final japaneseTitle = data['title']['japanese'] as String;
+    final prettyTitle = data['title']['pretty'] as String?;
+    final coverThumbnailMeta = ImageMeta(
+        path: data['thumbnail']['path'] as String,
+        width: data['thumbnail']['width'] as num,
+        height: data['thumbnail']['height'] as num);
+    final coverImageMeta = ImageMeta(
+        path: data['cover']['path'] as String,
+        width: data['cover']['width'] as num,
+        height: data['cover']['height'] as num);
+    final numPages = data['num_pages'] as int;
+    final numFavorites = data['num_favorites'] as int?;
+    final uploadDate = data['upload_date'] as int?;
+    final tags = (data['tags'] as List)
+        .cast<Map<String, dynamic>>()
+        .map((tag) => Tag.fromJson(tag))
         .toList();
+    final thumbnailMetas = (data['pages'] as List)
+        .cast<Map<String, dynamic>>()
+        .map((page) => ImageMeta(
+            path: page['thumbnail'] as String,
+            width: page['thumbnail_width'] as num,
+            height: page['thumbnail_height'] as num))
+        .toList();
+    final imageMetas = (data['pages'] as List)
+        .cast<Map<String, dynamic>>()
+        .map((page) => ImageMeta(
+            path: page['path'] as String,
+            width: page['width'] as num,
+            height: page['height'] as num))
+        .toList();
+    final gallery = Gallery(
+        id: id,
+        mediaId: mediaId,
+        englishTitle: englishTitle,
+        japaneseTitle: japaneseTitle,
+        prettyTitle: prettyTitle,
+        coverThumbnailMeta: coverThumbnailMeta,
+        coverImageMeta: coverImageMeta,
+        numPages: numPages,
+        numFavorites: numFavorites,
+        uploadDate: uploadDate,
+        tags: tags,
+        thumbnailMetas: thumbnailMetas,
+        imageMetas: imageMetas);
 
-    return (
-      title,
-      subtitle,
-      parodyTags,
-      characterTags,
-      tagTags,
-      artistTags,
-      groupTags,
-      languageTags,
-      categoryTags,
-      previewImageMetas
-    );
+    return gallery;
   } catch (e) {
     throw ('Error fetching gallery info: $e');
   }

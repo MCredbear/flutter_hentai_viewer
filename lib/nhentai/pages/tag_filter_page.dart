@@ -31,31 +31,31 @@ class _TagFilterPageState extends State<TagFilterPage>
               break;
             case 1:
               tagTagChips = tagChips
-                  .where((tagChip) => tagChip.tag.tagType == TagType.tag)
+                  .where((tagChip) => tagChip.tag.type == TagType.tag)
                   .toList()
                 ..sort(compareTagChip);
               break;
             case 2:
               artistTagChips = tagChips
-                  .where((tagChip) => tagChip.tag.tagType == TagType.artist)
+                  .where((tagChip) => tagChip.tag.type == TagType.artist)
                   .toList()
                 ..sort(compareTagChip);
               break;
             case 3:
               characterTagChips = tagChips
-                  .where((tagChip) => tagChip.tag.tagType == TagType.character)
+                  .where((tagChip) => tagChip.tag.type == TagType.character)
                   .toList()
                 ..sort(compareTagChip);
               break;
             case 4:
               parodyTagChips = tagChips
-                  .where((tagChip) => tagChip.tag.tagType == TagType.parody)
+                  .where((tagChip) => tagChip.tag.type == TagType.parody)
                   .toList()
                 ..sort(compareTagChip);
               break;
             case 5:
               parodyTagChips = tagChips
-                  .where((tagChip) => tagChip.tag.tagType == TagType.parody)
+                  .where((tagChip) => tagChip.tag.type == TagType.parody)
                   .toList()
                 ..sort(compareTagChip);
               break;
@@ -83,23 +83,23 @@ class _TagFilterPageState extends State<TagFilterPage>
       .toList()
     ..sort(compareTagChip);
   late var tagTagChips = tagChips
-      .where((tagChip) => tagChip.tag.tagType == TagType.tag)
+      .where((tagChip) => tagChip.tag.type == TagType.tag)
       .toList()
     ..sort(compareTagChip);
   late var artistTagChips = tagChips
-      .where((tagChip) => tagChip.tag.tagType == TagType.artist)
+      .where((tagChip) => tagChip.tag.type == TagType.artist)
       .toList()
     ..sort(compareTagChip);
   late var characterTagChips = tagChips
-      .where((tagChip) => tagChip.tag.tagType == TagType.character)
+      .where((tagChip) => tagChip.tag.type == TagType.character)
       .toList()
     ..sort(compareTagChip);
   late var parodyTagChips = tagChips
-      .where((tagChip) => tagChip.tag.tagType == TagType.parody)
+      .where((tagChip) => tagChip.tag.type == TagType.parody)
       .toList()
     ..sort(compareTagChip);
   late var groupTagChips = tagChips
-      .where((tagChip) => tagChip.tag.tagType == TagType.group)
+      .where((tagChip) => tagChip.tag.type == TagType.group)
       .toList()
     ..sort(compareTagChip);
 
@@ -148,52 +148,52 @@ class _TagFilterPageState extends State<TagFilterPage>
                                     tagChip.tag.tagState == TagState.banned ||
                                     tagChip.tag.tagState == TagState.required)
                                 .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
+                                    tagChip.tag.name!.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 1:
                             tagTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.tag)
+                                    tagChip.tag.type == TagType.tag)
                                 .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
+                                    tagChip.tag.name!.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 2:
                             artistTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.artist)
+                                    tagChip.tag.type == TagType.artist)
                                 .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
+                                    tagChip.tag.name!.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 3:
                             characterTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.character)
+                                    tagChip.tag.type == TagType.character)
                                 .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
+                                    tagChip.tag.name!.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 4:
                             parodyTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.parody)
+                                    tagChip.tag.type == TagType.parody)
                                 .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
+                                    tagChip.tag.name!.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 5:
                             groupTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.group)
+                                    tagChip.tag.type == TagType.group)
                                 .where((tagChip) =>
-                                    tagChip.tag.name.contains(value))
+                                    tagChip.tag.name!.contains(value))
                                 .toList()
                               ..sort(compareTagChip);
                             break;
@@ -214,35 +214,35 @@ class _TagFilterPageState extends State<TagFilterPage>
                           case 1:
                             tagTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.tag)
+                                    tagChip.tag.type == TagType.tag)
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 2:
                             artistTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.artist)
+                                    tagChip.tag.type == TagType.artist)
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 3:
                             characterTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.character)
+                                    tagChip.tag.type == TagType.character)
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 4:
                             parodyTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.parody)
+                                    tagChip.tag.type == TagType.parody)
                                 .toList()
                               ..sort(compareTagChip);
                             break;
                           case 5:
                             groupTagChips = tagChips
                                 .where((tagChip) =>
-                                    tagChip.tag.tagType == TagType.group)
+                                    tagChip.tag.type == TagType.group)
                                 .toList()
                               ..sort(compareTagChip);
                             break;
@@ -357,7 +357,7 @@ class _TagChipState extends State<TagChip> {
                   const SizedBox(width: 5),
                   Expanded(
                     child: Text(
-                      widget.tag.name,
+                      widget.tag.name!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

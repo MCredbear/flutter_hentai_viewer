@@ -1,11 +1,11 @@
 part of 'api.dart';
 
-Future<(List<Gallery>, int, int)> searchBySingleTag(
-    Tag tag, int pageIndex) async {
+Future<(List<Gallery>, int)> searchBySingleTag(Tag tag, int pageIndex) async {
   try {
+    final query = '${tag.type!.name}:"${tag.name}"';
     final response = await http.get(Uri.parse(proxy(
-        '$hostUrl/${tag.tagType.name}/${tag.name.replaceAll(' ', '-')}/?page=$pageIndex')));
-    return parseGalleriesHtml(response.body);
+        '$hostUrl/api/v2/search?query=$query&sort=date&page=$pageIndex')));
+    return parseGalleries(response.bodyBytes);
   } catch (e) {
     throw Exception('Failed to fetch latest update galleries: $e');
   }

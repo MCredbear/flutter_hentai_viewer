@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getLatestGalleries(int pageIndex) async {
     try {
-      final (galleries, currentPageIndex, lastPageIndex) =
+      final (galleries, lastPageIndex) =
           await api.latestUpdateGalleries(pageIndex);
       if (nhentaiSettingsStore.showHistoryMode == ShowHistoryMode.doNotShow) {
         galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
         this.galleries = globalSettingsStore.scrollUpToLoadMore
             ? (this.galleries ?? <Gallery>[]) + galleries
             : galleries;
-        this.currentPageIndex = currentPageIndex;
+        currentPageIndex = pageIndex;
         this.lastPageIndex = lastPageIndex;
         paginationTextController.text = '$currentPageIndex / $lastPageIndex';
       });
@@ -236,16 +236,15 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> searchGalleries(int pageIndex) async {
     try {
-      final (galleries, currentPageIndex, lastPageIndex) =
-          await api.searchGalleries(
-              searchController.text,
-              tagFilterStore.tags
-                  .where((tag) => tag.tagState == TagState.required)
-                  .toList(),
-              tagFilterStore.tags
-                  .where((tag) => tag.tagState == TagState.banned)
-                  .toList(),
-              pageIndex);
+      final (galleries, lastPageIndex) = await api.searchGalleries(
+          searchController.text,
+          tagFilterStore.tags
+              .where((tag) => tag.tagState == TagState.required)
+              .toList(),
+          tagFilterStore.tags
+              .where((tag) => tag.tagState == TagState.banned)
+              .toList(),
+          pageIndex);
       if (nhentaiSettingsStore.showHistoryMode == ShowHistoryMode.doNotShow) {
         galleries.removeWhere((gallery) => historyStore.isInHistory(gallery));
       }
@@ -253,7 +252,7 @@ class _HomePageState extends State<HomePage> {
         this.galleries = globalSettingsStore.scrollUpToLoadMore
             ? (this.galleries ?? <Gallery>[]) + galleries
             : galleries;
-        this.currentPageIndex = currentPageIndex;
+        currentPageIndex = pageIndex;
         this.lastPageIndex = lastPageIndex;
         paginationTextController.text = '$currentPageIndex / $lastPageIndex';
       });
