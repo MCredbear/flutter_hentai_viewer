@@ -5,6 +5,7 @@ import 'package:flutter_hentai_viewer/nhentai/gallery.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/reading_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/pages/tag_page.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/favorite_store.dart';
+import 'package:flutter_hentai_viewer/nhentai/stores/history_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/setting_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/stores/tag_filter_store.dart';
 import 'package:flutter_hentai_viewer/nhentai/tag.dart';
@@ -49,19 +50,22 @@ class _GalleryPageState extends State<GalleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [
-            Observer(
-              builder: (context) => IconButton(
-                  onPressed: () {
-                    favoriteStore.isFavorite(widget.gallery)
-                        ? favoriteStore.remove(widget.gallery)
-                        : favoriteStore.add(widget.gallery);
-                  },
-                  icon: Icon(favoriteStore.isFavorite(widget.gallery)
-                      ? Icons.favorite
-                      : Icons.favorite_outline)),
-            )
-          ],
+          actions: loaded
+              ? [
+                  Observer(
+                    builder: (context) => IconButton(
+                      onPressed: () {
+                        favoriteStore.isFavorite(gallery)
+                            ? favoriteStore.remove(gallery)
+                            : favoriteStore.add(gallery);
+                      },
+                      icon: Icon(favoriteStore.isFavorite(gallery)
+                          ? Icons.favorite
+                          : Icons.favorite_outline),
+                    ),
+                  )
+                ]
+              : null,
         ),
         body: loaded
             ? NestedScrollView(
@@ -250,6 +254,9 @@ class _GalleryPageState extends State<GalleryPage> {
       });
       if (nhentaiSettingsStore.autoUpdateTags) {
         tagFilterStore.updateTags(gallery.tags);
+      }
+      if (nhentaiSettingsStore.historyMode != HistoryMode.disabled) {
+        historyStore.add(widget.gallery);
       }
     } catch (e) {
       toastification.show(

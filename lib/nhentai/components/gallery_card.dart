@@ -137,10 +137,6 @@ class _GalleryCardState extends State<GalleryCard> {
                       isMasked = false;
                     });
                   } else {
-                    if (nhentaiSettingsStore.historyMode !=
-                        HistoryMode.disabled) {
-                      historyStore.add(widget.gallery);
-                    }
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => GalleryPage(widget.gallery)));
                   }
