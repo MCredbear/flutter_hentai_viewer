@@ -256,7 +256,7 @@ class _GalleryPageState extends State<GalleryPage> {
         tagFilterStore.updateTags(gallery.tags);
       }
       if (nhentaiSettingsStore.historyMode != HistoryMode.disabled) {
-        historyStore.add(widget.gallery);
+        historyStore.add(gallery);
       }
     } catch (e) {
       toastification.show(
